@@ -1,6 +1,6 @@
 [user]
-  name = Jeff Geerling
-  email = geerlingguy@mac.com
+  name = smchunn
+  email = smcnola1@gmail.com
 [core]
   editor = vi
   excludesfile = ~/.gitignore
@@ -12,14 +12,10 @@
   status = auto
 [init]
   defaultBranch = master
-[web]
-  browser = google-chrome
-[credential]
-  helper = osxkeychain
 [push]
   default = simple
 [merge]
-  tool = kdiff3
+  tool = smerge
 [difftool]
   prompt = false
 [alias]
