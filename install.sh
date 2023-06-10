@@ -6,7 +6,7 @@ backup() {
   if [ -e "$target" ]; then
     if [ ! -L "$target" ]; then
       mv "$target" "$target.bak"
-      echo "::: $target backed up to $target.bak"
+      echo "> $target backed up to $target.bak"
     fi
   fi
 }
@@ -14,10 +14,8 @@ backup() {
 symlink() {
   file=$1
   link=$2
-  if [ ! -e "$link" ]; then
-    echo "::: Symlinking your new $link"
-    ln -nsf $file $link
-  fi
+  echo "> Symlinking $link to $file"
+  ln -nsf $file $link
 }
 
 zparseopts -D -F -K   \
@@ -30,23 +28,23 @@ zparseopts -D -F -K   \
 # For all files `$name` in the present folder except `*.sh`, `README.md`, `settings.json`,
 # and `config`, backup the target file located at `~/.$name` and symlink `$name` to `~/.$name`
 if [[ $#opts_all || $#opts_file ]]; then
-  for fp in `find ./configs -not -name ".DS_Store" -mindepth 1 -maxdepth 1`; do
+  for fp in `find ~+/configs -not -name ".DS_Store" -mindepth 1 -maxdepth 1`; do
     name=${fp##*/}
     if [ ! -d "$name" ]; then
       target="$HOME/$name"
       backup $target
-      symlink "$PWD/$fp" $target
+      symlink "$fp" $target
     fi
   done
 fi
 
 if [[ $#opts_all || $#opts_dir ]]; then
-  for fp in `find ./configs -mindepth 1 -maxdepth 1`; do
+  for fp in `find ~+/configs -mindepth 1 -maxdepth 1`; do
     name=${fp##*/}
     if [ -d "$name" ]; then
       target="$HOME/$name"
       backup $target
-      symlink "$PWD/$fp" $target
+      symlink "$fp" $target
     fi
   done
 fi
@@ -56,11 +54,12 @@ if [[ $#opts_all || $#opts_zsh ]]; then
   if [ ! -d "$HOME/.oh-my-zsh" ]; then
     git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
   fi
-
-  if [ ! -d "$HOME/.zsh/typewritten" ]; then
-    mkdir -p "$HOME/.zsh"
-    git clone https://github.com/reobin/typewritten.git "$HOME/.zsh/typewritten"
+  ZSH_THEMES_DIR="$HOME/.oh-my-zsh/custom/themes"
+  if [ ! -d "$ZSH_THEMES_DIR/typewritten" ]; then
+    git clone https://github.com/reobin/typewritten.git $ZSH_THEMES_DIR/typewritten
   fi
+  ln -nsf "$ZSH_THEMES_DIR/typewritten/typewritten.zsh-theme" "$ZSH_THEMES_DIR/typewritten.zsh-theme"
+  ln -nsf "$ZSH_THEMES_DIR/typewritten/async.zsh" "/$ZSH_THEMES_DIR/async"
 fi
 
 # Install zsh-syntax-highlighting plugin
@@ -77,6 +76,4 @@ if [[ $#opts_all || $#opts_zsh ]]; then
   cd "$CURRENT_DIR"
 fi
 
-# Refresh the current terminal with the newly installed configuration
-exec zsh
 
