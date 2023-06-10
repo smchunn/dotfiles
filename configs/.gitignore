@@ -1,5 +1,2 @@
 *.DS_Store
-*.LSOverride
-Thumbs.db
 .bundle
-.config/nvim/plugins

@@ -57,11 +57,11 @@ cursor:
     blinking: Always
   blink_interval: 600
 shell:
-  program: /bin/zsh
+  program: /usr/local/bin/zsh
   args:
     - -l
-    # - -c
-    # - "tmux attach || tmux"
+    - -c
+    - "tmux attach || tmux"
 key_bindings:
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }

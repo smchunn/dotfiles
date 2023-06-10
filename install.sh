@@ -30,7 +30,7 @@ zparseopts -D -F -K   \
 # For all files `$name` in the present folder except `*.sh`, `README.md`, `settings.json`,
 # and `config`, backup the target file located at `~/.$name` and symlink `$name` to `~/.$name`
 if [[ $#opts_all || $#opts_file ]]; then
-  for fp in `find ./configs -mindepth 1 -maxdepth 1`; do
+  for fp in `find ./configs -not -name ".DS_Store" -mindepth 1 -maxdepth 1`; do
     name=${fp##*/}
     if [ ! -d "$name" ]; then
       target="$HOME/$name"
