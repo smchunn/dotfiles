@@ -2,7 +2,7 @@
   name = smchunn
   email = smcnola1@gmail.com
 [core]
-  editor = vi
+  editor = nvim
   excludesfile = ~/.gitignore
   autocrlf = input
 [color]
