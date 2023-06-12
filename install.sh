@@ -22,7 +22,8 @@ zparseopts -D -F -K   \
   {a,-all}=opts_all   \
   {f,-file}=opts_file \
   {d,-dir}=opts_dir   \
-  {z,-zsh}=opts_zsh 
+  {z,-zsh}=opts_zsh   \
+  {t,-tpm}=opts_tpm
 
 
 # For all files `$name` in the present folder except `*.sh`, `README.md`, `settings.json`,
@@ -74,6 +75,15 @@ if [[ $#opts_all || $#opts_zsh ]]; then
   fi
 
   cd "$CURRENT_DIR"
+fi
+
+
+# Install tpm
+if [[ $#opts_all || $#opts_tpm ]]; then
+  if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    echo "::: Installing tmux plugin manager..."
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  fi
 fi
 
 
