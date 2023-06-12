@@ -1,4 +1,4 @@
-export PATH="$HOME/Library/Python/3.9/bin:/opt/homebrew/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/Library/Python/3.9/bin:/opt/homebrew/bin:/usr/local/sbin:/usr/local/opt/libpq/bin:$PATH"
 
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -6,7 +6,7 @@ ZSH_THEME="typewritten"
 
 export TYPEWRITTEN_PROMPT_LAYOUT="singleline"
 export TYPEWRITTEN_ARROW_SYMBOL="➜"
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting tmux)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting tmux docker)
 
 # export ZSH_TMUX_AUTOSTART=true
 
