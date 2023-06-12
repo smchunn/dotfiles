@@ -28,7 +28,8 @@ zparseopts -D -F -K   \
 
 # For all files `$name` in the present folder except `*.sh`, `README.md`, `settings.json`,
 # and `config`, backup the target file located at `~/.$name` and symlink `$name` to `~/.$name`
-if [[ $#opts_all || $#opts_file ]]; then
+if (($#opts_all + $#opts_file > 0)); then
+  echo "Linking Files..."
   for fp in `find ~+/configs -not -name ".DS_Store" -mindepth 1 -maxdepth 1`; do
     name=${fp##*/}
     if [ ! -d "$name" ]; then
@@ -39,7 +40,8 @@ if [[ $#opts_all || $#opts_file ]]; then
   done
 fi
 
-if [[ $#opts_all || $#opts_dir ]]; then
+if (($#opts_all + $#opts_dir > 0)); then
+  echo "Linking Dirs..."
   for fp in `find ~+/configs -mindepth 1 -maxdepth 1`; do
     name=${fp##*/}
     if [ -d "$name" ]; then
@@ -51,7 +53,8 @@ if [[ $#opts_all || $#opts_dir ]]; then
 fi
 
 
-if [[ $#opts_all || $#opts_zsh ]]; then
+if (($#opts_all + $#opts_zsh > 0)); then
+  echo "Installing OMZ..."
   if [ ! -d "$HOME/.oh-my-zsh" ]; then
     git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
   fi
@@ -64,7 +67,7 @@ if [[ $#opts_all || $#opts_zsh ]]; then
 fi
 
 # Install zsh-syntax-highlighting plugin
-if [[ $#opts_all || $#opts_zsh ]]; then
+if (($#opts_all + $#opts_zsh > 0)); then
   CURRENT_DIR=`pwd`
   ZSH_PLUGINS_DIR="$HOME/.oh-my-zsh/custom/plugins"
   mkdir -p "$ZSH_PLUGINS_DIR" && cd "$ZSH_PLUGINS_DIR"
@@ -79,7 +82,8 @@ fi
 
 
 # Install tpm
-if [[ $#opts_all || $#opts_tpm ]]; then
+if (($#opts_all + $#opts_tpm > 0)); then
+  echo "Installing TPM..."
   if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
     echo "::: Installing tmux plugin manager..."
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
