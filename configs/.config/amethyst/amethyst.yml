@@ -31,7 +31,7 @@ mod2:
 # Move to the next layout in the list.
 cycle-layout:
   mod: mod1
-  key: n
+  key: v
 
 # Move to the previous layout in the list.
 cycle-layout-backward:
@@ -78,12 +78,12 @@ decrease-main:
 # Focus the next window in the list going counter-clockwise.
 focus-ccw:
   mod: mod2
-  key: c
+  key: x
 
 # Focus the next window in the list going clockwise.
 focus-cw:
   mod: mod1
-  key: c
+  key: x
 
 # Focus the main window in the list.
 focus-main:
@@ -98,7 +98,7 @@ focus-screen-ccw:
 # Focus the next screen in the list going clockwise.
 focus-screen-cw:
   mod: mod1
-  key: f
+  key: w
 
 # Move the currently focused window onto the next screen in the list going counter-clockwise.
 swap-screen-ccw:
@@ -108,17 +108,17 @@ swap-screen-ccw:
 # Move the currently focused window onto the next screen in the list going clockwise.
 swap-screen-cw:
   mod: mod1
-  key: w
+  key: f
 
 # Swap the position of the currently focused window with the next window in the list going counter-clockwise.
 swap-ccw:
   mod: mod2
-  key: x
+  key: c
 
 # Swap the position of the currently focused window with the next window in the list going clockwise.
 swap-cw:
   mod: mod1
-  key: x
+  key: c
 
 # Swap the position of the currently focused window with the main window in the list.
 swap-main:
@@ -203,7 +203,7 @@ select-wide-layout:
 # Select fullscreen layout
 select-fullscreen-layout:
   mod: mod1
-  key: enter
+  key: d
 
 # Select column layout
 select-column-layout:
