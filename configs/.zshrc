@@ -1,4 +1,4 @@
-export PATH="$HOME/Library/Python/3.9/bin:/opt/homebrew/bin:/usr/local/sbin:/usr/local/opt/libpq/bin:$PATH"
+export PATH="$HOME/Library/Python/3.9/bin:/opt/homebrew/bin:/usr/local/sbin:/usr/local/opt/postgresql@15/bin:$PATH"
 
 export ZSH="$HOME/.oh-my-zsh"
 
