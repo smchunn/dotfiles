@@ -36,6 +36,7 @@ treesitter.setup({
 		"rust",
 		"devicetree",
 	},
+	ignore_install = { "latex" },
 	-- auto install above language parsers
 	auto_install = true,
 })

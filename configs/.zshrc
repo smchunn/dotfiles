@@ -6,7 +6,7 @@ ZSH_THEME="typewritten"
 
 export TYPEWRITTEN_PROMPT_LAYOUT="singleline"
 export TYPEWRITTEN_ARROW_SYMBOL="➜"
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting tmux docker)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting tmux docker k)
 
 # export ZSH_TMUX_AUTOSTART=true
 
@@ -14,3 +14,4 @@ source $ZSH/oh-my-zsh.sh
 
 alias rvim="fd -t f -H -E .git -E .DS_Store | fzf-tmux -p --reverse | xargs nvim"
 alias vim="fd -d 1 -t f -H -E .git -E .DS_Store | fzf-tmux -p --reverse | xargs nvim"
+alias ka="k -a"
