@@ -37,6 +37,7 @@ treesitter.setup({
 		"devicetree",
 	},
 	ignore_install = { "latex" },
+	disable = { "latex" },
 	-- auto install above language parsers
 	auto_install = true,
 })
