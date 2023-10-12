@@ -82,6 +82,27 @@ lspconfig["tailwindcss"].setup({
 	on_attach = on_attach,
 })
 
+-- configure sqls server
+lspconfig["sqlls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "sql", "mysql" },
+})
+
+-- configure python server
+lspconfig["pyright"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "python" },
+})
+
+-- configure julia server
+lspconfig["julials"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "julia" },
+})
+
 -- configure emmet language server
 lspconfig["emmet_ls"].setup({
 	capabilities = capabilities,
