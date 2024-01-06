@@ -24,11 +24,7 @@ mason_lspconfig.setup({
 	ensure_installed = {
 		"tsserver",
 		"html",
-		"cssls",
-		"tailwindcss",
 		"lua_ls",
-		"emmet_ls",
-		"sqlls",
 		"pyright",
 		"julials",
 	},
@@ -42,7 +38,6 @@ mason_null_ls.setup({
 		"prettier", -- ts/js formatter
 		"stylua", -- lua formatter
 		"eslint_d", -- ts/js linter
-		"sql-formatter",
 	},
 	-- auto-install configured formatters & linters (with null-ls)
 	automatic_installation = true,
