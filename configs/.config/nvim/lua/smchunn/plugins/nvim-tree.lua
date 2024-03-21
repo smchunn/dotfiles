@@ -17,6 +17,7 @@ vim.cmd([[ highlight NvimTreeIndentMarker guifg=#3FC5FF ]])
 -- configure nvim-tree
 nvimtree.setup({
 	-- change folder arrow icons
+  update_cwd = true,
 	renderer = {
 		icons = {
 			glyphs = {
