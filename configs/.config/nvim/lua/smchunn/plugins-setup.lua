@@ -109,6 +109,9 @@ return packer.startup(function(use)
 
 	use("lervag/vimtex")
 
+  use({ "epwalsh/obsidian.nvim", tag = "*", requires = { "nvim-lua/plenary.nvim", } })
+
+  --- last
 	if packer_bootstrap then
 		require("packer").sync()
 	end

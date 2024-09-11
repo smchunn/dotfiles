@@ -28,6 +28,10 @@ keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
 keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
+keymap.set("n", "<leader>sk", "<C-w>k") -- move window up
+keymap.set("n", "<leader>sj", "<C-w>j") -- move window down
+keymap.set("n", "<leader>sl", "<C-w>l") -- move window right
+keymap.set("n", "<leader>sh", "<C-w>h") -- move window left
 
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
 keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
@@ -60,5 +64,6 @@ keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>") -- list current c
 -- restart lsp server (not on youtube nvim video)
 keymap.set("n", "<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary
 
+-- inert new line above/below cursor
 keymap.set("n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { silent = true })
 keymap.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { silent = true })

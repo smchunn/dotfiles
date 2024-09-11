@@ -1,11 +1,14 @@
 -- import lualine plugin safely
-local status, lualine = pcall(require, "lualine")
-if not status then
+local lualine_status, lualine = pcall(require, "lualine")
+if not lualine_status then
 	return
 end
 
 -- get lualine moonfly theme
-local lualine_moonfly = require("lualine.themes.moonfly")
+local moonfly_status, lualine_moonfly = pcall(require, "lualine.themes.moonfly")
+if not moonfly_status then
+  return
+end
 
 -- new colors for theme
 local mf_colors = {

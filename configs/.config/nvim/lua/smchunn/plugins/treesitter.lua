@@ -35,6 +35,7 @@ treesitter.setup({
 		"c",
 		"rust",
 		"devicetree",
+    "julia",
 	},
 	ignore_install = { "latex" },
 	disable = { "latex" },
