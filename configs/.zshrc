@@ -15,9 +15,12 @@ source $ZSH/oh-my-zsh.sh
 alias rvim="fd -t f -H -E .git -E .DS_Store | fzf-tmux -p --reverse | xargs nvim"
 alias vim="fd -d 1 -t f -H -E .git -E .DS_Store | fzf-tmux -p --reverse | xargs nvim"
 alias ka="k -a"
+
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
 export AIRFLOW_HOME=~/Development/airflow
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"

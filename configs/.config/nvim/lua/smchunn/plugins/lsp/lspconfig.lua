@@ -10,12 +10,6 @@ if not cmp_nvim_lsp_status then
 	return
 end
 
--- import typescript plugin safely
-local typescript_setup, typescript = pcall(require, "typescript")
-if not typescript_setup then
-	return
-end
-
 local keymap = vim.keymap -- for conciseness
 
 -- enable keybinds only for when lsp server available
@@ -49,43 +43,36 @@ end
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
 -- Change the Diagnostic symbols in the sign column (gutter)
--- (not in youtube nvim video)
 local signs = { Error = " ", Warn = " ", Hint = "󰆈 ", Info = " " }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
--- configure html server
-lspconfig["html"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
--- configure typescript server with plugin
-typescript.setup({
-	server = {
-		capabilities = capabilities,
-		on_attach = on_attach,
-	},
-})
 
 -- configure python server
-lspconfig["pyright"].setup({
+lspconfig.pyright.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	filetypes = { "python" },
 })
 
 -- configure julia server
-lspconfig["julials"].setup({
+lspconfig.julials.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	filetypes = { "julia" },
 })
 
+-- configure julia server
+lspconfig.jinja_lsp.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "jinja" },
+})
+
 -- configure lua server (with special settings)
-lspconfig["lua_ls"].setup({
+lspconfig.lua_ls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	settings = { -- custom settings for lua
@@ -104,3 +91,11 @@ lspconfig["lua_ls"].setup({
 		},
 	},
 })
+
+lspconfig.rust_analyzer.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "rust" },
+})
+
+
