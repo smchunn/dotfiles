@@ -67,6 +67,7 @@ nvimtree.setup({
 			return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
 		end,
 	},
+  on_attach = nvim_tree_on_attach
 	-- 	git = {
 	-- 		ignore = false,
 	-- 	},
