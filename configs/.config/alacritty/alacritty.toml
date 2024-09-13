@@ -60,147 +60,209 @@ style = "Italic"
 family = "MesloLGS Nerd Font Mono"
 style = "Regular"
 
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "Space"
-mods = "Shift|Control"
+# disable shift-ctrl-space 
+# [[keyboard.bindings]]
+# action = "ReceiveChar"
+# key = "Space"
+# mods = "Shift|Control"
 
-[[keyboard.bindings]]
-chars = "\u001E"
-key = "Key6"
-mods = "Control"
+# work around for C-6 not working in nvim 
+# [[keyboard.bindings]]
+# chars = "\u001E"
+# key = "Key6"
+# mods = "Control"
 
+# default font size
 [[keyboard.bindings]]
 action = "ResetFontSize"
-key = "Key9"
+key = "="
 mods = "Command"
 
+# increase font size
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "+"
+mods = "Shift|Command"
+
+# Hide alacritty
 [[keyboard.bindings]]
 action = "Hide"
 key = "H"
 mods = "Command"
 
+# Exit alacritty
 [[keyboard.bindings]]
 action = "Quit"
 key = "Q"
 mods = "Command"
 
+# Launch new alacritty window
 [[keyboard.bindings]]
 key = "N"
 mods = "Command"
+command = {program = "/opt/homebrew/bin/zsh", args = ["-e", "zsh", "-l"]}
 
-[keyboard.bindings.command]
-args = ["-e", "zsh", "-l"]
-program = "/opt/homebrew/bin/zsh"
-
-[[keyboard.bindings]]
-chars = "\u0000v"
-key = "D"
-mods = "Command"
-
+# send C-space, tmux leader
 [[keyboard.bindings]]
 chars = "\u0000"
 key = "Space"
 mods = "Command"
 
+# send leader-%, tmux verticle pane
 [[keyboard.bindings]]
-chars = "\u0000s"
+chars = "\u0000\u0025"
+key = "D"
+mods = "Command"
+
+# send leader-", tmux horizontal pane
+[[keyboard.bindings]]
+chars = "\u0000\u0022"
 key = "D"
 mods = "Command|Shift"
 
+# send leader-x, tmux close active pane/window
 [[keyboard.bindings]]
-chars = "\u0000x"
+chars = "\u0000\u0078"
 key = "W"
 mods = "Command"
 
-[[keyboard.bindings]]
-chars = "\u0000h"
-key = "H"
-mods = "Command"
+# send leader-h, unsure
+# [[keyboard.bindings]]
+# chars = "\u0000\u0068"
+# key = "Y"
+# mods = "Command"
 
+# send C-6, nvim last buf 
 [[keyboard.bindings]]
-chars = "\u0000j"
+# chars = "\u0000\u006a"
+chars = "\u001E"
 key = "J"
 mods = "Command"
 
-[[keyboard.bindings]]
-chars = "\u0000k"
-key = "K"
-mods = "Command"
+# send leader-k,
+# [[keyboard.bindings]]
+# chars = "\u0000\u006b"
+# key = "K"
+# mods = "Command"
 
+# send leader-l,
 [[keyboard.bindings]]
-chars = "\u0000l"
+chars = "\u0000\u006c"
 key = "L"
 mods = "Command"
 
+# send leader-c, tmux new window
 [[keyboard.bindings]]
-chars = "\u0000c"
+chars = "\u0000\u0063"
 key = "T"
 mods = "Command"
 
+# send leader-1, tmux window 1
 [[keyboard.bindings]]
-chars = "\u00001"
+chars = "\u0000\u0031"
 key = "Key1"
 mods = "Command"
 
+# send leader-2, tmux window 2
 [[keyboard.bindings]]
-chars = "\u00002"
+chars = "\u0000\u0032"
 key = "Key2"
 mods = "Command"
 
+# send leader-3, tmux window 3
 [[keyboard.bindings]]
-chars = "\u00003"
+chars = "\u0000\u0033"
 key = "Key3"
 mods = "Command"
 
+# send leader-4, tmux window 4
 [[keyboard.bindings]]
-chars = "\u00004"
+chars = "\u0000\u0034"
 key = "Key4"
 mods = "Command"
 
+# send leader-5, tmux window 5
 [[keyboard.bindings]]
-chars = "\u00005"
+chars = "\u0000\u0035"
 key = "Key5"
 mods = "Command"
 
+# send leader-6, tmux window 6
 [[keyboard.bindings]]
-chars = "\u00006"
+chars = "\u0000\u0036"
 key = "Key6"
 mods = "Command"
 
+# send leader-7, tmux window 7
 [[keyboard.bindings]]
-chars = "\u00007"
+chars = "\u0000\u0037"
 key = "Key7"
 mods = "Command"
 
+# send leader-8, tmux window 8
 [[keyboard.bindings]]
-chars = "\u00008"
+chars = "\u0000\u0038"
 key = "Key8"
 mods = "Command"
 
+# send leader-9, tmux window 9
 [[keyboard.bindings]]
-chars = "\u00009"
+chars = "\u0000\u0039"
 key = "Key9"
 mods = "Command"
 
+# send Ctl-Up, tmux switch pane
 [[keyboard.bindings]]
-chars = "\u0000H"
-key = "Left"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0000J"
-key = "Down"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0000K"
+chars = "\u001b[1;5A"
 key = "Up"
 mods = "Command"
 
+# send Ctl-Down, tmux switch pane
 [[keyboard.bindings]]
-chars = "\u0000L"
+chars = "\u001b[1;5B"
+key = "Down"
+mods = "Command"
+
+# send Ctl-Left, tmux switch pane
+[[keyboard.bindings]]
+chars = "\u001b[1;5D"
+key = "Left"
+mods = "Command"
+
+# send Ctl-Right, tmux switch pane
+[[keyboard.bindings]]
+chars = "\u001b[1;5C"
 key = "Right"
+mods = "Command"
+
+# send Alt-Ctl-Up, tmux resize pane
+[[keyboard.bindings]]
+chars = "\u001b[1;7A"
+key = "Up"
+mods = "Command|Alt"
+
+# send Alt-Ctl-Down, tmux resize pane
+[[keyboard.bindings]]
+chars = "\u001b[1;7B"
+key = "Down"
+mods = "Command|Alt"
+
+# send Alt-Ctl-Left, tmux resize pane
+[[keyboard.bindings]]
+chars = "\u001b[1;7D"
+key = "Left"
+mods = "Command|Alt"
+
+# send Alt-Ctl-Right, tmux resize pane
+[[keyboard.bindings]]
+chars = "\u001b\u005b\u0031\u003b\u0037\u0043"
+key = "Right"
+mods = "Command|Alt"
+
+# send leader-k, tmux clear history
+[[keyboard.bindings]]
+chars = "\u0000k"
+key = "K"
 mods = "Command"
 
 [scrolling]

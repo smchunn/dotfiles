@@ -9,7 +9,11 @@ obsidian.setup({
   workspaces = {
     {
       name = "work",
-      path = "~/Library/CloudStorage/OneDrive-MMC/Documents/vaults/work",
+      path = "~/Library/CloudStorage/OneDrive-MMC/Documents/vaults/work/",
+    },
+    {
+      name = "personal",
+      path = "~/Library/CloudStorage/OneDrive-MMC/Documents/vaults/personal/",
     },
   },
   ui = {

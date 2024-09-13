@@ -7,9 +7,6 @@ vim.g.mapleader = " "
 -- General Keymaps
 ---------------------
 
--- use jk to exit insert mode
-keymap.set("i", "jk", "<ESC>")
-
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>", { silent = true })
 
@@ -25,13 +22,17 @@ keymap.set("n", "<leader>-", "<C-x>") -- decrement
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
+keymap.set("n", "<leader>sd", "<C-w>s") -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
 keymap.set("n", "<leader>sk", "<C-w>k") -- move window up
 keymap.set("n", "<leader>sj", "<C-w>j") -- move window down
 keymap.set("n", "<leader>sl", "<C-w>l") -- move window right
 keymap.set("n", "<leader>sh", "<C-w>h") -- move window left
+keymap.set("n", "<leader>sK", "<C-w>+") -- expand h
+keymap.set("n", "<leader>sJ", "<C-w>-") -- shrink h
+keymap.set("n", "<leader>sL", "<C-w>>") -- expand w
+keymap.set("n", "<leader>sH", "<C-w><") -- shrink w 
 
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
 keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab

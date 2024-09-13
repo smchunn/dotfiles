@@ -23,7 +23,7 @@ local enable_float_window = false
 vim.diagnostic.config({ virtual_text = false })
 
 -- Prints the first diagnostic for the current line.
-function echo_diagnostic()
+local function echo_diagnostic()
   if echo_timer then
     echo_timer:stop()
   end
@@ -59,7 +59,7 @@ function echo_diagnostic()
       local width = vim.api.nvim_get_option('columns') - 15
       local lines = vim.split(diag.message, "\n")
       local message = lines[1]
-      local trimmed = false
+      -- local trimmed = false
 
       if #lines > 1 and #message <= short_line_limit then
         message = message .. ' ' .. lines[2]
@@ -81,7 +81,6 @@ function echo_diagnostic()
         { kind .. ': ', hlgroup },
         { message }
       }
-
       vim.api.nvim_echo(chunks, false, {})
     end,
     echo_timeout
@@ -107,7 +106,7 @@ vim.keymap.set('n', '<leader>dg', function()
     enable_float_window = true
   end
     if enable_float_window then
-      vim.diagnostic.open_float(nil, {focus=false, scope="line"})
+      vim.diagnostic.open_float(nil, {focus=false, scope="line",border="single"})
     end
 
 end, {desc="Show LSP errors"})
