@@ -13,7 +13,7 @@ local packer_bootstrap = ensure_packer() -- true if packer was just installed
 
 -- autocommand that reloads neovim and installs/updates/removes plugins
 -- when file is saved
-vim.cmd([[ 
+vim.cmd([[
   augroup packer_user_config
     autocmd!
     autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
@@ -35,7 +35,7 @@ return packer.startup(function(use)
 
 	use({ "bluz71/vim-moonfly-colors", as = "moonfly" }) -- preferred colorscheme
 
-	use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
+	-- use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
 
 	use("szw/vim-maximizer") -- maximizes and restores current window
 
@@ -56,8 +56,15 @@ return packer.startup(function(use)
 	use("nvim-lualine/lualine.nvim")
 
 	-- fuzzy finding w/ telescope
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
+	use({
+		"nvim-telescope/telescope-fzf-native.nvim",
+		run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+	})
 	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) -- fuzzy finder
+	use({
+		"fdschmidt93/telescope-egrepify.nvim",
+		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+	})
 
 	-- autocompletion
 	use("hrsh7th/nvim-cmp") -- completion plugin
@@ -84,11 +91,11 @@ return packer.startup(function(use)
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
 	}) -- enhanced lsp uis
-	use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
+
 	use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
 
 	-- formatting & linting
-	use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters
+	use("nvimtools/none-ls.nvim") -- configure formatters & linters; null-ls community maintained
 	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
 
 	-- treesitter configuration
@@ -102,16 +109,17 @@ return packer.startup(function(use)
 
 	-- auto closing
 	use("windwp/nvim-autopairs") -- autoclose parens, brackets, quotes, etc...
-	use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" }) -- autoclose tags
 
 	-- git integration
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
 
+	-- latex
 	use("lervag/vimtex")
 
-  use({ "epwalsh/obsidian.nvim", tag = "*", requires = { "nvim-lua/plenary.nvim", } })
+	-- obsidian
+	use({ "epwalsh/obsidian.nvim", tag = "*", requires = { "nvim-lua/plenary.nvim" } })
 
-  --- last
+	--- last
 	if packer_bootstrap then
 		require("packer").sync()
 	end

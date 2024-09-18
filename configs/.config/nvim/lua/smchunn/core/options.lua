@@ -41,3 +41,11 @@ opt.splitbelow = true -- split horizontal window to the bottom
 opt.iskeyword:append("-") -- consider string-string as whole word
 
 opt.colorcolumn = "80"
+
+-- remove trailing whitespace from all lines before saving a file
+local CleanOnSave = vim.api.nvim_create_augroup('CleanOnSave', {})
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  group = CleanOnSave,
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
+})

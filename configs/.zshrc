@@ -12,13 +12,35 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting docker k)
 
 source $ZSH/oh-my-zsh.sh
 
-alias rvim="fd -t f -H -E .git -E .DS_Store | fzf-tmux -p --reverse | xargs nvim"
-alias vim="fd -d 1 -t f -H -E .git -E .DS_Store | fzf-tmux -p --reverse | xargs nvim"
+rvim() {
+  local fp="${1:-.}"  # Use the provided directory or current directory if none is given
+  fd -t f -H -E .git -E .DS_Store . "$fp" | fzf-tmux -p --reverse | xargs -I % nvim % -c "cd $fp"
+}
+
+vim() {
+  local fp="${1:-.}"  # Use the provided directory or current directory if none is given
+  fd -d 1 -t f -H -E .git -E .DS_Store . "$fp" | fzf-tmux -p --reverse | xargs -I % nvim % -c "cd $fp"
+}
+
 alias ka="k -a"
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+# configs
+alias cfg="rvim $HOME/Development/dotfiles/"
+
+#obsidian
+export VAULT="$HOME/Documents/vault/"
+
+on() {
+  nvim -c "cd $VAULT | ObsidianNew $*"
+}
+
+oo() {
+  nvim -c "cd $VAULT | ObsidianQuickSwitch"
+}
 
 export AIRFLOW_HOME=~/Development/airflow
 export VISUAL=nvim

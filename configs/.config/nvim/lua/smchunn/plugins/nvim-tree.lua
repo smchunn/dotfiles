@@ -17,7 +17,7 @@ vim.cmd([[ highlight NvimTreeIndentMarker guifg=#3FC5FF ]])
 -- configure nvim-tree
 nvimtree.setup({
 	-- change folder arrow icons
-  update_cwd = true,
+	update_cwd = true,
 	renderer = {
 		icons = {
 			glyphs = {
@@ -67,7 +67,7 @@ nvimtree.setup({
 			return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
 		end,
 	},
-  on_attach = nvim_tree_on_attach
+	on_attach = nvim_tree_on_attach,
 	-- 	git = {
 	-- 		ignore = false,
 	-- 	},
@@ -98,41 +98,41 @@ end
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 local function nvim_tree_on_attach(bufnr)
-    local api = require "nvim-tree.api"
+	local api = require("nvim-tree.api")
 
-    local function opts(desc)
-        return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-    end
+	local function opts(desc)
+		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+	end
 
-    -- default mappings
-    api.config.mappings.default_on_attach(bufnr)
+	-- default mappings
+	api.config.mappings.default_on_attach(bufnr)
 
-    -- custom mappings
-    local function change_root_to_node(node)
-        if node == nil then
-            node = api.tree.get_node_under_cursor()
-        end
+	-- custom mappings
+	local function change_root_to_node(node)
+		if node == nil then
+			node = api.tree.get_node_under_cursor()
+		end
 
-        if node ~= nil and node.type == "directory" then
-            vim.api.nvim_set_current_dir(node.absolute_path)
-        end
-        api.tree.change_root_to_node(node)
-    end
+		if node ~= nil and node.type == "directory" then
+			vim.api.nvim_set_current_dir(node.absolute_path)
+		end
+		api.tree.change_root_to_node(node)
+	end
 
-    local function change_root_to_parent(node)
-        local abs_path
-        if node == nil then
-            abs_path = api.tree.get_nodes().absolute_path
-        else
-            abs_path = node.absolute_path
-        end
+	local function change_root_to_parent(node)
+		local abs_path
+		if node == nil then
+			abs_path = api.tree.get_nodes().absolute_path
+		else
+			abs_path = node.absolute_path
+		end
 
-        local parent_path = vim.fs.dirname(abs_path)
-        vim.api.nvim_set_current_dir(parent_path)
-        api.tree.change_root(parent_path)
-    end
+		local parent_path = vim.fs.dirname(abs_path)
+		vim.api.nvim_set_current_dir(parent_path)
+		api.tree.change_root(parent_path)
+	end
 
-    vim.keymap.set('n', '<C-]>',          change_root_to_node,   opts('CD'))
-    vim.keymap.set('n', '<2-RightMouse>', change_root_to_node,   opts('CD'))
-    vim.keymap.set('n', '-',              change_root_to_parent, opts('Up'))
+	vim.keymap.set("n", "<C-]>", change_root_to_node, opts("CD"))
+	vim.keymap.set("n", "<2-RightMouse>", change_root_to_node, opts("CD"))
+	vim.keymap.set("n", "-", change_root_to_parent, opts("Up"))
 end
