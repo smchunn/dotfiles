@@ -149,10 +149,10 @@ _G.packer_plugins = {
     path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/moonfly",
     url = "https://github.com/bluz71/vim-moonfly-colors"
   },
-  ["null-ls.nvim"] = {
+  ["none-ls.nvim"] = {
     loaded = true,
-    path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
-    url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
+    path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/none-ls.nvim",
+    url = "https://github.com/nvimtools/none-ls.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
@@ -179,13 +179,6 @@ _G.packer_plugins = {
     path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
-  ["nvim-ts-autotag"] = {
-    load_after = {},
-    loaded = true,
-    needs_bufread = false,
-    path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag",
-    url = "https://github.com/windwp/nvim-ts-autotag"
-  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
@@ -206,6 +199,11 @@ _G.packer_plugins = {
     path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["telescope-egrepify.nvim"] = {
+    loaded = true,
+    path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/telescope-egrepify.nvim",
+    url = "https://github.com/fdschmidt93/telescope-egrepify.nvim"
+  },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
     path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
@@ -215,11 +213,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
-  },
-  ["typescript.nvim"] = {
-    loaded = true,
-    path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/typescript.nvim",
-    url = "https://github.com/jose-elias-alvarez/typescript.nvim"
   },
   ["vim-ReplaceWithRegister"] = {
     loaded = true,
@@ -236,11 +229,6 @@ _G.packer_plugins = {
     path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
   },
-  ["vim-tmux-navigator"] = {
-    loaded = true,
-    path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator",
-    url = "https://github.com/christoomey/vim-tmux-navigator"
-  },
   vimtex = {
     loaded = true,
     path = "/Users/spencer.chunn/.local/share/nvim/site/pack/packer/start/vimtex",
@@ -249,11 +237,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Load plugins in order defined by `after`
-time([[Sequenced loading]], true)
-vim.cmd [[ packadd nvim-treesitter ]]
-vim.cmd [[ packadd nvim-ts-autotag ]]
-time([[Sequenced loading]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

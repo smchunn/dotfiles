@@ -32,7 +32,7 @@ keymap.set("n", "<leader>sh", "<C-w>h") -- move window left
 keymap.set("n", "<leader>sK", "<C-w>+") -- expand h
 keymap.set("n", "<leader>sJ", "<C-w>-") -- shrink h
 keymap.set("n", "<leader>sL", "<C-w>>") -- expand w
-keymap.set("n", "<leader>sH", "<C-w><") -- shrink w 
+keymap.set("n", "<leader>sH", "<C-w><") -- shrink w
 
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
 keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
@@ -49,22 +49,22 @@ keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle split window max
 -- nvim-tree
 keymap.set("", "<leader>e", ":NvimTreeToggle<CR>", { silent = true }) -- toggle file explorer
 
--- telescope
-keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
-keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>") -- find string in current working directory as you type
-keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>") -- find string under cursor in current working directory
-keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance
-keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
-
--- telescope git commands (not on youtube nvim video)
-keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>") -- list all git commits (use <cr> to checkout) ["gc" for git commits]
-keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>") -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
-keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>") -- list git branches (use <cr> to checkout) ["gb" for git branch]
-keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>") -- list current changes per file with diff preview ["gs" for git status]
-
 -- restart lsp server (not on youtube nvim video)
 keymap.set("n", "<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary
 
 -- inert new line above/below cursor
 keymap.set("n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { silent = true })
 keymap.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { silent = true })
+
+-- diagnostics
+keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev)
+keymap.set("n", "<leader>dn", vim.diagnostic.goto_next)
+keymap.set("n", "<leader>dd", vim.diagnostic.open_float)
+keymap.set("n", "<leader>ds", vim.diagnostic.setloclist)
+
+keymap.set("n", "<leader>on", ":ObsidianNew<CR>", { silent = true })
+keymap.set("n", "<leader>ot", ":ObsidianNewFromTemplate<CR>", { silent = true })
+keymap.set("n", "<leader>oT", ":ObsidianTemplate<CR>", { silent = true })
+keymap.set("n", "<leader>ow", ":ObsidianWorkspace<CR>", { silent = true })
+keymap.set("n", "<leader>oo", ":ObsidianQuickSwitch<CR>", { silent = true })
+keymap.set("n", "<leader>os", ":ObsidianSearch<CR>", { silent = true })
