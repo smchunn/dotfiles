@@ -12,6 +12,9 @@ return {
       config = {
         header = {
           [[]],
+          [[]],
+          [[]],
+          [[]],
           [[   ________  ________   ________  ________ ]],
           [[  /    /   \/    /   \ /        \/        \]],
           [[ /         /         /_/       //         /]],
@@ -53,26 +56,23 @@ return {
         end,
       })
     end
-    -- " Disable the scroll
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "dashboardReady",
-      callback = function()
-        vim.opt_local.scrolloff = 999
-        vim.opt_local.mouse = ""
-      end,
-    })
-    -- " Reset when leaving dashboard
+    -- Disable scrolling when the dashboard is active
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "dashboard",
       callback = function()
+        vim.opt_local.scrolloff = 999
+        vim.opt_local.mouse = ""
+        vim.opt.fillchars = { eob = " " }
         vim.api.nvim_create_autocmd("BufLeave", {
           buffer = 0,
           callback = function()
             vim.opt_local.scrolloff = 0
             vim.opt.mouse = "a"
+            vim.opt.fillchars = { eob = "~" }
           end,
         })
       end,
     })
+    return opts
   end,
 }
