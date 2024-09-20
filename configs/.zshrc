@@ -29,17 +29,19 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 
 # configs
-alias cfg="rvim $HOME/Development/dotfiles/"
+cfg(){
+  nvim -c "cd $HOME/Development/dotfiles/" -c "autocmd User DashboardLoaded lua require('telescope.builtin').git_files({ show_untracked = false })"
+}
 
 #obsidian
 export VAULT="$HOME/Documents/vault/"
 
 on() {
-  nvim -c "cd $VAULT | ObsidianNew $*"
+  nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianNew $*"
 }
 
 oo() {
-  nvim -c "cd $VAULT | ObsidianQuickSwitch"
+  nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
 }
 
 export AIRFLOW_HOME=~/Development/airflow
