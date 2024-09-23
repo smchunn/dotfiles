@@ -1,33 +1,32 @@
+local utils = require("smchunn.core.utils")
+
 return {
   "nvimdev/dashboard-nvim",
   event = "VimEnter",
   opts = function()
     local opts = {
       theme = "doom",
+      disable_move = true,
       hide = {
-        -- this is taken care of by lualine
-        -- enabling this messes up the actual laststatus setting after loading a file
         statusline = false,
       },
       config = {
+        -- stylua: ignore
         header = {
-          [[]],
-          [[]],
-          [[]],
-          [[]],
+          [[]], [[]], [[]], [[]], [[]],
           [[   ________  ________   ________  ________ ]],
           [[  /    /   \/    /   \ /        \/        \]],
           [[ /         /         /_/       //         /]],
           [[/         /\        //         /         / ]],
           [[\__/_____/  \______/ \________/\__/__/__/  ]],
-          [[]],
+          [[]], [[]], [[]], [[]], [[]],
         },
         -- stylua: ignore
         center = {
-          { action = "Telescope find_files", desc = " Find file", icon = " ", key = "f" },
+          { action = utils.file_picker, desc = " Find file", icon = " ", key = "f" },
           { action = "ene | startinsert", desc = " New file", icon = " ", key = "n" },
           { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
-          { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
+          { action = "Telescope egrepify", desc = " Find text", icon = " ", key = "g" },
           -- { action = require('telescope.builtin').git_files({cwd="$HOME/Development/dotfiles/", show_untracked=true}), desc = " Config", icon = " ", key = "c" },
           -- { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
           { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
@@ -57,20 +56,37 @@ return {
       })
     end
     -- Disable scrolling when the dashboard is active
+
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "dashboard",
       callback = function()
         vim.opt_local.scrolloff = 999
         vim.opt_local.mouse = ""
-        vim.opt.fillchars = { eob = " " }
-        vim.api.nvim_create_autocmd("BufLeave", {
-          buffer = 0,
-          callback = function()
-            vim.opt_local.scrolloff = 0
-            vim.opt.mouse = "a"
-            vim.opt.fillchars = { eob = "~" }
-          end,
-        })
+        vim.opt_local.fillchars = { eob = " " }
+        -- vim.api.nvim_create_autocmd("BufLeave", {
+        --   buffer = 0,
+        --   callback = function()
+        --     vim.opt_local.scrolloff = 0
+        --     vim.opt.mouse = "a"
+        --     vim.opt.fillchars = { eob = "~" }
+        --   end,
+        -- })
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("BufNew", {
+      pattern = "",
+      group = vim.api.nvim_create_augroup("open-dashboard-after-last-buffer-close", { clear = true }),
+      callback = function(event)
+        for buf = 1, vim.fn.bufnr("$") do
+          if buf ~= event.buf and vim.fn.buflisted(buf) == 1 then
+            if vim.api.nvim_buf_get_name(buf) ~= "" and vim.bo[buf].filetype ~= "dashboard" then
+              return
+            end
+          end
+        end
+
+        vim.cmd("Dashboard")
       end,
     })
     return opts
