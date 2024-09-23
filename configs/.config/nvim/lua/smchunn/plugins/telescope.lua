@@ -14,6 +14,7 @@ return {
     local telescope = require("telescope")
     local actions = require("telescope.actions")
     local builtin = require("telescope.builtin")
+    local utils = require("smchunn.core.utils")
 
     telescope.setup({
       defaults = {
@@ -21,6 +22,19 @@ return {
         selection_caret = "󰁕 ",
         path_display = { "smart" },
         winblend = 10,
+        vimgrep_arguments = {
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--hidden", -- Include hidden files
+          "--trim",
+          "--glob",
+          "!.git/*", -- Exclude .git directory
+        },
         cache_picker = {
           num_pickers = 10,
         },
@@ -73,15 +87,7 @@ return {
     vim.keymap.set("n", "<c-f>", "<cmd>Telescope egrepify<cr>",
       { desc = "Telescope Egrepify", silent = true, noremap = true })
 
-    if vim.fn.isdirectory(".git") == 1 or vim.fn.filereadable(".git") == 1 then
-      vim.keymap.set("n", "<leader>f", function()
-        builtin.git_files({ show_untracked = true })
-      end, { desc = "Telescope File Picker", silent = true, noremap = true })
-    else
-      vim.keymap.set("n", "<leader>f", function()
-        builtin.find_files({ hidden = true })
-      end, { desc = "Telescope File Picker", silent = true, noremap = true })
-    end
+    vim.keymap.set("n", "<leader>f", utils.file_picker, { desc = "Telescope File Picker", silent = true, noremap = true })
 
     vim.keymap.set("n", "<leader>rr", builtin.resume, { desc = "Telescope Resume", silent = true, noremap = true })
     vim.keymap.set("n", "<leader>rp", builtin.pickers,
@@ -107,7 +113,6 @@ return {
     function M.actions.git_apply_stash_file(stash_id)
       local actions = require("telescope.actions")
       local action_state = require("telescope.actions.state")
-      local utils = require("telescope.utils")
 
       return function(prompt_bufnr)
         local picker = action_state.get_current_picker(prompt_bufnr)
