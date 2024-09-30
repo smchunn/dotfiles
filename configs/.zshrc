@@ -23,6 +23,7 @@ vim() {
 }
 
 alias ka="k -a"
+alias dev="cd $HOME/Development/"
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -30,7 +31,7 @@ eval "$(pyenv init -)"
 
 # configs
 cfg(){
-  nvim -c "cd $HOME/Development/dotfiles/" -c "autocmd User DashboardLoaded lua require('telescope.builtin').git_files({ show_untracked = false })"
+  nvim -c "cd $HOME/Development/dotfiles/"
 }
 
 #obsidian
