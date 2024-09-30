@@ -9,4 +9,11 @@ function M.file_picker()
   end
 end
 
+function M.open_in_nvim_tree()
+  local nvim_tree_api = require("nvim-tree.api")
+
+  print("open...")
+  nvim_tree_api.tree.find_file({ open = true })
+end
+
 return M
