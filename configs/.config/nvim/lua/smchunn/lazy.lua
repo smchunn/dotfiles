@@ -15,11 +15,37 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
---
-
 require("smchunn.core")
 
-require("lazy").setup("smchunn.plugins")
+require("lazy").setup({
+  spec = {
+    -- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    { import = "smchunn.plugins" },
+  },
+  defaults = {
+    lazy = false,
+    version = false, -- always use the latest git commit
+  },
+  checker = {
+    enabled = true, -- check for plugin updates periodically
+    notify = false, -- notify on update
+  },              -- automatically check for plugin updates
+  performance = {
+    cache = {
+      enabled = true,
+    },
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        "rplugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
+})

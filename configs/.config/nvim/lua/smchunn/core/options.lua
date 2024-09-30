@@ -42,6 +42,9 @@ opt.iskeyword:append("-") -- consider string-string as whole word
 
 opt.colorcolumn = "80"
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- remove trailing whitespace from all lines before saving a file
 local CleanOnSave = vim.api.nvim_create_augroup("CleanOnSave", {})
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
