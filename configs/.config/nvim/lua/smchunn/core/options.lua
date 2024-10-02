@@ -52,3 +52,10 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = "*",
   command = [[%s/\s\+$//e]],
 })
+
+-- change diagnostic signs in gutter
+local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
