@@ -8,7 +8,7 @@ return {
 
     -- new colors for theme
     local moonfly_colors = {
-      Background = "#808080",
+      Background = "#080808",
       Foreground = "#bdbdbd",
       Bold = "#eeeeee",
       Cursor = "#9e9e9e",
@@ -66,7 +66,7 @@ return {
     lualine.setup({
       options = {
         theme = moonfly_theme,
-        disabled_filetypes = { "packer", "NvimTree" },
+        disabled_filetypes = { "NvimTree" },
       },
       sections = {
         lualine_x = {
