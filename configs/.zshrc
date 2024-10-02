@@ -24,6 +24,7 @@ vim() {
 
 alias ka="k -a"
 alias dev="cd $HOME/Development/"
+alias dots="cd $HOME/Development/dotfiles"
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
