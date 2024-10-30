@@ -60,13 +60,13 @@ style = "Italic"
 family = "MesloLGS Nerd Font Mono"
 style = "Regular"
 
-# disable shift-ctrl-space 
+# disable shift-ctrl-space
 # [[keyboard.bindings]]
 # action = "ReceiveChar"
 # key = "Space"
 # mods = "Shift|Control"
 
-# work around for C-6 not working in nvim 
+# work around for C-6 not working in nvim
 # [[keyboard.bindings]]
 # chars = "\u001E"
 # key = "Key6"
@@ -132,7 +132,7 @@ mods = "Command"
 # key = "Y"
 # mods = "Command"
 
-# send C-6, nvim last buf 
+# send C-6, nvim last buf
 [[keyboard.bindings]]
 # chars = "\u0000\u006a"
 chars = "\u001E"
@@ -279,6 +279,7 @@ dynamic_title = true
 opacity = 0.92
 startup_mode = "Windowed"
 title = "SMC"
+option_as_alt = "Both"
 
 [window.dimensions]
 columns = 80

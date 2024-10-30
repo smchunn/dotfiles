@@ -22,6 +22,10 @@ vim() {
   fd -d 1 -t f -H -E .git -E .DS_Store . "$fp" | fzf-tmux -p --reverse | xargs -I % nvim % -c "cd $fp"
 }
 
+nvim() {
+  /opt/homebrew/bin/nvim -c "cd ${1:-.}"
+}
+
 alias ka="k -a"
 alias dev="cd $HOME/Development/"
 alias dots="cd $HOME/Development/dotfiles"
@@ -32,18 +36,18 @@ eval "$(pyenv init -)"
 
 # configs
 cfg(){
-  nvim -c "cd $HOME/Development/dotfiles/"
+  /opt/homebrew/bin/nvim -c "cd $HOME/Development/dotfiles/"
 }
 
 #obsidian
 export VAULT="$HOME/Documents/vault/"
 
 on() {
-  nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianNew $*"
+  /opt/homebrew/bin/nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianNew $*"
 }
 
 oo() {
-  nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
+  /opt/homebrew/bin/nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
 }
 
 export AIRFLOW_HOME=~/Development/airflow

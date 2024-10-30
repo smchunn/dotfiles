@@ -37,27 +37,51 @@ return {
 
     local moonfly_theme = {
       normal = {
-        a = { fg = moonfly_colors.uStatusForeground, bg = moonfly_colors.Blue, gui = "bold" },
+        a = {
+          fg = moonfly_colors.uStatusForeground,
+          bg = moonfly_colors.Blue,
+          gui = "bold",
+        },
         b = { fg = moonfly_colors.White, bg = moonfly_colors.uBackground },
         c = { fg = moonfly_colors.White, bg = moonfly_colors.uBackground },
       },
       insert = {
-        a = { fg = moonfly_colors.uStatusForeground, bg = moonfly_colors.Green, gui = "bold" },
+        a = {
+          fg = moonfly_colors.uStatusForeground,
+          bg = moonfly_colors.Green,
+          gui = "bold",
+        },
         b = { fg = moonfly_colors.White, bg = moonfly_colors.uBackground },
       },
       visual = {
-        a = { fg = moonfly_colors.uStatusForeground, bg = moonfly_colors.bPurple, gui = "bold" },
+        a = {
+          fg = moonfly_colors.uStatusForeground,
+          bg = moonfly_colors.bPurple,
+          gui = "bold",
+        },
         b = { fg = moonfly_colors.White, bg = moonfly_colors.uBackground },
       },
       command = {
-        a = { bg = moonfly_colors.Yellow, fg = moonfly_colors.uStatusForeground, gui = "bold" },
+        a = {
+          bg = moonfly_colors.Yellow,
+          fg = moonfly_colors.uStatusForeground,
+          gui = "bold",
+        },
       },
       replace = {
-        a = { fg = moonfly_colors.uStatusForeground, bg = moonfly_colors.bRed, gui = "bold" },
+        a = {
+          fg = moonfly_colors.uStatusForeground,
+          bg = moonfly_colors.bRed,
+          gui = "bold",
+        },
         b = { fg = moonfly_colors.White, bg = moonfly_colors.uBackground },
       },
       inactive = {
-        a = { fg = moonfly_colors.Cursor, bg = moonfly_colors.uBackground, gui = "bold" },
+        a = {
+          fg = moonfly_colors.Cursor,
+          bg = moonfly_colors.uBackground,
+          gui = "bold",
+        },
         b = { fg = moonfly_colors.Cursor, bg = moonfly_colors.uBackground },
         c = { fg = moonfly_colors.Cursor, bg = moonfly_colors.uBackground },
       },
@@ -70,6 +94,19 @@ return {
       },
       sections = {
         lualine_x = {
+          function()
+            local ok, pomo = pcall(require, "pomo")
+            if not ok then
+              return ""
+            end
+
+            local timer = pomo.get_first_to_finish()
+            if timer == nil then
+              return ""
+            end
+
+            return "󰄉 " .. tostring(timer)
+          end,
           {
             lazy_status.updates,
             cond = lazy_status.has_updates,

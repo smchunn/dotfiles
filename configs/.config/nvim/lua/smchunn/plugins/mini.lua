@@ -2,7 +2,6 @@ return {
   {
     "echasnovski/mini.ai",
     version = false,
-    lazy = false,
     opts = {},
   },
   {
@@ -19,6 +18,10 @@ return {
     version = false,
     lazy = true,
     opts = {},
+    keys = {
+      { "gc", mode = { "n", "v" } },
+      { "gcc", mode = { "n" } },
+    },
   },
   {
     "echasnovski/mini.diff",
@@ -40,6 +43,12 @@ return {
     "echasnovski/mini.operators",
     version = false,
     lazy = true,
+    keys = {
+      { "gx" },
+      { "gm" },
+      { "gr" },
+      { "gs" },
+    },
     opts = {},
   },
   {
@@ -82,7 +91,11 @@ return {
   {
     "echasnovski/mini.surround",
     version = false,
-    lazy = true,
+    keys = {
+      { "ys" },
+      { "ds" },
+      { "cs" },
+    },
     opts = {
       highlight_duration = 500,
       mappings = {

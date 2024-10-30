@@ -19,7 +19,6 @@ require("smchunn.core")
 
 require("lazy").setup({
   spec = {
-    -- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     { import = "smchunn.plugins" },
   },
   defaults = {
