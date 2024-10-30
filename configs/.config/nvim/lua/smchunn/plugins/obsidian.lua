@@ -1,7 +1,6 @@
 return {
   "epwalsh/obsidian.nvim",
-  version = "*",
-  lazy = true,
+  version = false,
   ft = "markdown",
   cmd = { "ObsidianQuickSwitch", "ObsidianNew" },
   dependencies = {

@@ -10,7 +10,13 @@ local function nvim_tree_on_attach(bufnr)
   local api = require("nvim-tree.api")
 
   local function opts(desc)
-    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    return {
+      desc = "nvim-tree: " .. desc,
+      buffer = bufnr,
+      noremap = true,
+      silent = true,
+      nowait = true,
+    }
   end
 
   -- default mappings
@@ -44,6 +50,8 @@ local function nvim_tree_on_attach(bufnr)
   vim.keymap.set("n", "<C-]>", change_root_to_node, opts("CD"))
   vim.keymap.set("n", "-", change_root_to_parent, opts("Up"))
   vim.keymap.set("n", "<esc>", api.tree.close, opts("Close tree"))
+  vim.keymap.set("n", "D", api.fs.remove, opts("Delete"))
+  vim.keymap.set("n", "d", api.fs.trash, opts("Trash"))
 end
 
 return {
@@ -82,7 +90,8 @@ return {
           local window_w_int = math.floor(window_w)
           local window_h_int = math.floor(window_h)
           local center_x = (screen_w - window_w) / 2
-          local center_y = ((vim.opt.lines:get() - window_h) / 2) - vim.opt.cmdheight:get()
+          local center_y = ((vim.opt.lines:get() - window_h) / 2)
+            - vim.opt.cmdheight:get()
           return {
             border = "rounded",
             relative = "editor",

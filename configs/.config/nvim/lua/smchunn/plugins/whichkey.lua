@@ -1,7 +1,12 @@
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
-  opts = {},
+  opts = {
+    disable = {
+      ft = { "dashboard" },
+      bt = {},
+    },
+  },
   keys = {
     {
       "<leader>?",
