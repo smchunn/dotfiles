@@ -61,7 +61,7 @@ utils.keymap({
   -- Telescope --
   ---------------
   {"n", "<leader>tf",      ":Telescope egrepify<CR>",                                                opts("Telescope Egrepify")},
-  {"n", "<leader>f",       function () utils.file_picker() end,                                      opts("Telescope File Picker")},
+  {"n", "<leader>f",       function () require("telescope.builtin").find_files() end,                opts("Telescope File Picker")},
   {"n", "<leader>rr",      function () require("telescope.builtin").resume() end,                    opts("Telescope Resume")},
   {"n", "<leader>rp",      function () require("telescope.builtin").pickers() end,                   opts("Telescope Recent Pickers")},
   {"n", "<leader>cf",      function () require("telescope.builtin").filetypes() end,                 opts("Telescope Filetypes")},
