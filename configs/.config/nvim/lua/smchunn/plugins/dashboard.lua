@@ -22,7 +22,7 @@ return {
         },
         -- stylua: ignore
         center = {
-          { action = utils.file_picker, desc = " Find file", icon = " ", key = "f" },
+          { action = function () require("telescope.builtin").find_files() end, desc = " Find file", icon = " ", key = "f" },
           { action = "ene | startinsert", desc = " New file", icon = " ", key = "n" },
           { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
           { action = "Telescope egrepify", desc = " Find text", icon = " ", key = "g" },
