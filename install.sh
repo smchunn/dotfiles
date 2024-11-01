@@ -127,6 +127,14 @@ else
   echo "::: 'zsh-syntax-highlighting' directory exists, skipping..."
 fi
 
+if [ ! -h "$ZSH_CUSTOM/themes/typewritten.zsh-theme" ]; then
+  ln -nsf "$ZSH_THEMES_DIR/typewritten/typewritten.zsh-theme" "$ZSH_THEMES_DIR/typewritten.zsh-theme"
+fi
+
+if [ ! -h "$ZSH_CUSTOM/themes/async" ]; then
+  ln -nsf "$ZSH_THEMES_DIR/typewritten/async.zsh" "/$ZSH_THEMES_DIR/async"
+fi
+
 if [ ! -d "$ZSH_PLUGINS_DIR/zsh-autosuggestions" ]; then
   echo "::: Installing zsh plugin 'zsh-autosuggestions'..."
   git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_PLUGINS_DIR/zsh-autosuggestions"
