@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # Define a function which renames a `target` file to `target.bak` if the file
 # exists and if it's a 'real' file, i.e., not a symlink
@@ -33,7 +32,7 @@ while getopts "uf" opt; do
   esac
 done
 
-echo "Zsh:"
+echo "--- Zsh:"
 # Detect OS and install/update Zsh
 if [[ "$(uname)" == "Darwin" ]]; then
   echo "::: Detected macOS. Checking for Homebrew Zsh..."
@@ -66,29 +65,37 @@ fi
 
 # For all files in the present folder except `*.sh`, `README.md`, `settings.json`,
 # and `config`, backup the target file located at `~/.$name` and symlink `$name` to `~/.$name`
-echo "Linking Files..."
-for fp in $(find "$(pwd)/configs" -not -name ".DS_Store" -mindepth 1 -maxdepth 1); do
+echo "--- Linking Files:"
+for fp in $(find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -not -name ".DS_Store"); do
   name=${fp##*/}
   # Check if name is not a directory and either opts_force is true or the target is not a symlink
-  if [[ ! -d "$name" && ( "$opts_force" == true || ! -h "$HOME/$name" ) ]]; then
-    target="$HOME/$name"
-    backup "$target"
-    symlink "$fp" "$target"
+  if [ ! -d "$name" ]; then
+    if [[ "$opts_force" == true || ! -h "$HOME/$name" ]]; then
+      target="$HOME/$name"
+      backup "$target"
+      symlink "$fp" "$target"
+    else
+      echo "::: $HOME/$name linked, skipping..."
+    fi
   fi
 done
 
-echo "Linking Dirs..."
+echo "--- Linking Dirs:"
 for fp in $(find "$(pwd)/configs" -mindepth 1 -maxdepth 1); do
   name=${fp##*/}
   # Check if name is a directory and either opts_force is true or the target is not a symlink
-  if [[ -d "$name" && ( "$opts_force" == true || ! -h "$HOME/$name" ) ]]; then
-    target="$HOME/$name"
-    backup "$target"
-    symlink "$fp" "$target"
+  if [ -d "$name" ]; then
+    if [[ "$opts_force" == true || ! -h "$HOME/$name" ]]; then
+      target="$HOME/$name"
+      backup "$target"
+      symlink "$fp" "$target"
+    else
+      echo "::: $HOME/$name linked, skipping..."
+    fi
   fi
 done
 
-echo "OMZ:"
+echo "--- OMZ:"
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
 elif [ "$opts_update" == true ]; then
@@ -132,7 +139,7 @@ else
   echo "::: 'zsh-autosuggestions' directory exists, skipping..."
 fi
 
-echo "TPM:"
+echo "--- TPM:"
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   echo "::: Installing tmux plugin manager..."
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
