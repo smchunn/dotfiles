@@ -67,7 +67,7 @@ fi
 # For all files in the present folder except `*.sh`, `README.md`, `settings.json`,
 # and `config`, backup the target file located at `~/.$name` and symlink `$name` to `~/.$name`
 echo "Linking Files..."
-for fp in $(find ~/configs -not -name ".DS_Store" -mindepth 1 -maxdepth 1); do
+for fp in $(find "$(pwd)/configs" -not -name ".DS_Store" -mindepth 1 -maxdepth 1); do
   name=${fp##*/}
   # Check if name is not a directory and either opts_force is true or the target is not a symlink
   if [[ ! -d "$name" && ( "$opts_force" == true || ! -h "$HOME/$name" ) ]]; then
@@ -78,7 +78,7 @@ for fp in $(find ~/configs -not -name ".DS_Store" -mindepth 1 -maxdepth 1); do
 done
 
 echo "Linking Dirs..."
-for fp in $(find ~/configs -mindepth 1 -maxdepth 1); do
+for fp in $(find "$(pwd)/configs" -mindepth 1 -maxdepth 1); do
   name=${fp##*/}
   # Check if name is a directory and either opts_force is true or the target is not a symlink
   if [[ -d "$name" && ( "$opts_force" == true || ! -h "$HOME/$name" ) ]]; then
