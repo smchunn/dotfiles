@@ -63,13 +63,11 @@ elif [[ "$(uname -s)" == "Linux" ]]; then
   fi
 fi
 
-# For all files in the present folder except `*.sh`, `README.md`, `settings.json`,
-# and `config`, backup the target file located at `~/.$name` and symlink `$name` to `~/.$name`
 echo "--- Linking Files:"
-for fp in $(find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -not -name ".DS_Store"); do
+find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -type f -not -name ".DS_Store" -print0 | while IFS= read -r -d '' fp; do
   name=${fp##*/}
-  # Check if name is not a directory and either opts_force is true or the target is not a symlink
-  if [ ! -d "$name" ]; then
+  # Check if fp is not a directory and either opts_force is true or the target is not a symlink
+  if [ -f "$fp" ]; then
     if [[ "$opts_force" == true || ! -h "$HOME/$name" ]]; then
       target="$HOME/$name"
       backup "$target"
@@ -81,10 +79,10 @@ for fp in $(find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -not -name ".DS_Store"
 done
 
 echo "--- Linking Dirs:"
-for fp in $(find "$(pwd)/configs" -mindepth 1 -maxdepth 1); do
+find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -type d -print0 | while IFS= read -r -d '' fp; do
   name=${fp##*/}
-  # Check if name is a directory and either opts_force is true or the target is not a symlink
-  if [ -d "$name" ]; then
+  # Check if fp is a directory and either opts_force is true or the target is not a symlink
+  if [ -d "$fp" ]; then
     if [[ "$opts_force" == true || ! -h "$HOME/$name" ]]; then
       target="$HOME/$name"
       backup "$target"
