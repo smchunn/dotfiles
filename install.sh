@@ -84,9 +84,15 @@ find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -type d -print0 | while IFS= read 
   # Check if fp is a directory and either opts_force is true or the target is not a symlink
   if [ -d "$fp" ]; then
     if [[ "$opts_force" == true || ! -h "$HOME/$name" ]]; then
-      target="$HOME/$name"
-      backup "$target"
-      symlink "$fp" "$target"
+      if [[ "$name" == *.os && -f "${fp}/${name%.*}.$(uname)" ]]; then
+        target="$HOME/$name"
+        backup "$target"
+        symlink "${fp}/${name%.*}.$(uname)" "$target"
+      else
+        target="$HOME/$name"
+        backup "$target"
+        symlink "$fp" "$target"
+      fi
     else
       echo "::: $HOME/$name linked, skipping..."
     fi
