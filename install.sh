@@ -95,9 +95,10 @@ elif [ "$opts_update" == true ]; then
   (omz update)
 fi
 
-echo "::: Installing theme: 'typewritten'..."
 ZSH_THEMES_DIR="$HOME/.oh-my-zsh/custom/themes"
+
 if [[ ! -d "$ZSH_THEMES_DIR/typewritten" ]]; then
+  echo "::: Installing zsh theme: 'typewritten'..."
   git clone https://github.com/reobin/typewritten.git "$ZSH_THEMES_DIR/typewritten"
 elif [ "$opts_update" == true ]; then
   echo "::: 'typewritten' updating..."
@@ -113,7 +114,7 @@ fi
 
 if [ ! -d "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" ]; then
   echo "::: Installing zsh plugin 'zsh-syntax-highlighting'..."
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting"
 elif [ "$opts_update" == true ]; then
   echo "::: Updating zsh plugin 'zsh-syntax-highlighting'..."
   (cd "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" && git pull)
@@ -123,7 +124,7 @@ fi
 
 if [ ! -d "$ZSH_PLUGINS_DIR/zsh-autosuggestions" ]; then
   echo "::: Installing zsh plugin 'zsh-autosuggestions'..."
-  git clone https://github.com/zsh-users/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_PLUGINS_DIR/zsh-autosuggestions"
 elif [ "$opts_update" == true ]; then
   echo "::: Updating zsh plugin 'zsh-autosuggestions'..."
   (cd "$ZSH_PLUGINS_DIR/zsh-autosuggestions" && git pull)
@@ -134,7 +135,7 @@ fi
 echo "TPM:"
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   echo "::: Installing tmux plugin manager..."
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 elif [ "$opts_update" == true ]; then
   echo "::: Updating tmux plugin manager..."
   (cd "$HOME/.tmux/plugins/tpm" && git pull)
