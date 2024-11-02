@@ -10,11 +10,6 @@ fi
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting docker)
 
-# export ZSH_TMUX_AUTOSTART=true
-
 source $ZSH/oh-my-zsh.sh
-
-export VISUAL=nvim
-export EDITOR="$VISUAL"
 
 source .zshrc.os
