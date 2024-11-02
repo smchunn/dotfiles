@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Define a function which renames a `target` file to `target.bak` if the file
 # exists and if it's a 'real' file, i.e., not a symlink
