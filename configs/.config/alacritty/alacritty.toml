@@ -268,7 +268,7 @@ mods = "Command"
 [scrolling]
 history = 0
 
-[shell]
+[terminal.shell]
 args = ["-l", "-c", "/opt/homebrew/bin/tmux attach|| /opt/homebrew/bin/tmux"]
 program = "/opt/homebrew/bin/zsh"
 
@@ -284,3 +284,5 @@ option_as_alt = "Both"
 [window.dimensions]
 columns = 80
 lines = 25
+
+[terminal]
