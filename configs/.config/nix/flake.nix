@@ -69,6 +69,9 @@ inputs = {
           "microsoft-excel"
           "microsoft-word"
         ];
+        masApps = {
+          "1Password for Safari" = 1569813296;
+        };
       };
 
       system.defaults = {
@@ -137,8 +140,24 @@ inputs = {
     {
       darwinConfigurations."mini" = nix-darwin.lib.darwinSystem {
         modules = [
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              enableRosetta = true;
+              user = "smchunn";
+
+             # taps = {
+             #   "homebrew/homebrew-core" = homebrew-core;
+             #   "homebrew/homebrew-cask" = homebrew-cask;
+             #   "homebrew/homebrew-bundle" = homebrew-bundle;
+             # };
+
+            };
+          }
           configuration
         ];
       };
     };
+
 }
