@@ -18,7 +18,7 @@ vim() {
 
 # configs
 cfg(){
-  /opt/homebrew/bin/nvim -c "cd $HOME/Development/dotfiles/"
+ /run/current-system/sw/bin/nvim -c "cd $HOME/Development/dotfiles/"
 }
 
 #obsidian
