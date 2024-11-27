@@ -3,3 +3,4 @@
 configs/.config/karabiner/automatic_backups
 configs/.config/wireshark
 configs/.config/op
+configs/.config/nvim/lazy-lock.json
