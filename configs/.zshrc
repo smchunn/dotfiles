@@ -1,4 +1,5 @@
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh" 
+[ -e "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ] && source "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" 
 
 ZSH_THEME="typewritten"
 
