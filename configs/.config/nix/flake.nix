@@ -68,6 +68,10 @@ inputs = {
           "microsoft-outlook"
           "microsoft-excel"
           "microsoft-word"
+          "jump"
+          "jump-desktop-connect"
+          "dropbox"
+          "betterdisplay"
         ];
         masApps = {
           "1Password for Safari" = 1569813296;
