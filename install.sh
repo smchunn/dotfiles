@@ -33,32 +33,32 @@ while getopts "uf" opt; do
   esac
 done
 
-echo "--- Zsh:"
-# Detect OS and install/update Zsh
+echo "--- Fish:"
+# Detect OS and install/update Fish
 if [[ "$(uname)" == "Darwin" ]]; then
-  echo "::: Detected macOS. Checking for Homebrew Zsh..."
-  if ! brew list zsh &>/dev/null; then
-    echo "::: Zsh not found. Installing Zsh via Homebrew..."
-    brew install zsh
+  echo "::: Detected macOS. Checking for Homebrew Fish..."
+  if ! brew list fish &>/dev/null; then
+    echo "::: Zsh not found. Installing Fish via Homebrew..."
+    brew install fish
   elif [ "$opts_update" == true ]; then
-    echo "::: Updating Zsh via Homebrew..."
-    brew upgrade zsh
+    echo "::: Updating Fish via Homebrew..."
+    brew upgrade fish
   else
-    echo "::: Zsh is already installed. Skipping installation."
+    echo "::: Fish is already installed. Skipping installation."
   fi
 elif [[ "$(uname -s)" == "Linux" ]]; then
   if [ -f /etc/os-release ]; then
     . /etc/os-release
     if [[ "$ID" == "ubuntu" ]]; then
-      echo "::: Detected Ubuntu. Checking for apt Zsh..."
-      if ! dpkg -l | grep -q zsh; then
-        echo "::: Zsh not found. Installing Zsh via apt..."
-        sudo apt update && sudo apt install -y zsh
+      echo "::: Detected Ubuntu. Checking for apt Fish..."
+      if ! dpkg -l | grep -q fish; then
+        echo "::: Fish not found. Installing Fish via apt..."
+        sudo apt update && sudo apt install -y fish
       elif [ "$opts_update" == true ]; then
-        echo "::: Updating Zsh via apt..."
-        sudo apt update && sudo apt upgrade -y zsh
+        echo "::: Updating Fish via apt..."
+        sudo apt update && sudo apt upgrade -y fish
       else
-        echo "::: Zsh is already installed. Skipping installation."
+        echo "::: Fish is already installed. Skipping installation."
       fi
     fi
   fi
@@ -100,57 +100,6 @@ find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -type d -print0 | while IFS= read 
   fi
 done
 
-echo "--- OMZ:"
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
-elif [ "$opts_update" == true ]; then
-  (omz update)
-fi
-
-ZSH_THEMES_DIR="$HOME/.oh-my-zsh/custom/themes"
-
-if [[ ! -d "$ZSH_THEMES_DIR/typewritten" ]]; then
-  echo "::: Installing zsh theme: 'typewritten'..."
-  git clone https://github.com/reobin/typewritten.git "$ZSH_THEMES_DIR/typewritten"
-elif [ "$opts_update" == true ]; then
-  echo "::: 'typewritten' updating..."
-  (cd "$ZSH_THEMES_DIR/typewritten" && git pull)
-else
-  echo "::: 'typewritten' directory exists, skipping..."
-fi
-
-ZSH_PLUGINS_DIR="$HOME/.oh-my-zsh/custom/plugins"
-if [ ! -d "$ZSH_PLUGINS_DIR" ]; then
-  mkdir -p "$ZSH_PLUGINS_DIR"
-fi
-
-if [ ! -d "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" ]; then
-  echo "::: Installing zsh plugin 'zsh-syntax-highlighting'..."
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting"
-elif [ "$opts_update" == true ]; then
-  echo "::: Updating zsh plugin 'zsh-syntax-highlighting'..."
-  (cd "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" && git pull)
-else
-  echo "::: 'zsh-syntax-highlighting' directory exists, skipping..."
-fi
-
-if [ ! -h "$ZSH_CUSTOM/themes/typewritten.zsh-theme" ]; then
-  ln -nsf "$ZSH_THEMES_DIR/typewritten/typewritten.zsh-theme" "$ZSH_THEMES_DIR/typewritten.zsh-theme"
-fi
-
-if [ ! -h "$ZSH_CUSTOM/themes/async" ]; then
-  ln -nsf "$ZSH_THEMES_DIR/typewritten/async.zsh" "/$ZSH_THEMES_DIR/async"
-fi
-
-if [ ! -d "$ZSH_PLUGINS_DIR/zsh-autosuggestions" ]; then
-  echo "::: Installing zsh plugin 'zsh-autosuggestions'..."
-  git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_PLUGINS_DIR/zsh-autosuggestions"
-elif [ "$opts_update" == true ]; then
-  echo "::: Updating zsh plugin 'zsh-autosuggestions'..."
-  (cd "$ZSH_PLUGINS_DIR/zsh-autosuggestions" && git pull)
-else
-  echo "::: 'zsh-autosuggestions' directory exists, skipping..."
-fi
 
 echo "--- TPM:"
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
