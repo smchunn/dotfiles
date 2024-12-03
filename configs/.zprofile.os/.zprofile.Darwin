@@ -1,4 +1,0 @@
-export PATH="/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/bin:/usr/local/sbin:$PATH"
-
-export PYENV_ROOT="$HOME/.pyenv"
-export AIRFLOW_HOME=~/Development/airflow
