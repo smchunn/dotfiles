@@ -1,6 +1,7 @@
 *.DS_Store
-*.d
+*.off
 configs/.config/karabiner/automatic_backups
 configs/.config/wireshark
 configs/.config/op
 configs/.config/nvim/lazy-lock.json
+configs/.config/fish/fish_variables
