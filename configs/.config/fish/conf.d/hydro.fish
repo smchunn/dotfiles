@@ -3,6 +3,13 @@ status is-interactive || exit
 set --global _hydro_git _hydro_git_$fish_pid
 
 function $_hydro_git --on-variable $_hydro_git
+  set --global _hydro_git_branch $$_hydro_git[1][1]
+  set --global _hydro_git_staged $$_hydro_git[1][2]
+  set --global _hydro_git_unstaged $$_hydro_git[1][3]
+  set --global _hydro_git_untracked $$_hydro_git[1][4]
+  set --global _hydro_git_unmerged $$_hydro_git[1][5]
+  set --global _hydro_git_ahead $$_hydro_git[1][6]
+  set --global _hydro_git_behind $$_hydro_git[1][7]
   commandline --function repaint
 end
 
@@ -59,37 +66,31 @@ function _hydro_prompt --on-event fish_prompt
   command kill $_hydro_last_pid 2>/dev/null
 
   set --query _hydro_skip_git_prompt && set $_hydro_git && return
-
+  # check lucid theme async
   fish --private --command "
-    set branch (
-      command git symbolic-ref --short HEAD 2>/dev/null ||
-      command git describe --tags --exact-match HEAD 2>/dev/null ||
-      command git rev-parse --short HEAD 2>/dev/null |
-        string replace --regex -- '(.+)' '@\$1'
-    )
+    set branch (command git symbolic-ref --short HEAD 2>/dev/null)
 
-    test -z \"\$$_hydro_git\" && set --universal $_hydro_git \"\$branch\"
+    test -z \"\$$_hydro_git\" && set --universal $_hydro_git[1] \"\$branch\"
 
     command git diff-index --quiet HEAD 2>/dev/null
-    test \$status -eq 1 ||
-      count (command git ls-files --others --exclude-standard (command git rev-parse --show-toplevel)) >/dev/null && set info \"$hydro_symbol_git_dirty\"
+
+    set -l status_response (command git status --porcelain -b 2> /dev/null)
+
+    set -l staged (printf \"%s\n\" \$status_response | grep '^[AMDRC].' | wc -l | string trim)
+    set -l unstaged (printf \"%s\n\" \$status_response | grep '^.[MD]' | wc -l | string trim)
+    set -l untracked (printf \"%s\n\" \$status_response | grep '^??' | wc -l | string trim)
+    set -l unmerged (printf \"%s\n\" \$status_response | grep '^UU' | wc -l | string trim)
+    set --universal $_hydro_git\[2] \"\$staged\"
+    set --universal $_hydro_git\[3] \"\$unstaged\"
+    set --universal $_hydro_git\[4] \"\$untracked\"
+    set --universal $_hydro_git\[5] \"\$unmerged\"
+
 
     for fetch in $hydro_fetch false
-      command git rev-list --count --left-right @{upstream}...@ 2>/dev/null |
-        read behind ahead
+      command git rev-list --count --left-right @{upstream}...@ 2>/dev/null | read behind ahead
 
-      switch \"\$behind \$ahead\"
-        case \" \" \"0 0\"
-        case \"0 *\"
-          set upstream \" $hydro_symbol_git_ahead\$ahead\"
-        case \"* 0\"
-          set upstream \" $hydro_symbol_git_behind\$behind\"
-        case \*
-          set upstream \" $hydro_symbol_git_ahead\$ahead $hydro_symbol_git_behind\$behind\"
-      end
-      set branch \$branch
-
-      set --universal $_hydro_git \"\$branch\" \"\$info\" \"\$upstream\"
+      set --universal $_hydro_git\[6] \"\$ahead\"
+      set --universal $_hydro_git\[7] \"\$behind\"
 
       test \$fetch = true && command git fetch --no-tags 2>/dev/null
     end
@@ -127,6 +128,9 @@ set --query hydro_color_start || set --global hydro_color_start green
 set --query hydro_symbol_prompt || set --global hydro_symbol_prompt '❯ '
 set --query hydro_symbol_arrow || set --global hydro_symbol_arrow '➜'
 set --query hydro_symbol_git_dirty || set --global hydro_symbol_git_dirty ''
+set --query hydro_symbol_git_staged || set --global hydro_symbol_git_staged '+'
+set --query hydro_symbol_git_unstaged || set --global hydro_symbol_git_unstaged '~'
+set --query hydro_symbol_git_untracked || set --global hydro_symbol_git_untracked '?'
 set --query hydro_symbol_git_ahead || set --global hydro_symbol_git_ahead ''
 set --query hydro_symbol_git_behind || set --global hydro_symbol_git_behind ''
 set --query hydro_multiline || set --global hydro_multiline false
@@ -141,10 +145,13 @@ end
 
 function hydro_right
   set -l rprompt "$_hydro_color_pwd$_hydro_pwd"
-  set --query $_hydro_git && set -l rprompt "$rprompt $hydro_color_normal$hydro_symbol_arrow "
-  set --query $_hydro_git && set -l rprompt "$rprompt$_hydro_color_pwd$$_hydro_git[1][1]"
-  set --query $_hydro_git && set -l rprompt "$rprompt $_hydro_color_git$$_hydro_git[1][2]"
-  set --query $_hydro_git && set -l rprompt "$rprompt$_hydro_color_git$$_hydro_git[1][3]"
+  set --query _hydro_git_branch && string length -- $_hydro_git_branch &>/dev/null && set -l rprompt "$rprompt $hydro_color_normal$hydro_symbol_arrow"
+  set --query _hydro_git_branch && string length -- $_hydro_git_branch &>/dev/null && set -l rprompt "$rprompt $_hydro_color_pwd$_hydro_git_branch "
+  set --query _hydro_git_staged && string length -- $_hydro_git_staged &>/dev/null && test $_hydro_git_staged -gt 0 && set -l rprompt "$rprompt$_hydro_color_start$_hydro_git_staged$hydro_symbol_git_staged"
+  set --query _hydro_git_unstaged && string length -- $_hydro_git_unstaged &>/dev/null && test $_hydro_git_unstaged -gt 0 && set -l rprompt "$rprompt$_hydro_color_duration$_hydro_git_unstaged$hydro_symbol_git_unstaged"
+  set --query _hydro_git_untracked && string length -- $_hydro_git_untracked &>/dev/null && test $_hydro_git_untracked -gt 0 && set -l rprompt "$rprompt$_hydro_color_error$_hydro_git_untracked$hydro_symbol_git_untracked"
+  set --query _hydro_git_ahead && string length -- $_hydro_git_ahead &>/dev/null && test $_hydro_git_ahead -gt 0 && set -l rprompt "$rprompt$_hydro_color_git$_hydro_git_ahead$hydro_symbol_git_ahead"
+  set --query _hydro_git_behind && string length -- $_hydro_git_behind &>/dev/null && test $_hydro_git_behind -gt 0 && set -l rprompt "$rprompt$_hydro_color_git$_hydro_git_behind$hydro_symbol_git_behind"
 
-  echo -e "$rprompt"
+  echo $rprompt" "
 end
