@@ -35,3 +35,24 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = "*",
   command = [[%s/\s\+$//e]],
 })
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function(opts)
+    -- buffer is a [No Name]
+    local no_name = opts.file == "" and vim.bo[opts.buf].buftype == ""
+
+    -- buffer is a directory
+    local directory = vim.fn.isdirectory(opts.file) == 1
+
+    if not no_name and not directory then
+      return
+    end
+
+    -- change to the directory
+    if directory then
+      vim.cmd.cd(opts.file)
+      vim.cmd([[ Dashboard ]])
+    end
+
+  end,
+})
