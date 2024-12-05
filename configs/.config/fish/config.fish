@@ -16,6 +16,10 @@ function ll
   command eza -l $argv
 end
 
+function lg
+  command eza -l --git $argv
+end
+
 function cfg
   command /opt/homebrew/bin/nvim -c "cd $HOME/Development/dotfiles/"
 end
