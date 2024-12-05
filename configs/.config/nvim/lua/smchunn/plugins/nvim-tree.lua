@@ -3,9 +3,6 @@
 local HEIGHT_RATIO = 0.9
 local WIDTH_RATIO = 0.9
 
--- change color for arrows in tree to light blue
-vim.cmd([[ highlight NvimTreeIndentMarker guifg=#3FC5FF ]])
-
 local function nvim_tree_on_attach(bufnr)
   local api = require("nvim-tree.api")
 
@@ -18,6 +15,8 @@ local function nvim_tree_on_attach(bufnr)
       nowait = true,
     }
   end
+
+  vim.cmd([[ highlight NvimTreeIndentMarker guifg=#3FC5FF ]])
 
   -- default mappings
   api.config.mappings.default_on_attach(bufnr)
@@ -59,16 +58,16 @@ return {
   dependencies = "nvim-tree/nvim-web-devicons",
   opts = {
     update_cwd = true,
-    renderer = {
-      icons = {
-        glyphs = {
-          folder = {
-            arrow_closed = "󰧂",
-            arrow_open = "󰦺",
-          },
-        },
-      },
-    },
+    -- renderer = {
+    --   icons = {
+    --     glyphs = {
+    --       folder = {
+    --         arrow_closed = "󰧂",
+    --         arrow_open = "󰦺",
+    --       },
+    --     },
+    --   },
+    -- },
     actions = {
       open_file = {
         window_picker = {
