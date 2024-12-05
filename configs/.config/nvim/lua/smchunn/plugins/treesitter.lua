@@ -35,6 +35,7 @@ return {
         "toml",
         "tmux",
         "python",
+        "fish",
       },
       ignore_install = { "latex" },
       disable = { "latex" },
