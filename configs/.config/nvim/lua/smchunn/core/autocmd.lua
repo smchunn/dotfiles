@@ -51,8 +51,7 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
     -- change to the directory
     if directory then
       vim.cmd.cd(opts.file)
-      vim.cmd([[ Dashboard ]])
+      Snacks.dashboard()
     end
-
   end,
 })
