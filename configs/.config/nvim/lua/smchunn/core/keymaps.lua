@@ -46,6 +46,7 @@ utils.keymap({
   {"n", "<leader>tp", ":tabp<CR>",     opts("Tab: prev")},
   {"n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", opts("new line above")},
   {"n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", opts("new line below")},
+  {"n", "YY", ":%y<CR>",               opts("Copy All")},
 
   ----------------------
   -- Plugin Keybinds
