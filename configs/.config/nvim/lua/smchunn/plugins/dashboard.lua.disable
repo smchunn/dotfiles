@@ -24,11 +24,12 @@ return {
         center = {
           { action = function () require("telescope.builtin").find_files() end, desc = " Find file", icon = " ", key = "f" },
           { action = "ene | startinsert", desc = " New file", icon = " ", key = "n" },
-          { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
-          { action = "Telescope egrepify", desc = " Find text", icon = " ", key = "g" },
+          -- { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
+          { action = "Telescope egrepify", desc = " Find text", icon = " ", key = "p" },
           -- { action = require('telescope.builtin').git_files({cwd="$HOME/Development/dotfiles/", show_untracked=true}), desc = " Config", icon = " ", key = "c" },
           -- { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
           { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
+          { action = "LazyGit", desc = " LazyGit", icon = "󰊢 ", key = "g" },
           { action = "qa", desc = " Quit", icon = " ", key = "q" },
         },
         footer = function()
