@@ -34,11 +34,11 @@ return {
       },
     },
   },
-  {
-    "echasnovski/mini.indentscope",
-    version = false,
-    opts = {},
-  },
+  -- {
+  --   "echasnovski/mini.indentscope",
+  --   version = false,
+  --   opts = {},
+  -- },
   {
     "echasnovski/mini.operators",
     version = false,
