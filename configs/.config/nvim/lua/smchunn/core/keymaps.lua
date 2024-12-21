@@ -119,7 +119,7 @@ utils.keymap({
   ---------------
   -- dashboard --
   ---------------
-  {"n", "<leader>db", ":Dashboard<CR>", opts("Open Dashboard")},
+  {"n", "<leader>db", ":lua Snacks.dashboard.open()<CR>", opts("Open Dashboard")},
 })
 
 -- stylua: ignore end
