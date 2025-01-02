@@ -5,3 +5,5 @@ configs/.config/wireshark
 configs/.config/op
 configs/.config/nvim/lazy-lock.json
 configs/.config/fish/fish_variables
+configs/.config/Alfred.alfredpreferences/workflows
+
