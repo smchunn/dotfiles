@@ -59,7 +59,7 @@
 
 "diff.delta" = { fg = "blue" }
 "diff.minus" = { fg = "red" }
-"diff.plus" = { fg = "mineral" }
+"diff.plus" = { fg = "emerald" }
 
 # Syntax highlighting
 "annotation" = { fg = "white" }
@@ -101,7 +101,7 @@
 "function.method.call" = { fg = "green" }
 
 "keyword" = { fg = "magenta" }
-"keyword.control.import" = { fg = "turquoise" }
+"keyword.control.import" = { fg = "violet" }
 "keyword.conditional" = { fg = "red" }
 "keyword.directive" = { fg = "purple" }
 "keyword.directive.define" = { fg = "purple" }
@@ -139,9 +139,10 @@
 "type.qualifier" = { fg = "violet" }
 
 "variable" = { fg = "white" }
-"variable.builtin" = { fg = "orange", modifiers = ["italic"] }
+"variable.builtin" = { fg = "green" }
+"variable.member" = { fg = "lavender" }
 "variable.other.member" = { fg = "blue" }
-"variable.parameter" = { fg = "blue", modifiers = ["italic"] }
+"variable.parameter" = { fg = "orchid" }
 "attribute" = { fg = "sky" }
 
 "markup.environment" = { fg = "violet" }
@@ -163,7 +164,6 @@
 
 # "variable" = { fg = "white" }
 # "variable.builtin" = { fg = "green" }
-# "variable.member" = { fg = "lavender" }
 # "variable.parameter" = { fg = "orchid" }
 
 [palette]
