@@ -1,0 +1,206 @@
+# moonfly.toml - Helix theme with Moonfly palette names
+
+# UI elements
+"ui.background" = { bg = "black" }
+"ui.bufferline" = { fg = "grey62", bg = "grey18" }
+"ui.bufferline.active" = { fg = "blue", bg = "grey11" }
+"ui.bufferline.background" = { bg = "grey18" }
+
+"ui.cursor" = { fg = "grey0", bg = "grey1" }
+"ui.cursor.insert" = { fg = "grey0", bg = "lime" }
+"ui.cursor.normal" = { fg = "grey0", bg = "sky" }
+"ui.cursor.select" = { fg = "grey0", bg = "coral" }
+"ui.cursor.match" = { fg = "grey62", bg = "grey23" }
+
+"ui.cursor.primary" = { bg = "grey62", fg = "black" }
+
+"ui.cursorline" = { bg = "grey7" }
+"ui.cursorline.primary" = { bg = "grey11" }
+
+"ui.help" = { bg = "grey0", fg = "white" }
+"ui.linenr" = { fg = "grey39" }
+"ui.linenr.selected" = { fg = "blue" }
+"ui.menu" = { fg = "white", bg = "grey1" }
+"ui.menu.selected" = { fg = "grey1", bg = "blue", modifiers = ["bold"] }
+"ui.popup" = { bg = "grey0" }
+"ui.picker.header.column" = { underline.style = "line" }
+"ui.picker.header.column.active" = { modifiers = ["bold"], underline.style = "line" }
+"ui.selection" = { bg = "grey1" }
+"ui.selection.primary" = { bg = "grey23" }
+
+"ui.statusline" = { fg = "white", bg = "grey1" }
+"ui.statusline.inactive" = { fg = "grey39", bg = "grey1" }
+"ui.statusline.insert" = { fg = "grey0", bg = "lime", modifiers = ["bold"] }
+"ui.statusline.normal" = { fg = "grey0", bg = "sky", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "grey0", bg = "orchid", modifiers = ["bold"] }
+
+"ui.text" = { fg = "white" }
+"ui.text.directory" = { fg = "blue" }
+"ui.virtual.inlay-hint" = { fg = "grey50" }
+"ui.virtual.jump-label" = { fg = "violet", modifiers = ["bold"] }
+"ui.virtual.ruler" = { bg = "grey0" }
+"ui.virtual.whitespace" = "grey1"
+"ui.virtual.wrap" = { fg = "grey1" }
+"ui.window" = { bg = "grey0" }
+
+
+"diagnostic.underline" = { color = "orange", style = "curl" }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+"diagnostic.error" = { underline = { color = "red", style = "curl" } }
+"diagnostic.hint" = { underline = { color = "blue", style = "curl" } }
+"diagnostic.info" = { underline = { color = "turquoise", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "yellow", style = "curl" } }
+# "diagnostic.unnecessary" = { modifiers = ["dim"] }  # preserved as is
+
+"error" = { fg = "red" }
+"hint" = { fg = "blue" }
+"info" = { fg = "turquoise" }
+"warning" = { fg = "yellow" }
+
+"diff.delta" = { fg = "blue" }
+"diff.minus" = { fg = "red" }
+"diff.plus" = { fg = "mineral" }
+
+# Syntax highlighting
+"annotation" = { fg = "white" }
+
+"comment" = { fg = "grey50", modifiers = ["italic"] }
+
+"definition" = { underline = { color = "turquoise" } }
+
+"label" = { fg = "red" }
+
+"namespace" = { fg = "turquoise" }
+
+"operator" = { fg = "violet" }
+
+"punctuation" = { fg = "cranberry" }
+"punctuation.bracket" = { fg = "white" }
+
+"special" = { fg = "violet" }
+
+"comment.error" = { fg = "red" }
+"comment.note" = { fg = "grey58" }
+"comment.ok" = { fg = "green" }
+"comment.todo" = { fg = "crimson", modifiers = ["bold"] }
+"comment.warning" = { fg = "yellow" }
+
+"constant" = { fg = "turquoise" }
+"constant.builtin" = { fg = "green" }
+"constant.macro" = { fg = "violet" }
+"constant.character" = { fg = "turquoise" }
+"constant.character.escape" = { fg = "orange" }
+
+"constructor" = { fg = "emerald" }
+
+"function" = { fg = "blue" }
+"function.builtin" = { fg = "green" }
+"function.call" = { fg = "green" }
+"function.macro" = { fg = "turquoise" }
+"function.method" = { fg = "green" }
+"function.method.call" = { fg = "green" }
+
+"keyword" = { fg = "magenta" }
+"keyword.control.import" = { fg = "turquoise" }
+"keyword.conditional" = { fg = "red" }
+"keyword.directive" = { fg = "purple" }
+"keyword.directive.define" = { fg = "purple" }
+"keyword.exception" = { fg = "violet" }
+"keyword.import" = { fg = "turquoise" }
+"keyword.operator" = { fg = "violet" }
+"keyword.repeat" = { fg = "red" }
+"keyword.storage" = { fg = "violet" }
+
+"module" = { fg = "turquoise" }
+"module.builtin" = { fg = "green" }
+
+"none" = {}
+
+"parameter.builtin" = { fg = "orchid" }
+"property" = { fg = "lavender" }
+
+"string" = { fg = "khaki" }
+"string.regexp" = { fg = "orange" }
+"string.symbol" = { fg = "yellow" }
+"string.documentation" = { fg = "turquoise" }
+"string.special" = { fg = "orange" }
+"string.special.path" = { fg = "orchid" }
+"string.special.symbol" = { fg = "purple" }
+"string.special.url" = { fg = "purple" }
+
+"tag" = { fg = "blue" }
+"tag.attribute" = { fg = "turquoise" }
+"tag.builtin" = { fg = "blue" }
+"tag.delimiter" = { fg = "green" }
+
+"type" = { fg = "emerald" }
+"type.enum.variant" = { modifiers = ["italic"] }
+"type.builtin" = { fg = "emerald" }
+"type.qualifier" = { fg = "violet" }
+
+"variable" = { fg = "white" }
+"variable.builtin" = { fg = "orange", modifiers = ["italic"] }
+"variable.other.member" = { fg = "blue" }
+"variable.parameter" = { fg = "blue", modifiers = ["italic"] }
+"attribute" = { fg = "sky" }
+
+"markup.environment" = { fg = "violet" }
+"markup.environment.name" = { fg = "emerald" }
+"markup.heading" = { fg = "violet" }
+"markup.italic" = { fg = "orchid", modifiers = ["italic"] }
+"markup.link" = { fg = "green" }
+"markup.link.label" = { fg = "green" }
+"markup.link.url" = { fg = "purple", modifiers = ["underlined"], underline = { color = "grey50" } }
+"markup.list" = { fg = "cranberry" }
+"markup.list.checked" = { fg = "turquoise" }
+"markup.list.unchecked" = { fg = "blue" }
+"markup.math" = { fg = "sky" }
+"markup.quote" = { fg = "grey58" }
+"markup.raw" = { fg = "khaki" }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.strong" = { fg = "orchid" }
+"markup.underline" = { modifiers = ["underlined"] }
+
+# "variable" = { fg = "white" }
+# "variable.builtin" = { fg = "green" }
+# "variable.member" = { fg = "lavender" }
+# "variable.parameter" = { fg = "orchid" }
+
+[palette]
+black = "#080808"
+white = "#c6c6c6"
+grey7 = "#121212"
+grey11 = "#1c1c1c"
+grey15 = "#262626"
+grey18 = "#2e2e2e"
+grey0 = "#323437"
+grey1 = "#373c4d"
+grey23 = "#3a3a3a"
+grey27 = "#444444"
+grey30 = "#4e4e4e"
+grey39 = "#626262"
+grey50 = "#808080"
+grey58 = "#949494"
+grey62 = "#9e9e9e"
+grey70 = "#b2b2b2"
+grey89 = "#e4e4e4"
+khaki = "#c6c684"
+yellow = "#e3c78a"
+orange = "#de935f"
+coral = "#f09479"
+orchid = "#e196a2"
+lime = "#85dc85"
+green = "#8cc85f"
+emerald = "#36c692"
+turquoise = "#79dac8"
+blue = "#80a0ff"
+sky = "#74b2ff"
+lavender = "#adadf3"
+purple = "#ae81ff"
+violet = "#cf87e8"
+cranberry = "#e65e72"
+crimson = "#ff5189"
+red = "#ff5454"
+mineral = "#314940"
+bay = "#4d5d8d"
+slate = "#748999"
