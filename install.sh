@@ -99,15 +99,3 @@ find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -type d -print0 | while IFS= read 
     fi
   fi
 done
-
-
-echo "--- TPM:"
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-  echo "::: Installing tmux plugin manager..."
-  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
-elif [ "$opts_update" == true ]; then
-  echo "::: Updating tmux plugin manager..."
-  (cd "$HOME/.tmux/plugins/tpm" && git pull)
-else
-  echo "::: 'TPM' directory exists, skipping..."
-fi
