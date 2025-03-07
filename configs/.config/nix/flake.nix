@@ -17,7 +17,6 @@ inputs = {
     let
       hostPlatform = "aarch64-darwin";
       configuration = { pkgs, ... }: {
-      services.nix-daemon.enable = true;
 
       nixpkgs.hostPlatform = hostPlatform;
 
@@ -25,9 +24,13 @@ inputs = {
 
       system.configurationRevision = self.rev or self.dirtyRev or null;
 
+      programs.fish.enable = true;
+      environment.shells = [ pkgs.fish ];
+
       users.users.smchunn = {
         name = "smchunn";
         home = "/Users/smchunn";
+        shell = pkgs.fish;
       };
 
       # List packages installed in system profile. To search by name, run:
@@ -44,9 +47,11 @@ inputs = {
         ripgrep
         nodejs
         rustup
-      ];
-      fonts.packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "Meslo" ]; })
+        eza
+        fish
+        pyenv
+        helix
+        rust-analyzer
       ];
       homebrew = {
         enable = true;
@@ -63,7 +68,7 @@ inputs = {
           "1password"
           "1password-cli"
           "obsidian"
-          "amethyst"
+          "nikitabobko/tap/aerospace"
           "steermouse"
           "microsoft-outlook"
           "microsoft-excel"
@@ -72,6 +77,7 @@ inputs = {
           "jump-desktop-connect"
           "dropbox"
           "betterdisplay"
+          "wezterm"
         ];
         masApps = {
           "1Password for Safari" = 1569813296;

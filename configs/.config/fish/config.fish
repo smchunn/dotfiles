@@ -21,7 +21,7 @@ function lg
 end
 
 function cfg
-  command /opt/homebrew/bin/nvim -c "cd $HOME/Development/dotfiles/"
+  command nvim -c "cd $HOME/dev/dotfiles/"
 end
 
 function dev
@@ -29,15 +29,13 @@ function dev
 end
 
 function on
-  /opt/homebrew/bin/nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianNew $argv[1]"
+  command nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianNew $argv[1]"
 end
 
 function oo
-  /opt/homebrew/bin/nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
+  command nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
 end
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
 pyenv init - | source
-
 
 

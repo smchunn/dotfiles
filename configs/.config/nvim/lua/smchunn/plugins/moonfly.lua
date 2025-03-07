@@ -1,5 +1,6 @@
 return {
 	"bluz71/vim-moonfly-colors",
+        cond = vim.env.TERM_PROGRAM ~= "Apple_Terminal",
 	name = "moonfly",
 	lazy = false,
 	priority = 1000,
