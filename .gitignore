@@ -4,6 +4,5 @@ configs/.config/karabiner/automatic_backups
 configs/.config/wireshark
 configs/.config/op
 configs/.config/nvim/lazy-lock.json
-configs/.config/nix/flake.lock
 configs/.config/fish/fish_variables
-configs/.config/nix/flake.lock
+configs/.config/Alfred.alfredpreferences/workflows
