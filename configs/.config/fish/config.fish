@@ -36,8 +36,10 @@ function oo
   /opt/homebrew/bin/nvim -c "cd $VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
 end
 
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 pyenv init - | source
 
+eval (luarocks path --lua-version 5.1)
 
 
