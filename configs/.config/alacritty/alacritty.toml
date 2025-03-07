@@ -269,8 +269,9 @@ mods = "Command"
 history = 0
 
 [terminal.shell]
-args = ["-l", "-c", "/opt/homebrew/bin/tmux attach || /opt/homebrew/bin/tmux"]
-program = "/opt/homebrew/bin/fish"
+program = "/run/current-system/sw/bin/fish"
+# args = ["-l"]
+args = ["-l", "-c", "/run/current-system/sw/bin/tmux attach || /run/current-system/sw/bin/tmux"]
 
 [window]
 decorations = "full"
