@@ -1,7 +1,16 @@
 # darwin.nix
-{config, pkgs, IosevkaTerm, ...}: {
-  nixpkgs.hostPlatform = "aarch64-darwin";
-  # nixpkgs.hostPlatform = hostPlatform;
+{
+  config,
+  pkgs,
+  self,
+  iosevkaTerm,
+  user,
+  host,
+  platform,
+  ...
+}: {
+  # nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.hostPlatform = platform;
 
   nix.settings.experimental-features = "nix-command flakes";
 
@@ -12,8 +21,8 @@
   environment.shells = [pkgs.fish];
 
   users.users.smchunn = {
-    name = "smchunn";
-    home = "/Users/smchunn";
+    name = user;
+    home = "/Users/${user}";
     shell = pkgs.fish;
   };
 
@@ -27,6 +36,7 @@
     fd
     fzf
     git
+    gh
     lazygit
     ripgrep
     nodejs
@@ -139,5 +149,4 @@
     };
     # universalaccess.reduceTransparency = true;
   };
-
-};
+}

@@ -2,11 +2,13 @@
 {
   config,
   pkgs,
+  user,
+  host,
   ...
 }: {
   # Define your user
-  home.username = "smchunn";
-  home.homeDirectory = "/Users/smchunn";
+  home.username = user;
+  home.homeDirectory = "/Users/${user}";
 
   programs.home-manager.enable = true;
   home.stateVersion = "24.05";

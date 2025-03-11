@@ -18,29 +18,32 @@
     nix-homebrew,
     home-manager,
   }: let
-    hostPlatform = "aarch64-darwin";
-    iosevkaTerm = nixpkgs.legacyPackages.${hostPlatform}.iosevka.override {
+    user = "smchunn";
+    host = "mini";
+    platform = "aarch64-darwin";
+    iosevkaTerm = nixpkgs.legacyPackages.${platform}.iosevka.override {
       set = "Term";
     };
   in {
-    darwinConfigurations."mini" = nix-darwin.lib.darwinSystem {
-      system = hostPlatform; # Pass system explicitly
-      specialArgs = {inherit self iosevkaTerm;}; # Pass self and iosevkaTerm to modules
+    darwinConfigurations.${host} = nix-darwin.lib.darwinSystem {
+      system = platform;
+      specialArgs = {inherit self iosevkaTerm user host platform;};
       modules = [
         nix-homebrew.darwinModules.nix-homebrew
         {
           nix-homebrew = {
             enable = true;
             enableRosetta = true;
-            user = "smchunn";
+            user = user;
           };
         }
         ./darwin.nix
         home-manager.darwinModules.home-manager
         {
+          home-manager.extraSpecialArgs = {inherit user host;};
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.smchunn = import ./home.nix;
+          home-manager.users.${user} = import ./home.nix;
         }
       ];
     };

@@ -37,3 +37,11 @@ auto-format = true
 name = "dockerfile"
 file-types = ["Dockerfile", "Dockerfile.lambda"]
 auto-format = true
+
+[[language]]
+name = "nix"
+scope = "source.nix"
+file-types = ["nix"]
+roots = ["flake.nix", "flake.lock"]
+auto-format = true # Optional: auto-format on save
+formatter = { command = "alejandra", args = ["-"] }
