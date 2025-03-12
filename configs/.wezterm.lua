@@ -14,9 +14,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 
 	local pane = tab.active_pane
 	local index = tab.tab_index
-	local title = (index + 1) .. " " .. pane.foreground_process_name
-
-	title = " " .. wezterm.truncate_left(title, max_width - 2) .. " "
+	local title = " " .. (index + 1) .. " " .. wezterm.truncate_left(pane.title, max_width - 4) .. " "
 
 	return {
 		{ Text = title },
@@ -49,13 +47,6 @@ config.keys = {
 	{ key = "+", mods = "SHIFT|CMD", action = wezterm.action.IncreaseFontSize },
 	{ key = "H", mods = "CMD", action = wezterm.action.Hide },
 	{ key = "Q", mods = "CMD", action = wezterm.action.QuitApplication },
-	{
-		key = "N",
-		mods = "CMD",
-		action = wezterm.action.SpawnCommandInNewWindow({
-			args = { "/opt/homebrew/bin/zsh", "-e", "zsh", "-l" },
-		}),
-	},
 	{
 		key = "[",
 		mods = "LEADER",
