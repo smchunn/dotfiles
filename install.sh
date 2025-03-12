@@ -33,36 +33,6 @@ while getopts "uf" opt; do
   esac
 done
 
-echo "--- Fish:"
-# Detect OS and install/update Fish
-if [[ "$(uname)" == "Darwin" ]]; then
-  echo "::: Detected macOS. Checking for Homebrew Fish..."
-  if ! brew list fish &>/dev/null; then
-    echo "::: Zsh not found. Installing Fish via Homebrew..."
-    brew install fish
-  elif [ "$opts_update" == true ]; then
-    echo "::: Updating Fish via Homebrew..."
-    brew upgrade fish
-  else
-    echo "::: Fish is already installed. Skipping installation."
-  fi
-elif [[ "$(uname -s)" == "Linux" ]]; then
-  if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    if [[ "$ID" == "ubuntu" ]]; then
-      echo "::: Detected Ubuntu. Checking for apt Fish..."
-      if ! dpkg -l | grep -q fish; then
-        echo "::: Fish not found. Installing Fish via apt..."
-        sudo apt update && sudo apt install -y fish
-      elif [ "$opts_update" == true ]; then
-        echo "::: Updating Fish via apt..."
-        sudo apt update && sudo apt upgrade -y fish
-      else
-        echo "::: Fish is already installed. Skipping installation."
-      fi
-    fi
-  fi
-fi
 
 echo "--- Linking Files:"
 find "$(pwd)/configs" -mindepth 1 -maxdepth 1 -type f -not -name ".DS_Store" -print0 | while IFS= read -r -d '' fp; do
