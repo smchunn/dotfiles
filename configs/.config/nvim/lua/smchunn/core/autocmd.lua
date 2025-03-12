@@ -36,6 +36,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   command = [[%s/\s\+$//e]],
 })
 
+-- autocmd to open dashboard when open to dir
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function(opts)
     -- buffer is a [No Name]
