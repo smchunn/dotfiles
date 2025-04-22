@@ -8,7 +8,7 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-	function basename(s)
+	local function basename(s)
 		return string.gsub(s, "(.*[/\\])(.*)", "%2")
 	end
 
@@ -29,7 +29,8 @@ config.unix_domains = {
 
 -- General settings
 config.default_gui_startup_args = { "connect", "unix" }
-config.term = "xterm-256color"
+-- config.term = "xterm-256color"
+config.term = "wezterm"
 config.scrollback_lines = 10000
 config.switch_to_last_active_tab_when_closing_tab = true
 
@@ -83,6 +84,7 @@ config.mouse_bindings = {
 		action = act.SelectTextAtMouseCursor("SemanticZone"),
 	},
 }
+-- config.force_reverse_video_cursor = false
 ------------------------------------------------------------------------------
 -- UI
 ------------------------------------------------------------------------------
@@ -97,9 +99,17 @@ config.show_new_tab_button_in_tab_bar = false
 config.show_tab_index_in_tab_bar = true
 config.bold_brightens_ansi_colors = true
 config.tab_max_width = 32
+-- config.use_cap_height_to_scale_fallback_fonts = true
 -- Font
 -- config.allow_square_glyphs_to_overflow_width = "Never"
 config.font = wezterm.font_with_fallback({
+	{
+		family = "IosevkaSC Nerd Font",
+		style = "Normal",
+		harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
+		weight = "Light",
+		stretch = "Expanded",
+	},
 	{
 		family = "Iosevka Term",
 		style = "Normal",
@@ -113,10 +123,10 @@ config.font = wezterm.font_with_fallback({
 	},
 	{
 		family = "Symbols Nerd Font Mono",
-		-- scale = 0.7,
+		scale = 1.0,
 	},
 })
-config.font_size = 14.0
+config.font_size = 16.0
 
 -- Colors
 config.colors = {

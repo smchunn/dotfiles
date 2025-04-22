@@ -31,7 +31,7 @@ utils.keymap({
   {"n", "<leader>sv", "<C-w>v",        opts("Win: v-split")},
   {"n", "<leader>sd", "<C-w>s",        opts("Win: h-split")},
   {"n", "<leader>se", "<C-w>=",        opts("Win: equate")},
-  {"n", "<leader>sx", ":close<CR>",    opts("Win: close")},
+  {"n", "<leader>xx", ":close<CR>",    opts("Win: close")},
   {"n", "<leader>sk", "<C-w>k",        opts("Win: move up")},
   {"n", "<leader>sj", "<C-w>j",        opts("Win: move down")},
   {"n", "<leader>sl", "<C-w>l",        opts("Win: move right")},
@@ -41,8 +41,10 @@ utils.keymap({
   {"n", "<leader>sL", "<C-w>>",        opts("Win: expand width")},
   {"n", "<leader>sH", "<C-w><",        opts("Win: shrink width")},
   {"n", "<leader>to", ":tabnew<CR>",   opts("Tab: new")},
-  {"n", "<leader>tx", ":tabclose<CR>", opts("Tab: close")},
+  {"n", "<leader>xt", ":tabclose<CR>", opts("Tab: close")},
   {"n", "<leader>tn", ":tabn<CR>",     opts("Tab: next")},
+  {"n", "<leader>tp", ":tabp<CR>",     opts("Tab: prev")},
+  {"n", "<leader>p",  "<CTRL>6",       opts("Alternate File")},
   {"n", "<leader>tp", ":tabp<CR>",     opts("Tab: prev")},
   {"n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", opts("new line above")},
   {"n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", opts("new line below")},
@@ -56,25 +58,25 @@ utils.keymap({
   -- NvimTree --
   --------------
   {"n", "<leader>e", ":NvimTreeToggle<CR>", opts("Toggle NvimTree")},
-  {"n", "<C-s>", function() require("nvim-tree.api").tree.find_file({ open = true, focus = true }) end, opts("Open NvimTree to current buffer")},
+  {"n", "<leader>i", function() require("nvim-tree.api").tree.find_file({ open = true, focus = true }) end, opts("Open NvimTree to current buffer")},
 
   ---------------
   -- Telescope --
   ---------------
   {"n", "<leader>tf",      ":Telescope egrepify<CR>",                                                opts("Telescope Egrepify")},
   {"n", "<leader>f",       function () require("telescope.builtin").find_files() end,                opts("Telescope File Picker")},
-  {"n", "<leader>rr",      function () require("telescope.builtin").resume() end,                    opts("Telescope Resume")},
-  {"n", "<leader>rp",      function () require("telescope.builtin").pickers() end,                   opts("Telescope Recent Pickers")},
-  {"n", "<leader>cf",      function () require("telescope.builtin").filetypes() end,                 opts("Telescope Filetypes")},
+  {"n", "<leader>tt",      function () require("telescope.builtin").resume() end,                    opts("Telescope Resume")},
+  {"n", "<leader>tr",      function () require("telescope.builtin").pickers() end,                   opts("Telescope Recent Pickers")},
+  {"n", "<leader>tc",      function () require("telescope.builtin").filetypes() end,                 opts("Telescope Filetypes")},
   {"n", "<leader>bb",      function () require("telescope.builtin").buffers() end,                   opts("Telescope Buffers")},
-  {"n", "<localleader>h",  function () require("telescope.builtin").help_tags() end,                 opts("Telescope help")},
+  {"n", "<leader>th",      function () require("telescope.builtin").help_tags() end,                 opts("Telescope help")},
   {"n", "<leader>tg",      function () require("telescope.builtin").current_buffer_fuzzy_find() end, opts("Telescope Search Buffer")},
   {"n", "<localleader>gb", function () require("telescope.builtin").git_branches() end,              opts("Teleccope Git Branches")},
   {"n", "<localleader>gc", function () require("telescope.builtin").git_commits() end,               opts("Telescope Git Commits")},
   {"n", "<localleader>gf", function () require("telescope.builtin").git_bcommits() end,              opts("Telescope Git Commits(buffer)")},
   {"n", "<localleader>gs", function () require("telescope.builtin").git_stash() end,                 opts("Telescope Git Stash")},
   {"n", "<localleader>gt", function () require("telescope.builtin").git_status() end,                opts("Telescope Git Status")},
-  {"n", "z=",              ":Telescope spell_suggest<CR>",                                           opts("Telescope Spell Suggest")},
+  {"n", "<leader>tz",      ":Telescope spell_suggest<CR>",                                           opts("Telescope Spell Suggest")},
 
   ---------
   -- lsp --
@@ -90,9 +92,9 @@ utils.keymap({
     {{ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action,                   opts("See available code actions")},
     {"n",          "<leader>rn", vim.lsp.buf.rename,                        opts("Smart rename")},
     {"n",          "<leader>D",  "<cmd>Telescope diagnostics bufnr=0<CR>",  opts("Show buffer diagnostics")},
-    {"n",          "<leader>d",  vim.diagnostic.open_float,                 opts("Show line diagnostics")},
-    {"n",          "[d",         vim.diagnostic.goto_prev,                  opts("Go to previous diagnostic")},
-    {"n",          "]d",         vim.diagnostic.goto_next,                  opts("Go to next diagnostic")},
+    -- {"n",          "<leader>d",  vim.diagnostic.open_float,                 opts("Show line diagnostics")},
+    -- {"n",          "[d",         vim.diagnostic.goto_prev,                  opts("Go to previous diagnostic")},
+    -- {"n",          "]d",         vim.diagnostic.goto_next,                  opts("Go to next diagnostic")},
     {"n",          "K",          vim.lsp.buf.hover,                         opts("Show documentation for what is under cursor")},
     {"n",          "<leader>rs", ":LspRestart<CR>",                         opts("Restart LSP")},
   },
@@ -109,12 +111,12 @@ utils.keymap({
   --------------
   -- Obsidian --
   --------------
-  {"n", "<leader>on", ":ObsidianNew<CR>",             opts("Obsidian New File")},
-  {"n", "<leader>ot", ":ObsidianNewFromTemplate<CR>", opts("Obsidian New File From Template")},
-  {"n", "<leader>oT", ":ObsidianTemplate<CR>",        opts("Obsidian New Template")},
-  {"n", "<leader>ow", ":ObsidianWorkspace<CR>",       opts("Obsidian Switch Workspace")},
-  {"n", "<leader>oo", ":ObsidianQuickSwitch<CR>",     opts("Obsidian Quick Switch")},
-  {"n", "<leader>os", ":ObsidianSearch<CR>",          opts("Obsidian Search")},
+  -- {"n", "<leader>on", ":ObsidianNew<CR>",             opts("Obsidian New File")},
+  -- {"n", "<leader>ot", ":ObsidianNewFromTemplate<CR>", opts("Obsidian New File From Template")},
+  -- {"n", "<leader>oT", ":ObsidianTemplate<CR>",        opts("Obsidian New Template")},
+  -- {"n", "<leader>ow", ":ObsidianWorkspace<CR>",       opts("Obsidian Switch Workspace")},
+  -- {"n", "<leader>oo", ":ObsidianQuickSwitch<CR>",     opts("Obsidian Quick Switch")},
+  -- {"n", "<leader>os", ":ObsidianSearch<CR>",          opts("Obsidian Search")},
 
   ---------------
   -- dashboard --
