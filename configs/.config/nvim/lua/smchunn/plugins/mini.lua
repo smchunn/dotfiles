@@ -65,22 +65,11 @@ return {
       },
     },
   },
-  -- {
-  --   "echasnovski/mini.indentscope",
-  --   version = false,
-  --   opts = {},
-  -- },
   {
     "echasnovski/mini.operators",
+    enabled = false,
     version = false,
     lazy = true,
-    keys = {
-      { "gx" },
-      { "gm" },
-      { "gr" },
-      { "gs" },
-    },
-    opts = {},
   },
   {
     "echasnovski/mini.pairs",
@@ -102,27 +91,20 @@ return {
   {
     "echasnovski/mini.surround",
     version = false,
-    keys = {
-      { "ys" },
-      { "ds" },
-      { "cs" },
-    },
+    lazy = true,
     opts = {
-      highlight_duration = 500,
       mappings = {
-        add = "gsa",
-        delete = "gsd",
-        find = "gsf",
-        find_left = "gsF",
-        highlight = "gsh",
-        replace = "gsr",
-        update_n_lines = "gsn",
+        add = "<leader>ma", -- Add surrounding in Normal and Visual modes
+        delete = "<leader>md", -- Delete surrounding
+        find = "<leader>mf", -- Find surrounding (to the right)
+        find_left = "<leader>mF", -- Find surrounding (to the left)
+        highlight = "<leader>mh", -- Highlight surrounding
+        replace = "<leader>mr", -- Replace surrounding
+        update_n_lines = "<leader>mn", -- Update `n_lines`
 
         suffix_last = "l", -- Suffix to search with "prev" method
         suffix_next = "n", -- Suffix to search with "next" method
       },
-
-      n_lines = 20,
 
       respect_selection_type = false,
 
