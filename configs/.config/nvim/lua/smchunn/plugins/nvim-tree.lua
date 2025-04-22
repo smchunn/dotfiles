@@ -1,10 +1,10 @@
--- local HEIGHT_RATIO = 0.8
--- local WIDTH_RATIO = 0.5
 local HEIGHT_RATIO = 0.9
 local WIDTH_RATIO = 0.9
+local OPACITY = 0
 
 local function nvim_tree_on_attach(bufnr)
   local api = require("nvim-tree.api")
+  local win = vim.api.nvim_get_current_win()
 
   local function opts(desc)
     return {
@@ -15,10 +15,27 @@ local function nvim_tree_on_attach(bufnr)
       nowait = true,
     }
   end
+  local nvim_tree_detatch =
+    vim.api.nvim_create_augroup("nvim_tree_detatch", { clear = true })
+  vim.api.nvim_set_option_value("winblend", OPACITY, { win = win })
+  vim.api.nvim_set_hl(
+    0,
+    "Cursor",
+    { fg = "#080808", bg = "#9e9e9e", blend = 100, force = true }
+  )
+  vim.api.nvim_set_hl(0, "NvimTreeIndentMarker", { fg = "#3fc5ff" })
+  vim.api.nvim_create_autocmd("BufLeave", {
+    buffer = bufnr,
+    group = nvim_tree_detatch,
+    callback = function()
+      vim.api.nvim_set_hl(
+        0,
+        "Cursor",
+        { fg = "#080808", bg = "#9e9e9e", blend = 0, force = true }
+      )
+    end,
+  })
 
-  vim.cmd([[ highlight NvimTreeIndentMarker guifg=#3FC5FF ]])
-
-  -- default mappings
   api.config.mappings.default_on_attach(bufnr)
 
   -- custom mappings
@@ -58,16 +75,6 @@ return {
   dependencies = "nvim-tree/nvim-web-devicons",
   opts = {
     update_cwd = true,
-    -- renderer = {
-    --   icons = {
-    --     glyphs = {
-    --       folder = {
-    --         arrow_closed = "󰧂",
-    --         arrow_open = "󰦺",
-    --       },
-    --     },
-    --   },
-    -- },
     actions = {
       open_file = {
         window_picker = {

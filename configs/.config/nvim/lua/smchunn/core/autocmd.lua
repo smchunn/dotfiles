@@ -8,17 +8,15 @@ local function set_dashboard_options()
     and vim.bo[current_buf].filetype ~= "TelescopeResults"
     and vim.bo[current_buf].filetype ~= "NvimTree"
   then
-    -- print("scroll on")
-    vim.opt_local.scrolloff = 5
-    vim.opt_local.mouse = "a"
-    vim.opt_local.fillchars = { eob = "~" }
-    vim.b.miniindentscope_disable = false
+    -- print("unset")
+    vim.opt.mouse = vim.d_mouse
+    vim.opt.fillchars = vim.d_fillchars
+  -- vim.api.nvim_set_hl(0, "Cursor", { blend = 0, force = true })
   else
-    -- print("scroll off")
-    vim.opt_local.scrolloff = 999
-    vim.opt_local.mouse = ""
-    vim.opt_local.fillchars = { eob = " " }
-    vim.b.miniindentscope_disable = true
+    -- print("set")
+    vim.opt.mouse = ""
+    vim.opt.fillchars = { eob = " " }
+    -- vim.api.nvim_set_hl(0, "Cursor", { blend = 100, force = true})
   end
 end
 
@@ -39,6 +37,10 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 -- autocmd to open dashboard when open to dir
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function(opts)
+    -- vim.d_guicursor = vim.o.guicursor
+    vim.d_mouse = vim.opt.mouse
+    vim.d_fillchars = { eob = "~" }
+
     -- buffer is a [No Name]
     local no_name = opts.file == "" and vim.bo[opts.buf].buftype == ""
 

@@ -24,6 +24,10 @@ function cfg
   command /opt/homebrew/bin/nvim -c "cd $HOME/Development/dotfiles/"
 end
 
+function nvimtest
+  command /opt/homebrew/bin/nvim -u ~/.config/nvim/test/init.lua
+end
+
 function dev
   command cd "$HOME/Development/"
 end

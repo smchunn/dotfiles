@@ -1,5 +1,4 @@
 local opt = vim.opt -- for conciseness
-
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -23,16 +22,20 @@ opt.wrap = false -- disable line wrapping
 opt.ignorecase = true -- ignore case when searching
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 
+-- motion
+opt.iskeyword:append("-") -- consider string-string as whole word
+
 -- cursor line
 opt.cursorline = true -- highlight the current cursor line
 
 -- appearance
 opt.conceallevel = 1
--- turn on termguicolors for nightfly colorscheme to work
--- (have to use iterm2 or any other true color terminal)
 opt.termguicolors = true
-opt.background = "dark" -- colorschemes that can be light or dark will be made dark
-opt.signcolumn = "yes" -- show sign column so that text doesn't shift
+opt.background = "dark"
+opt.signcolumn = "yes"
+opt.colorcolumn = "80"
+opt.guicursor =
+  "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor"
 
 -- backspace
 opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
@@ -44,9 +47,8 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
-opt.iskeyword:append("-") -- consider string-string as whole word
-
-opt.colorcolumn = "80"
+-- term
+vim.opt.termsync = false
 
 -- change diagnostic signs in gutter
 local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
