@@ -23,6 +23,7 @@ local function nvim_tree_on_attach(bufnr)
     "Cursor",
     { fg = "#080808", bg = "#9e9e9e", blend = 100, force = true }
   )
+  vim.api.nvim_set_hl(0, "NvimTreePadding", { fg = "#1c1c1c", force = true })
   vim.api.nvim_set_hl(0, "NvimTreeIndentMarker", { fg = "#3fc5ff" })
   vim.api.nvim_create_autocmd("BufLeave", {
     buffer = bufnr,
@@ -33,6 +34,7 @@ local function nvim_tree_on_attach(bufnr)
         "Cursor",
         { fg = "#080808", bg = "#9e9e9e", blend = 0, force = true }
       )
+      vim.api.nvim_set_option_value("winblend", 0, { win = win })
     end,
   })
 
@@ -71,7 +73,7 @@ local function nvim_tree_on_attach(bufnr)
 end
 
 return {
-  "nvim-tree/nvim-tree.lua",
+  "smchunn/nvim-tree.lua",
   dependencies = "nvim-tree/nvim-web-devicons",
   opts = {
     update_cwd = true,
