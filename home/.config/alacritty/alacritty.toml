@@ -1,0 +1,289 @@
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "#949494"
+blue = "#74b2ff"
+cyan = "#85dc85"
+green = "#36c692"
+magenta = "#ae81ff"
+red = "#ff5189"
+white = "#e4e4e4"
+yellow = "#c2c292"
+
+[colors.cursor]
+cursor = "#9e9e9e"
+text = "#080808"
+
+[colors.normal]
+black = "#323437"
+blue = "#80a0ff"
+cyan = "#79dac8"
+green = "#8cc85f"
+magenta = "#cf87e8"
+red = "#ff5454"
+white = "#c6c6c6"
+yellow = "#e3c78a"
+
+[colors.primary]
+background = "#080808"
+bright_foreground = "#eeeeee"
+foreground = "#bdbdbd"
+
+[colors.selection]
+background = "#b2ceee"
+text = "#080808"
+
+[cursor]
+blink_interval = 600
+
+[cursor.style]
+blinking = "Always"
+shape = "Underline"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 16.0
+
+[font.bold]
+style = "Bold"
+
+[font.bold_italic]
+style = "Bold Italic"
+
+[font.italic]
+style = "Italic"
+
+[font.normal]
+family = "MesloLGS Nerd Font Mono"
+style = "Regular"
+
+# disable shift-ctrl-space
+# [[keyboard.bindings]]
+# action = "ReceiveChar"
+# key = "Space"
+# mods = "Shift|Control"
+
+# work around for C-6 not working in nvim
+# [[keyboard.bindings]]
+# chars = "\u001E"
+# key = "Key6"
+# mods = "Control"
+
+# default font size
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "="
+mods = "Command"
+
+# increase font size
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "+"
+mods = "Shift|Command"
+
+# Hide alacritty
+[[keyboard.bindings]]
+action = "Hide"
+key = "H"
+mods = "Command"
+
+# Exit alacritty
+[[keyboard.bindings]]
+action = "Quit"
+key = "Q"
+mods = "Command"
+
+# Launch new alacritty window
+[[keyboard.bindings]]
+key = "N"
+mods = "Command"
+command = {program = "/opt/homebrew/bin/zsh", args = ["-e", "zsh", "-l"]}
+
+# send C-space, tmux leader
+[[keyboard.bindings]]
+chars = "\u0000"
+key = "Space"
+mods = "Command"
+
+# send leader-%, tmux verticle pane
+[[keyboard.bindings]]
+chars = "\u0000\u0025"
+key = "D"
+mods = "Command"
+
+# send leader-", tmux horizontal pane
+[[keyboard.bindings]]
+chars = "\u0000\u0022"
+key = "D"
+mods = "Command|Shift"
+
+# send leader-x, tmux close active pane/window
+[[keyboard.bindings]]
+chars = "\u0000\u0078"
+key = "W"
+mods = "Command"
+
+# send leader-h, unsure
+# [[keyboard.bindings]]
+# chars = "\u0000\u0068"
+# key = "Y"
+# mods = "Command"
+
+# send C-6, nvim last buf
+[[keyboard.bindings]]
+# chars = "\u0000\u006a"
+chars = "\u001E"
+key = "J"
+mods = "Command"
+
+# send leader-k,
+# [[keyboard.bindings]]
+# chars = "\u0000\u006b"
+# key = "K"
+# mods = "Command"
+
+# send leader-l,
+[[keyboard.bindings]]
+chars = "\u0000\u006c"
+key = "L"
+mods = "Command"
+
+# send leader-c, tmux new window
+[[keyboard.bindings]]
+chars = "\u0000\u0063"
+key = "T"
+mods = "Command"
+
+# send leader-1, tmux window 1
+[[keyboard.bindings]]
+chars = "\u0000\u0031"
+key = "Key1"
+mods = "Command"
+
+# send leader-2, tmux window 2
+[[keyboard.bindings]]
+chars = "\u0000\u0032"
+key = "Key2"
+mods = "Command"
+
+# send leader-3, tmux window 3
+[[keyboard.bindings]]
+chars = "\u0000\u0033"
+key = "Key3"
+mods = "Command"
+
+# send leader-4, tmux window 4
+[[keyboard.bindings]]
+chars = "\u0000\u0034"
+key = "Key4"
+mods = "Command"
+
+# send leader-5, tmux window 5
+[[keyboard.bindings]]
+chars = "\u0000\u0035"
+key = "Key5"
+mods = "Command"
+
+# send leader-6, tmux window 6
+[[keyboard.bindings]]
+chars = "\u0000\u0036"
+key = "Key6"
+mods = "Command"
+
+# send leader-7, tmux window 7
+[[keyboard.bindings]]
+chars = "\u0000\u0037"
+key = "Key7"
+mods = "Command"
+
+# send leader-8, tmux window 8
+[[keyboard.bindings]]
+chars = "\u0000\u0038"
+key = "Key8"
+mods = "Command"
+
+# send leader-9, tmux window 9
+[[keyboard.bindings]]
+chars = "\u0000\u0039"
+key = "Key9"
+mods = "Command"
+
+# send Ctl-Up, tmux switch pane
+[[keyboard.bindings]]
+chars = "\u001b[1;5A"
+key = "Up"
+mods = "Command"
+
+# send Ctl-Down, tmux switch pane
+[[keyboard.bindings]]
+chars = "\u001b[1;5B"
+key = "Down"
+mods = "Command"
+
+# send Ctl-Left, tmux switch pane
+[[keyboard.bindings]]
+chars = "\u001b[1;5D"
+key = "Left"
+mods = "Command"
+
+# send Ctl-Right, tmux switch pane
+[[keyboard.bindings]]
+chars = "\u001b[1;5C"
+key = "Right"
+mods = "Command"
+
+# send Alt-Ctl-Up, tmux resize pane
+[[keyboard.bindings]]
+chars = "\u001b[1;7A"
+key = "Up"
+mods = "Command|Alt"
+
+# send Alt-Ctl-Down, tmux resize pane
+[[keyboard.bindings]]
+chars = "\u001b[1;7B"
+key = "Down"
+mods = "Command|Alt"
+
+# send Alt-Ctl-Left, tmux resize pane
+[[keyboard.bindings]]
+chars = "\u001b[1;7D"
+key = "Left"
+mods = "Command|Alt"
+
+# send Alt-Ctl-Right, tmux resize pane
+[[keyboard.bindings]]
+chars = "\u001b\u005b\u0031\u003b\u0037\u0043"
+key = "Right"
+mods = "Command|Alt"
+
+# send leader-k, tmux clear history
+[[keyboard.bindings]]
+chars = "\u0000k"
+key = "K"
+mods = "Command"
+
+[scrolling]
+history = 0
+
+[terminal.shell]
+program = "/run/current-system/sw/bin/fish"
+# args = ["-l"]
+args = ["-l", "-c", "/run/current-system/sw/bin/tmux attach || /run/current-system/sw/bin/tmux"]
+
+[window]
+decorations = "full"
+dynamic_padding = true
+dynamic_title = true
+opacity = 0.92
+startup_mode = "Windowed"
+title = "SMC"
+option_as_alt = "Both"
+
+[window.dimensions]
+columns = 80
+lines = 25
+
+[terminal]

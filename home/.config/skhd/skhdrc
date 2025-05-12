@@ -1,0 +1,66 @@
+# Changing focus
+lctrl + lshift - h : yabai -m window --focus west
+lctrl + lshift - j : yabai -m window --focus south
+lctrl + lshift - k : yabai -m window --focus north
+lctrl + lshift - l : yabai -m window --focus east
+
+# forward
+meh - s : yabai -m query --spaces --space \
+  | jq -re ".index" \
+  | xargs -I{} yabai -m query --windows --space {} \
+  | jq -r '[.[] | select(.["is-minimized"]? != true)] | sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.["has-focus"]? == true))) - 1).id' \
+  | xargs -I{} yabai -m window --focus {}
+
+meh - r : yabai -m query --spaces --space \
+  | jq -re ".index" \
+  | xargs -I{} yabai -m query --windows --space {} \
+  | jq -r '[.[] | select(.["is-minimized"]? != true)] | sort_by(.display, .frame.y, .frame.x, .id) | nth(index(map(select(.["has-focus"]? == true))) - 1).id' \
+  | xargs -I{} yabai -m window --focus {}
+
+# Moving windows
+meh - h : yabai -m window --warp west
+meh - j : yabai -m window --warp south
+meh - k : yabai -m window --warp north
+meh - l : yabai -m window --warp east
+
+# Resize windows
+lctrl + alt - h : yabai -m window --resize left:-50:0; \
+    yabai -m window --resize right:-50:0
+lctrl + alt - j : yabai -m window --resize bottom:0:50; \
+    yabai -m window --resize top:0:50
+lctrl + alt - k : yabai -m window --resize top:0:-50; \
+    yabai -m window --resize bottom:0:-50
+lctrl + alt - l : yabai -m window --resize right:50:0; \
+    yabai -m window --resize left:50:0
+
+# Equalize size of windows
+# meh - e : yabai -m space --balance
+
+# Rotate windows
+# meh - r : yabai -m space --rotate 270
+
+# Rotate on X and Y Axis
+hyper - x : yabai -m space --mirror x-axis
+hyper - y : yabai -m space --mirror y-axis
+
+meh - m : yabai -m space --layout "$(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')"
+
+# Float / Unfloat window
+meh - v : \
+    yabai -m window --toggle float; \
+    yabai -m window --toggle border
+
+# Make window native fullscreen
+meh - d : yabai -m window --toggle zoom-fullscreen
+
+# Quit and restart yabai
+hyper - s : yabai --restart-service
+hyper - r : skhd --restart-service
+
+# Move current window to space 1
+meh - 1 : yabai -m window --space 1
+meh - 2 : yabai -m window --space 2
+meh - 3 : yabai -m window --space 3
+meh - 4 : yabai -m window --space 4
+meh - 5 : yabai -m window --space 5
+meh - 6 : yabai -m window --space 6
