@@ -33,6 +33,7 @@ config.default_gui_startup_args = { "connect", "unix" }
 config.term = "wezterm"
 config.scrollback_lines = 10000
 config.switch_to_last_active_tab_when_closing_tab = true
+config.enable_kitty_graphics = true
 
 -- Shell
 config.default_prog = { "/run/current-system/sw/bin/fish", "-l" }

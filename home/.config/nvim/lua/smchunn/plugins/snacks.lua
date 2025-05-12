@@ -1,5 +1,5 @@
 return {
-  "snacks.nvim",
+  "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
   opts = {
@@ -8,7 +8,7 @@ return {
     input = { enabled = true },
     notifier = { enabled = true },
     scope = { enabled = true },
-    scroll = { enabled = true },
+    -- scroll = { enabled = true },
     words = { enabled = true },
     dashboard = {
       preset = {
@@ -61,6 +61,13 @@ return {
     -- { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
     -- { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
     -- { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
+    -- { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+    -- { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+    -- { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+    -- { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+    -- { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
+    -- { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+    -- { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {
@@ -82,7 +89,7 @@ return {
         Snacks.toggle.treesitter():map("<leader>uT")
         Snacks.toggle.inlay_hints():map("<leader>uh")
         Snacks.toggle.indent():map("<leader>ug")
-        Snacks.toggle.scroll():map("<leader>uj")
+        -- Snacks.toggle.scroll():map("<leader>uj")
         Snacks.toggle.dim():map("<leader>uD")
       end,
     })
