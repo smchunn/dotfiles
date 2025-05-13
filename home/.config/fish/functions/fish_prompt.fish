@@ -1,3 +1,3 @@
 function fish_prompt
-  surge_left
+  surge_prompt
 end

@@ -29,7 +29,6 @@ config.unix_domains = {
 
 -- General settings
 config.default_gui_startup_args = { "connect", "unix" }
--- config.term = "xterm-256color"
 config.term = "wezterm"
 config.scrollback_lines = 10000
 config.switch_to_last_active_tab_when_closing_tab = true

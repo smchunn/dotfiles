@@ -3,6 +3,9 @@ status is-interactive || return
 set fish_greeting
 
 set fish_color_command magenta
+set --global surge_symbol_git_branch ' '
+set --global surge_symbol_git_ahead ' '
+set --global surge_symbol_git_behind ' '
 function ls
   command eza $argv
 end
