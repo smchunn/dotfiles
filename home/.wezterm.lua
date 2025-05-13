@@ -35,7 +35,35 @@ config.switch_to_last_active_tab_when_closing_tab = true
 config.enable_kitty_graphics = true
 
 -- Shell
-config.default_prog = { "/run/current-system/sw/bin/fish", "-l" }
+local shells = {
+	"/run/current-system/sw/bin/fish",
+	"/opt/homebrew/bin/fish",
+	"/usr/local/bin/fish",
+}
+local function file_exists(path)
+	local f = io.open(path, "r")
+	if f then
+		f:close()
+		return true
+	else
+		return false
+	end
+end
+
+local shell_path = nil
+for _, shell in ipairs(shells) do
+	if file_exists(shell) then
+		shell_path = shell
+		break
+	end
+end
+
+if shell_path == nil then
+	shell_path = os.getenv("SHELL") or "/bin/sh"
+end
+
+config.default_prog = { shell_path, "-l" }
+config.default_prog = { shell_path, "-l" }
 
 -- Keybindings
 config.leader = {
