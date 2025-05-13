@@ -4,19 +4,17 @@ set --global _surge_git _surge_git_$fish_pid
 set --query surge_color_pwd || set --global surge_color_pwd magenta
 set --query surge_color_git || set --global surge_color_git blue
 set --query surge_color_git_branch || set --global surge_color_git_branch $surge_color_pwd
-set --query surge_color_git_branch_icon || set --global surge_color_git_branch_icon brgreen
-set --query surge_color_git_dirty || set --global surge_color_git_dirty brred
-set --query surge_color_git_ahead || set --global surge_color_git_behind brblue
+set --query surge_color_git_branch_clean || set --global surge_color_git_branch_clean brgreen
+set --query surge_color_git_branch_dirty || set --global surge_color_git_branch_dirty brred
+set --query surge_color_git_ahead || set --global surge_color_git_ahead brblue
 set --query surge_color_git_behind || set --global surge_color_git_behind green
 set --query surge_color_error || set --global surge_color_error red
 set --query surge_color_prompt || set --global surge_color_prompt blue
 set --query surge_color_duration || set --global surge_color_duration yellow
-set --query surge_color_start || set --global surge_color_start green
 set --query surge_symbol_prompt || set --global surge_symbol_prompt '❯ '
-set --query surge_symbol_git_branch || set --global surge_symbol_git_branch ' '
-set --query surge_symbol_git_dirty || set --global surge_symbol_git_dirty ' '
-set --query surge_symbol_git_ahead || set --global surge_symbol_git_ahead ' '
-set --query surge_symbol_git_behind || set --global surge_symbol_git_behind ' '
+set --query surge_symbol_git_branch || set --global surge_symbol_git_branch '•'
+set --query surge_symbol_git_ahead || set --global surge_symbol_git_ahead '↑'
+set --query surge_symbol_git_behind || set --global surge_symbol_git_behind '↓'
 set --query surge_multiline || set --global surge_multiline false
 set --query surge_cmd_duration_threshold || set --global surge_cmd_duration_threshold 1000
 
@@ -24,12 +22,11 @@ function $_surge_git --on-variable $_surge_git
   commandline --function repaint
 end
 
-function _surge_pwd --on-variable PWD --on-variable surge_ignored_git_paths --on-variable fish_prompt_pwd_dir_length
+function __surge_pwd --on-variable PWD --on-variable surge_ignored_git_paths
   set --local git_root (command git --no-optional-locks rev-parse --show-toplevel 2>/dev/null)
   set --local git_base (string replace --all --regex -- "^.*/" "" "$git_root")
   set --local path_sep /
 
-  test "$fish_prompt_pwd_dir_length" = 0 && set path_sep
 
   if set --query git_root[1] && ! contains -- $git_root $surge_ignored_git_paths
     set --erase _surge_skip_git_prompt
@@ -44,16 +41,18 @@ function _surge_pwd --on-variable PWD --on-variable surge_ignored_git_paths --on
   end
 end
 
-function _surge_postexec --on-event fish_postexec
+function __surge_postexec --on-event fish_postexec
   set --local last_status $pipestatus
-  set --global _surge_status "$_surge_newline$_surge_color_prompt$surge_symbol_prompt"
+  set --local prompt_status
 
   for code in $last_status
     if test $code -ne 0
-      set --global _surge_status "$_surge_color_error"(echo $last_status)" $_surge_newline$_surge_color_prompt$_surge_color_error$surge_symbol_prompt"
+      set prompt_status "$_surge_color_error"(echo $last_status)"$_surge_newline"
       break
     end
   end
+
+  set --global _surge_status "$_surge_color_prompt$prompt_status"
 
   test "$CMD_DURATION" -lt $surge_cmd_duration_threshold && set _surge_cmd_duration && return
 
@@ -66,33 +65,39 @@ function _surge_postexec --on-event fish_postexec
   test $hours -gt 0 && set --local --append out $hours"h"
   test $mins -gt 0 && set --local --append out $mins"m"
   test $secs -gt 0 && set --local --append out $secs"s"
+  set --local out "$_surge_color_duration$out "
 
-  set --global _surge_cmd_duration "$out "
+  set --global _surge_cmd_duration $out
+  set --query prompt_status || set --global _surge_status "$_surge_status$_surge_newline"
+
 end
 
-function _surge_prompt --on-event fish_prompt
-  set --query _surge_status || set --global _surge_status "$_surge_newline$_surge_color_prompt$surge_symbol_prompt"
-  set --query _surge_pwd || _surge_pwd
+function __surge_prompt --on-event fish_prompt
+  set --query _surge_prompt || set --global _surge_prompt "$_surge_color_prompt$surge_symbol_prompt"
+  set --query _surge_pwd || __surge_pwd
 
   command kill $_surge_last_pid 2>/dev/null
 
   set --query _surge_skip_git_prompt && set $_surge_git && return
   fish --private --command "
-    set branch \"$_surge_color_git_branch_icon$surge_symbol_git_branch $_surge_color_git_branch\$(command git symbolic-ref --short HEAD 2>/dev/null)\"
+    set branch \"$_surge_color_git_branch\$(command git symbolic-ref --short HEAD 2>/dev/null)\"
+    set branch_icon \"$_surge_color_git_branch_clean$surge_symbol_git_branch \"
 
-    test -z \"\$$_surge_git\" && set --universal $_surge_git \"\$branch \"
+    test -z \"\$$_surge_git\" && set --universal $_surge_git \"\$branch_icon\$branch \"
 
     command git diff-index --quiet HEAD 2>/dev/null
-        test \$status -eq 1 ||
-            count (command git ls-files --others --exclude-standard (command git rev-parse --show-toplevel)) >/dev/null && set info \"$_surge_color_git_dirty$surge_symbol_git_dirty\"
+      test \$status -eq 1 ||
+        count (command git ls-files --others --exclude-standard (command git rev-parse --show-toplevel)) >/dev/null &&
+        set branch_icon \"$_surge_color_git_branch_dirty$surge_symbol_git_branch \"
 
     for fetch in $surge_fetch false
       command git rev-list --count --left-right @{upstream}...@ 2>/dev/null | read behind ahead
 
       test \$ahead -gt 0 && set upstream \"$_surge_color_git_ahead\$ahead$surge_symbol_git_ahead\"
       test \$behind -gt 0 && set upstream \"\$upstream$_surge_color_git_behind\$behind$surge_symbol_git_behind\"
+      set --query upstream && set upstream \" \$upstream\"
 
-      set --universal $_surge_git \"\$branch\$info\$upstream\"
+      set --universal $_surge_git \"\$branch_icon\$branch\$upstream\"
       test \$fetch = true && command git fetch --no-tags 2>/dev/null
     end
   " &
@@ -100,13 +105,13 @@ function _surge_prompt --on-event fish_prompt
   set --global _surge_last_pid $last_pid
 end
 
-function _surge_fish_exit --on-event fish_exit
+function __surge_fish_exit --on-event fish_exit
   set --erase $_surge_git
 end
 
 set --global surge_color_normal (set_color normal)
 
-for color in surge_color_{pwd,git,git_branch,git_branch_icon,git_dirty,git_ahead,git_behind,error,prompt,duration,start}
+for color in surge_color_{pwd,git,git_branch,git_branch_clean,git_branch_dirty,git_ahead,git_behind,error,prompt,duration}
   function $color --on-variable $color --inherit-variable color
     set --query $color && set --global _$color (set_color $$color)
   end && $color
@@ -121,18 +126,16 @@ function surge_multiline --on-variable surge_multiline
 end && surge_multiline
 
 
-function surge_left
-  set -l lprompt
-  set -l lprompt "$lprompt$_surge_color_duration$_surge_cmd_duration"
-  set -l lprompt "$lprompt$_surge_status"
+function surge_prompt
+  set -l lprompt "$_surge_cmd_duration$_surge_status$_surge_prompt$surge_color_normal"
 
-  echo -e "$lprompt$surge_color_normal"
+  echo -e $lprompt
 end
 
-function surge_right
+function surge_git
   set -l rprompt "$_surge_color_pwd$_surge_pwd"
   set --query _surge_git && string length -- $_surge_git &>/dev/null && set -l rprompt "$rprompt $$_surge_git"
-  set -l rprompt "$rprompt$surge_color_normal"
+  set -l rprompt "$rprompt$surge_color_normal "
 
-  echo $rprompt" "
+  echo -e $rprompt
 end
