@@ -6,32 +6,38 @@ set fish_color_command magenta
 set --global surge_symbol_git_branch ' '
 set --global surge_symbol_git_ahead ' '
 set --global surge_symbol_git_behind ' '
-function ls
-  command eza $argv
-end
 
-function la
-  command eza -la $argv
-end
+test -d "$HOME/Development" && set -g _dev "$HOME/Development"
+test -d "$HOME/development" && set -g _dev "$HOME/development"
+test -d "$HOME/dev" && set -g _dev "$HOME/dev"
+if type -q eza
+  function ls
+    command eza $argv
+  end
 
-function ll
-  command eza -l $argv
-end
+  function la
+    command eza -la $argv
+  end
 
-function lg
-  command eza -l --git $argv
+  function ll
+    command eza -l $argv
+  end
+
+  function lg
+    command eza -l --git $argv
+  end
 end
 
 function cfg
-  command nvim -c "cd $HOME/dev/nix"
+  command nvim -c "cd $_dev/dotfiles"
 end
 
 function tvim
-  command nvim -c "cd $HOME/dev/nix" -u "$HOME/.config/nvim/test/init.lua"
+  command nvim -c "cd $_dev/dotfiles" -u "$HOME/.config/nvim/test/init.lua"
 end
 
 function dev
-  command cd "$HOME/Development/"
+  command cd "$_dev"
 end
 
 function on
