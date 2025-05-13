@@ -47,7 +47,7 @@ function __surge_postexec --on-event fish_postexec
 
   for code in $last_status
     if test $code -ne 0
-      set prompt_status "$_surge_color_error"(echo $last_status)"$_surge_newline"
+      set prompt_status "$_surge_color_error"(echo $last_status) "$_surge_newline"
       break
     end
   end
