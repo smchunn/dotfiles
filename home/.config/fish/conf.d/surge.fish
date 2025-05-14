@@ -91,10 +91,12 @@ function __surge_prompt --on-event fish_prompt
         set branch_icon \"$_surge_color_git_branch_dirty$surge_symbol_git_branch \"
 
     for fetch in $surge_fetch false
+      command git rev-parse --abbrev-ref --symbolic-full-name @{u} &>/dev/null
+      set -l hasremote \$status
       command git rev-list --count --left-right @{upstream}...@ 2>/dev/null | read behind ahead
 
-      test \$ahead -gt 0 && set upstream \"$_surge_color_git_ahead\$ahead$surge_symbol_git_ahead\"
-      test \$behind -gt 0 && set upstream \"\$upstream$_surge_color_git_behind\$behind$surge_symbol_git_behind\"
+      test \$hasremote -eq 0 && test \$ahead -gt 0 && set upstream \"$_surge_color_git_ahead\$ahead$surge_symbol_git_ahead\"
+      test \$hasremote -eq 0 && test \$behind -gt 0 && set upstream \"\$upstream$_surge_color_git_behind\$behind$surge_symbol_git_behind\"
       set --query upstream && set upstream \" \$upstream\"
 
       set --universal $_surge_git \"\$branch_icon\$branch\$upstream\"
