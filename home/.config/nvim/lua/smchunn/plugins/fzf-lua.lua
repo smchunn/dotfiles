@@ -24,9 +24,8 @@ return {
       -- ["--prompt"] = " λ ",
     },
     files = {
-      prompt = " Files> ",
       cwd_prompt = false,
-      rg_opts = [[--color=never --no-heading --with-filename --line-number --column --smart-case --hidden --trim --glob !**/.git/*]],
+      -- fd_opts = [[--color=never --hidden --type f --type l ]],
       git_icons = true,
       file_icons = true,
       color_icons = true,
@@ -37,21 +36,18 @@ return {
       },
     },
     grep = {
-      prompt = " Grep> ",
       rg_opts = [[--color=never --no-heading --with-filename --line-number --column --smart-case --hidden --trim --glob !**/.git/*]],
       actions = {
         ["ctrl-q"] = "sel_qf",
       },
     },
     buffers = {
-      prompt = " Buffers> ",
       actions = {
         ["ctrl-d"] = "bufdel",
       },
     },
     git = {
       stash = {
-        prompt = " Stash> ",
         actions = {},
       },
     },
