@@ -3,9 +3,10 @@ status is-interactive || return
 set fish_greeting
 
 set fish_color_command magenta
-set --global surge_symbol_git_branch ' '
-set --global surge_symbol_git_ahead ' '
-set --global surge_symbol_git_behind ' '
+set --global surge_symbol_git_branch ''
+set --global surge_symbol_git_ahead ''
+set --global surge_symbol_git_behind ''
+set --global surge_fetch true
 
 test -d "$HOME/Development" && set -g _dev "$HOME/Development"
 test -d "$HOME/development" && set -g _dev "$HOME/development"

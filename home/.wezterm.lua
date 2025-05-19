@@ -63,7 +63,6 @@ if shell_path == nil then
 end
 
 config.default_prog = { shell_path, "-l" }
-config.default_prog = { shell_path, "-l" }
 
 -- Keybindings
 config.leader = {
@@ -130,13 +129,13 @@ config.tab_max_width = 32
 -- Font
 -- config.allow_square_glyphs_to_overflow_width = "Never"
 config.font = wezterm.font_with_fallback({
-	-- {
-	-- 	family = "IosevkaSC Nerd Font",
-	-- 	style = "Normal",
-	-- 	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
-	-- 	weight = "Light",
-	-- 	stretch = "Expanded",
-	-- },
+	{
+		family = "IosevkaSC Nerd Font",
+		style = "Normal",
+		harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
+		weight = "Light",
+		stretch = "Expanded",
+	},
 	{
 		family = "Iosevka Term",
 		style = "Normal",
@@ -150,7 +149,7 @@ config.font = wezterm.font_with_fallback({
 	},
 	{
 		family = "Symbols Nerd Font Mono",
-		scale = 1.0,
+		scale = 0.7,
 	},
 })
 config.font_size = 16.0
