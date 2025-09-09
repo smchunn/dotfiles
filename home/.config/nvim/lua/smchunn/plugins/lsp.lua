@@ -75,9 +75,9 @@ return {
     opts = {
       ui = {
         icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
+          -- package_installed = "✓",
+          -- package_pending = "➜",
+          -- package_uninstalled = "✗",
         },
         border = "single",
       },
@@ -99,6 +99,7 @@ return {
         "prettier", -- general formatter
         "stylua", -- lua formatter
         "black", -- python formatter
+        -- "alejandra",
       },
       automatic_installation = true,
     },
@@ -134,6 +135,10 @@ return {
           }),
           formatting.black.with({
             filetypes = { "python" },
+          }),
+          formatting.alejandra.with({
+            command = "alejandra",
+            filetypes = { "nix" },
           }),
         },
         on_attach = function(client, bufnr)
