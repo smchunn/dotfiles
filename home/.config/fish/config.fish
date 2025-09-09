@@ -8,6 +8,8 @@ set --global surge_symbol_git_ahead ''
 set --global surge_symbol_git_behind ''
 set --global surge_fetch true
 
+set --global OBSIDIAN_VAULT '/Users/smchunn/Library/Mobile Documents/iCloud~md~obsidian/Documents/SC'
+
 test -d "$HOME/Development" && set -g _dev "$HOME/Development"
 test -d "$HOME/development" && set -g _dev "$HOME/development"
 test -d "$HOME/dev" && set -g _dev "$HOME/dev"
@@ -33,6 +35,10 @@ function cfg
   command nvim -c "cd $_dev/dotfiles"
 end
 
+function dar
+  command nvim -c "cd $_dev/nix"
+end
+
 function tvim
   command nvim -c "cd $_dev/dotfiles" -u "$HOME/.config/nvim/test/init.lua"
 end
@@ -48,9 +54,9 @@ function on
 end
 
 function oo
-  # command nvim -c "cd $OBSIDIAN_VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
+  command nvim -c "cd $OBSIDIAN_VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
   # command nvim -c "cd $OBSIDIAN_VAULT"
-  command hx -w $VAULT $VAULT
+  # command hx -w $VAULT $VAULT
 end
 
 pyenv init - | source
