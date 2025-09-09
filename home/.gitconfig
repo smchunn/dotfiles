@@ -3,7 +3,7 @@
   email = smchunn@icloud.com
 [core]
   editor = nvim
-  excludesfile = ~/.gitignore
+	excludesfile = /Users/smchunn/.config/git/ignore
   autocrlf = input
 [color]
   branch = auto

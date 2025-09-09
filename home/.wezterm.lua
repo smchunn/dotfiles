@@ -137,10 +137,11 @@ config.font = wezterm.font_with_fallback({
 		stretch = "Expanded",
 	},
 	{
-		family = "Iosevka Term",
+		family = "iosevka-sc",
 		style = "Normal",
 		harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 		weight = "Light",
+		stretch = "Expanded",
 	},
 	{
 		family = "JetBrains Mono",
