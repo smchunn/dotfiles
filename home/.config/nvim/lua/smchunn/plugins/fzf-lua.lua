@@ -26,30 +26,13 @@ return {
     files = {
       cwd_prompt = false,
       -- fd_opts = [[--color=never --hidden --type f --type l ]],
-      git_icons = true,
-      file_icons = true,
-      color_icons = true,
-      actions = {
-        ["ctrl-h"] = "split",
-        ["ctrl-o"] = "edit",
-        ["ctrl-q"] = "sel_qf",
-      },
     },
     grep = {
       rg_opts = [[--color=never --no-heading --with-filename --line-number --column --smart-case --hidden --trim --glob !**/.git/*]],
-      actions = {
-        ["ctrl-q"] = "sel_qf",
-      },
     },
-    buffers = {
-      actions = {
-        ["ctrl-d"] = "bufdel",
-      },
-    },
+    buffers = {},
     git = {
-      stash = {
-        actions = {},
-      },
+      stash = {},
     },
     previewers = {
       bat = {
@@ -63,6 +46,16 @@ return {
     keymap = {
       builtin = {
         ["<C-p>"] = "toggle-preview",
+      },
+    },
+    actions = {
+      files = {
+        ["ctrl-h"] = "split",
+        ["ctrl-o"] = "edit",
+        ["ctrl-q"] = "sel_qf",
+      },
+      buffers = {
+        ["ctrl-q"] = "sel_qf",
       },
     },
   },

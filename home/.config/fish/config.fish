@@ -40,7 +40,7 @@ function dar
 end
 
 function tvim
-  command nvim -c "cd $_dev/dotfiles" -u "$HOME/.config/nvim/test/init.lua"
+  command nvim -c "cd $_dev/dotfiles/home/.config/nvim" -u "$HOME/.config/nvim/test/init.lua"
 end
 
 function dev
