@@ -48,34 +48,28 @@ return {
         ["<C-p>"] = "toggle-preview",
       },
     },
-    actions = {
-      files = {
-        ["ctrl-h"] = "split",
-        ["ctrl-o"] = "edit",
-        ["ctrl-q"] = "sel_qf",
-      },
-      buffers = {
-        ["ctrl-q"] = "sel_qf",
-      },
-    },
   },
   config = function(_, opts)
     require("fzf-lua").setup(opts)
+    local fzflua = require("fzf-lua")
     -- Key mappings
     vim.keymap.set("n", "<leader>ff", function()
-      require("fzf-lua").files()
+      fzflua.files()
     end, { desc = "Find Files (fzf-lua)" })
     vim.keymap.set("n", "<leader>fg", function()
-      require("fzf-lua").live_grep()
+      fzflua.live_grep()
     end, { desc = "Live Grep (fzf-lua)" })
     vim.keymap.set("n", "<leader>fb", function()
-      require("fzf-lua").buffers()
+      fzflua.buffers()
     end, { desc = "Buffers (fzf-lua)" })
     vim.keymap.set("n", "<leader>fs", function()
-      require("fzf-lua").git_stash()
+      fzflua.git_stash()
     end, { desc = "Git Stash (fzf-lua)" })
     vim.keymap.set("n", "<leader>fh", function()
-      require("fzf-lua").helptags()
+      fzflua.helptags()
     end, { desc = "Help (fzf-lua)" })
+    vim.keymap.set("n", "<leader>fa", function()
+      fzflua.builtin()
+    end, { desc = "Pickers (fzf-lua)" })
   end,
 }
