@@ -47,16 +47,8 @@ function dev
   command cd "$_dev"
 end
 
-function on
-  # command nvim -c "cd $OBSIDIAN_VAULT" -c "autocmd User DashboardLoaded ObsidianNew $argv[1]"
-  new_note $argv
-  command hx -w $VAULT $VAULT
-end
-
-function oo
-  command nvim -c "cd $OBSIDIAN_VAULT" -c "autocmd User DashboardLoaded ObsidianQuickSwitch"
-  # command nvim -c "cd $OBSIDIAN_VAULT"
-  # command hx -w $VAULT $VAULT
+function note
+  command nvim -c "cd $OBSIDIAN_VAULT" -c "Obsidian quick_switch"
 end
 
 pyenv init - | source

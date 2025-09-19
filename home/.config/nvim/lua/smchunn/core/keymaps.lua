@@ -108,12 +108,12 @@ utils.keymap({
   --------------
   -- Obsidian --
   --------------
-  -- {"n", "<leader>on", ":ObsidianNew<CR>",             opts("Obsidian New File")},
+  {"n", "<leader>on", ":Obsidian new<CR>",             opts("Obsidian New File")},
   -- {"n", "<leader>ot", ":ObsidianNewFromTemplate<CR>", opts("Obsidian New File From Template")},
   -- {"n", "<leader>oT", ":ObsidianTemplate<CR>",        opts("Obsidian New Template")},
   -- {"n", "<leader>ow", ":ObsidianWorkspace<CR>",       opts("Obsidian Switch Workspace")},
-  -- {"n", "<leader>oo", ":ObsidianQuickSwitch<CR>",     opts("Obsidian Quick Switch")},
-  -- {"n", "<leader>os", ":ObsidianSearch<CR>",          opts("Obsidian Search")},
+  {"n", "<leader>oo", ":Obsidian quick_switch<CR>",     opts("Obsidian Quick Switch")},
+  {"n", "<leader>os", ":Obsidian search<CR>",          opts("Obsidian Search")},
 
   ---------------
   -- dashboard --
