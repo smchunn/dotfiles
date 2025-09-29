@@ -24,9 +24,9 @@ return {
     },
     opts = {
       ensure_installed = {
-        "lua_ls",
+        -- "lua_ls",
         "pyright",
-        "julials",
+        -- "julials",
         "rust_analyzer",
         "jinja_lsp",
       },
@@ -97,7 +97,7 @@ return {
     opts = {
       ensure_installed = {
         "prettier", -- general formatter
-        "stylua", -- lua formatter
+        -- "stylua", -- lua formatter
         "black", -- python formatter
         -- "alejandra",
       },
