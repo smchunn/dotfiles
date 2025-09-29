@@ -95,12 +95,21 @@ function __surge_prompt --on-event fish_prompt
       set -l hasremote \$status
       command git rev-list --count --left-right @{upstream}...@ 2>/dev/null | read behind ahead
 
-      test \$hasremote -eq 0 && test \$ahead -gt 0 && set upstream \"$_surge_color_git_ahead\$ahead$surge_symbol_git_ahead\"
+      set -l upstream
+      test \$hasremote -eq 0 && test \$ahead -gt 0 && set upstream \"\$upstream$_surge_color_git_ahead\$ahead$surge_symbol_git_ahead\"
       test \$hasremote -eq 0 && test \$behind -gt 0 && set upstream \"\$upstream$_surge_color_git_behind\$behind$surge_symbol_git_behind\"
       set --query upstream && set upstream \" \$upstream\"
 
       set --universal $_surge_git \"\$branch_icon\$branch\$upstream\"
-      test \$fetch = true && command git fetch --no-tags 2>/dev/null
+
+      if test \$fetch = true && test \$hasremote -eq 0
+        # Check if remote URL uses SSH and prevent retries on auth failure
+        set -l remote_url (command git remote get-url (command git rev-parse --abbrev-ref --symbolic-full-name @{u} | string replace '/' ' ' | read -l remote_name rest; echo \$remote_name) 2>/dev/null)
+        if string match -q 'git@*' \$remote_url || string match -q 'ssh://*' \$remote_url
+          # SSH-only auth protection: set GIT_SSH_COMMAND to disable password prompts and limit connection attempts
+          env GIT_SSH_COMMAND='ssh -o BatchMode=yes -o ConnectTimeout=5 -o ConnectionAttempts=1' command git fetch --no-tags 2>/dev/null
+        end
+      end
     end
   " &
 
@@ -140,4 +149,13 @@ function surge_git
   set -l rprompt "$rprompt$surge_color_normal "
 
   echo -e $rprompt
+end
+
+if string match -q "tmux-256color" "$TERM"
+  function fish_prompt
+    surge_prompt
+  end
+  function fish_right_prompt
+    surge_git
+  end
 end
