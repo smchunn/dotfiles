@@ -8,7 +8,7 @@ if not type -q fisher
     fisher install jorgebucaran/fisher
 end
 
-set plugin "github.com/smchunn/surge.fish"
+set plugin "smchunn/surge.fish"
 if not contains -- $plugin (fisher list)
     echo "Installing $plugin..."
     fisher install $plugin
