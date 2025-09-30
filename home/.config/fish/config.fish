@@ -53,9 +53,11 @@ end
 
 pyenv init - | source
 
-set fish_path (string join ":" $PATH)
-if grep -q "export PATH=" ~/.zshrc
-    sed -i '' "s|export PATH=.*|export PATH=\"$fish_path\"|" ~/.zshrc
-else
-    echo "export PATH=\"$fish_path\"" >> ~/.zshrc
-end
+# set fish_path (string join ":" $PATH)
+# if grep -q "export PATH=" ~/.zshrc
+#     sed -i '' "s|export PATH=.*|export PATH=\"$fish_path\"|" ~/.zshrc
+# else
+#     echo "export PATH=\"$fish_path\"" >> ~/.zshrc
+# end
+
+alias claude="/Users/smchunn/.claude/local/claude"
