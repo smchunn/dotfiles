@@ -70,8 +70,8 @@ config.leader = {
 	mods = "CMD",
 	timeout_milliseconds = 2000,
 }
-config.keys = {
-	{ key = "=", mods = "CMD", action = wezterm.action.ResetFontSize },
+config.keys = {{ key = "=", mods = "CMD", action = wezterm.action.ResetFontSize,
+  {key="Enter", mods="SHIFT", action=wezterm.action{SendString="\x1b\r"}},},
 	{ key = "+", mods = "SHIFT|CMD", action = wezterm.action.IncreaseFontSize },
 	{ key = "H", mods = "CMD", action = wezterm.action.Hide },
 	{ key = "Q", mods = "CMD", action = wezterm.action.QuitApplication },
