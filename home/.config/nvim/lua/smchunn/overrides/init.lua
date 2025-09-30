@@ -1,1 +1,1 @@
-require("smchunn.overrides.obsidian-nvim")
+-- require("smchunn.overrides.obsidian-nvim")

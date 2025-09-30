@@ -45,7 +45,7 @@ shape = "Underline"
 TERM = "xterm-256color"
 
 [font]
-size = 16.0
+size = 10.0
 
 [font.bold]
 style = "Bold"
@@ -57,8 +57,8 @@ style = "Bold Italic"
 style = "Italic"
 
 [font.normal]
-family = "MesloLGS Nerd Font Mono"
-style = "Regular"
+family = "IosevkaTerm NFM"
+style = "Light"
 
 # disable shift-ctrl-space
 # [[keyboard.bindings]]
@@ -76,7 +76,7 @@ style = "Regular"
 [[keyboard.bindings]]
 action = "ResetFontSize"
 key = "="
-mods = "Command"
+mods = "Super"
 
 # increase font size
 [[keyboard.bindings]]
@@ -84,29 +84,11 @@ action = "IncreaseFontSize"
 key = "+"
 mods = "Shift|Command"
 
-# Hide alacritty
-[[keyboard.bindings]]
-action = "Hide"
-key = "H"
-mods = "Command"
-
-# Exit alacritty
-[[keyboard.bindings]]
-action = "Quit"
-key = "Q"
-mods = "Command"
-
-# Launch new alacritty window
-[[keyboard.bindings]]
-key = "N"
-mods = "Command"
-command = {program = "/opt/homebrew/bin/zsh", args = ["-e", "zsh", "-l"]}
-
 # send C-space, tmux leader
 [[keyboard.bindings]]
 chars = "\u0000"
 key = "Space"
-mods = "Command"
+mods = "Super"
 
 # send leader-%, tmux verticle pane
 [[keyboard.bindings]]
@@ -154,8 +136,14 @@ mods = "Command"
 # send leader-c, tmux new window
 [[keyboard.bindings]]
 chars = "\u0000\u0063"
+key = "G"
+mods = "Super"
+
+# send leader-c, tmux new window
+[[keyboard.bindings]]
+chars = "\u0000\u0074"
 key = "T"
-mods = "Command"
+mods = "Super"
 
 # send leader-1, tmux window 1
 [[keyboard.bindings]]
@@ -269,18 +257,55 @@ mods = "Command"
 history = 0
 
 [terminal.shell]
-program = "/run/current-system/sw/bin/fish"
-# args = ["-l"]
-args = ["-l", "-c", "/run/current-system/sw/bin/tmux attach || /run/current-system/sw/bin/tmux"]
+program = "fish"
+# args = ["-l", "-c", "tmux attach || tmux"]
+args = [
+  "-c",
+  """
+  # Check if tmux server is running
+  if not tmux list-sessions &>/dev/null
+    exec tmux new-session -s "1"
+  end
+
+  # Get all existing main-* sessions, sorted by number
+  set existing_sessions (tmux list-sessions -F '#{session_name}' 2>/dev/null | grep -E '^[0-9]+$' | sort -n)
+
+  # Find unattached session first
+  for session in $existing_sessions
+    set attached (tmux list-sessions -F '#{session_name}:#{session_attached}' | grep "^$session:" | cut -d: -f2)
+    if test "$attached" = "0"
+      exec tmux attach-session -t "$session"
+    end
+  end
+
+  # All sessions are attached, need to renumber and create new
+  if test (count $existing_sessions) -gt 0
+    # Renumber existing sessions
+    set counter 1
+    for session in $existing_sessions
+      if test "$session" != "$counter"
+        tmux rename-session -t "$session" "$counter"
+      end
+      set counter (math $counter + 1)
+    end
+
+    # Create new session with next number
+    exec tmux new-session -s "$counter"
+  else
+    # No sessions exist, create first one
+    exec tmux new-session -s "1"
+  end
+  """
+]
 
 [window]
-decorations = "full"
-dynamic_padding = true
-dynamic_title = true
-opacity = 0.92
-startup_mode = "Windowed"
-title = "SMC"
-option_as_alt = "Both"
+# decorations = "full"
+# dynamic_padding = true
+# dynamic_title = true
+# opacity = 0.50
+# startup_mode = "Windowed"
+# title = "SMC"
+# option_as_alt = "Both"
 
 [window.dimensions]
 columns = 80

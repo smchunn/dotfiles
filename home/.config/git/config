@@ -1,0 +1,31 @@
+
+[user]
+  name = smchunn
+  email = smchunn@icloud.com
+[core]
+  editor = nvim
+	excludesfile = ~/.config/git/ignore
+  autocrlf = input
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+[init]
+  defaultBranch = master
+[push]
+  default = simple
+[merge]
+  tool = smerge
+[difftool]
+  prompt = false
+[alias]
+  c = commit
+  ca = commit -a
+  cm = commit -m
+  cam = commit -am
+  d = diff
+  dc = diff --cached
+  l = log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit
+[pull]
+	rebase = true

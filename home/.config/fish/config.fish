@@ -2,6 +2,18 @@ status is-interactive || return
 # Commands to run in interactive sessions can go here
 set fish_greeting
 
+if not type -q fisher
+    echo "Installing fisher..."
+    curl -sL https://git.io/fisher | source
+    fisher install jorgebucaran/fisher
+end
+
+set plugin "smchunn/surge.fish"
+if not contains -- $plugin (fisher list)
+    echo "Installing $plugin..."
+    fisher install $plugin
+end
+
 set fish_color_command magenta
 set --global surge_symbol_git_branch ''
 set --global surge_symbol_git_ahead ''
@@ -41,6 +53,10 @@ end
 
 function tvim
   command nvim -c "cd $_dev/dotfiles/home/.config/nvim" -u "$HOME/.config/nvim/test/init.lua"
+end
+
+function svim
+  command sudo -E HOME="$HOME" nvim $argv
 end
 
 function dev
