@@ -1,0 +1,16 @@
+target_dir = "~"
+
+[targets]
+".yabairc" = { tags = ["macos", "macos-work"] }
+".wezterm.lua" = { tags = ["macos", "macos-work"] }
+".zshrc" = { tags = ["macos", "macos-work"] }
+".config/Default.smsetting_app" = { tags = ["macos", "macos-work"] }
+"Alfred.alfredpreferences" = { tags = ["macos", "macos-work"] }
+".config/Alfred.alfredpreferences" = { tags = ["macos", "macos-work"] }
+".config/hypr" = { tags = ["linux"] }
+".config/waybar" = { tags = ["linux"] }
+".config/nvim" = { tags = ["macos", "linux"] }
+".config/alacritty" = { tags = ["macos", "linux", "alacritty"] }
+".config/fish" = { tags = ["macos", "linux", "fish"] }
+".config/git" = { tags = ["macos", "linux", "git"] }
+
