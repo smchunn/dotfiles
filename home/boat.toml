@@ -4,13 +4,17 @@ target_dir = "~"
 ".yabairc" = { tags = ["macos", "macos-work"] }
 ".wezterm.lua" = { tags = ["macos", "macos-work"] }
 ".zshrc" = { tags = ["macos", "macos-work"] }
-".config/Default.smsetting_app" = { tags = ["macos", "macos-work"] }
 "Alfred.alfredpreferences" = { tags = ["macos", "macos-work"] }
+".tmux.conf" = { tags = ["linux", "macos", "tmux"]}
+
+".config/Default.smsetting_app" = { tags = ["macos", "macos-work"] }
 ".config/Alfred.alfredpreferences" = { tags = ["macos", "macos-work"] }
+
+".config/nvim" = { tags = ["macos", "macos-work", "linux", "nvim"] }
+".config/alacritty" = { tags = ["macos", "linux", "alacritty"] }
+".config/fish" = { tags = ["macos",  "macos-work", "linux", "fish"] }
+".config/git" = { tags = ["macos", "linux", "git"] }
+".claude" = { tags = ["macos", "linux", "claude"] }
+
 ".config/hypr" = { tags = ["linux"] }
 ".config/waybar" = { tags = ["linux"] }
-".config/nvim" = { tags = ["macos", "linux"] }
-".config/alacritty" = { tags = ["macos", "linux", "alacritty"] }
-".config/fish" = { tags = ["macos", "linux", "fish"] }
-".config/git" = { tags = ["macos", "linux", "git"] }
-
