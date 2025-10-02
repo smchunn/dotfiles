@@ -70,8 +70,9 @@ config.leader = {
 	mods = "CMD",
 	timeout_milliseconds = 2000,
 }
-config.keys = {{ key = "=", mods = "CMD", action = wezterm.action.ResetFontSize,
-  {key="Enter", mods="SHIFT", action=wezterm.action{SendString="\x1b\r"}},},
+config.keys = {
+	{ key = "=", mods = "CMD", action = wezterm.action.ResetFontSize },
+	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
 	{ key = "+", mods = "SHIFT|CMD", action = wezterm.action.IncreaseFontSize },
 	{ key = "H", mods = "CMD", action = wezterm.action.Hide },
 	{ key = "Q", mods = "CMD", action = wezterm.action.QuitApplication },
@@ -130,7 +131,7 @@ config.tab_max_width = 32
 -- config.allow_square_glyphs_to_overflow_width = "Never"
 config.font = wezterm.font_with_fallback({
 	{
-		family = "iosevka-sc",
+		family = "IosevkaSC Nerd Font",
 		style = "Normal",
 		harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 		weight = "Light",
