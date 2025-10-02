@@ -1,7 +1,7 @@
 target_dir = "~"
 
 [targets]
-".yabairc" = { tags = ["macos", "macos-work"] }
+".yabairc" = { tags = ["macos"] }
 ".wezterm.lua" = { tags = ["macos", "macos-work"] }
 ".zshrc" = { tags = ["macos", "macos-work"] }
 "Alfred.alfredpreferences" = { tags = ["macos", "macos-work"] }
@@ -9,6 +9,7 @@ target_dir = "~"
 
 ".config/Default.smsetting_app" = { tags = ["macos", "macos-work"] }
 ".config/Alfred.alfredpreferences" = { tags = ["macos", "macos-work"] }
+".config/skhd" = { tags = ["macos"] }
 
 ".config/nvim" = { tags = ["macos", "macos-work", "linux", "nvim"] }
 ".config/alacritty" = { tags = ["macos", "linux", "alacritty"] }
