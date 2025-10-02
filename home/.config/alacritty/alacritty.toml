@@ -45,7 +45,12 @@ shape = "Underline"
 TERM = "xterm-256color"
 
 [font]
-size = 10.0
+# {linux-
+# size = 10.0
+# -linux}
+# {macos-
+size = 16.0
+# -macos}
 
 [font.bold]
 style = "Bold"
@@ -57,8 +62,8 @@ style = "Bold Italic"
 style = "Italic"
 
 [font.normal]
-family = "IosevkaTerm NFM"
-style = "Light"
+family = "IosevkaSC Nerd Font"
+style = "Extended Light"
 
 # disable shift-ctrl-space
 # [[keyboard.bindings]]
@@ -257,8 +262,7 @@ mods = "Command"
 history = 0
 
 [terminal.shell]
-program = "fish"
-# args = ["-l", "-c", "tmux attach || tmux"]
+program = "/run/current-system/sw/bin/fish"
 args = [
   "-c",
   """
@@ -299,16 +303,18 @@ args = [
 ]
 
 [window]
-# decorations = "full"
-# dynamic_padding = true
+decorations = "Buttonless"
+dynamic_padding = true
 # dynamic_title = true
-# opacity = 0.50
-# startup_mode = "Windowed"
+opacity = 0.92
+startup_mode = "Windowed"
 # title = "SMC"
-# option_as_alt = "Both"
+option_as_alt = "Both"
 
-[window.dimensions]
-columns = 80
-lines = 25
+[debug]
+persistent_logging = true
 
-[terminal]
+# [window.dimensions]
+# columns = 80
+# lines = 25
+
