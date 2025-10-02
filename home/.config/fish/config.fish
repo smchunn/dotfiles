@@ -20,7 +20,9 @@ set --global surge_symbol_git_ahead ''
 set --global surge_symbol_git_behind ''
 set --global surge_fetch true
 
+# {macos-
 set --global OBSIDIAN_VAULT '/Users/smchunn/Library/Mobile Documents/iCloud~md~obsidian/Documents/SC'
+# -macos}
 
 test -d "$HOME/Development" && set -g _dev "$HOME/Development"
 test -d "$HOME/development" && set -g _dev "$HOME/development"
@@ -76,4 +78,4 @@ pyenv init - | source
 #     echo "export PATH=\"$fish_path\"" >> ~/.zshrc
 # end
 
-alias claude="/Users/smchunn/.claude/local/claude"
+alias claude="$HOME/.claude/local/claude"
