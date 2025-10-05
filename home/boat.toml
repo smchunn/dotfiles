@@ -19,3 +19,4 @@ target_dir = "~"
 
 ".config/hypr" = { tags = ["linux"] }
 ".config/waybar" = { tags = ["linux"] }
+".config/kitty" = { tags = ["linux"] }
