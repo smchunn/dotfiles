@@ -27,6 +27,7 @@ set --global OBSIDIAN_VAULT '/Users/smchunn/Library/Mobile Documents/iCloud~md~o
 test -d "$HOME/Development" && set -g _dev "$HOME/Development"
 test -d "$HOME/development" && set -g _dev "$HOME/development"
 test -d "$HOME/dev" && set -g _dev "$HOME/dev"
+
 if type -q eza
   function ls
     command eza $argv
@@ -49,9 +50,11 @@ function cfg
   command nvim -c "cd $_dev/dotfiles"
 end
 
+# {macos-
 function dar
   command nvim -c "cd $_dev/nix"
 end
+# -macos}
 
 function tvim
   command nvim -c "cd $_dev/dotfiles/home/.config/nvim" -u "$HOME/.config/nvim/test/init.lua"
@@ -69,7 +72,9 @@ function note
   command nvim -c "cd $OBSIDIAN_VAULT" -c "Obsidian quick_switch"
 end
 
-pyenv init - | source
+# {macos-
+# pyenv init - | source
+# -macos}
 
 # set fish_path (string join ":" $PATH)
 # if grep -q "export PATH=" ~/.zshrc
@@ -78,4 +83,4 @@ pyenv init - | source
 #     echo "export PATH=\"$fish_path\"" >> ~/.zshrc
 # end
 
-alias claude="$HOME/.claude/local/claude"
+# alias claude="$HOME/.claude/local/claude"
