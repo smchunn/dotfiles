@@ -19,6 +19,7 @@ set --global surge_symbol_git_branch ''
 set --global surge_symbol_git_ahead ''
 set --global surge_symbol_git_behind ''
 set --global surge_fetch true
+set --global surge_term "wezterm" "xterm-kitty"
 
 # {macos-
 set --global OBSIDIAN_VAULT '/Users/smchunn/Library/Mobile Documents/iCloud~md~obsidian/Documents/SC'
@@ -73,7 +74,7 @@ function note
 end
 
 # {macos-
-# pyenv init - | source
+pyenv init - | source
 # -macos}
 
 # set fish_path (string join ":" $PATH)
@@ -83,4 +84,4 @@ end
 #     echo "export PATH=\"$fish_path\"" >> ~/.zshrc
 # end
 
-# alias claude="$HOME/.claude/local/claude"
+alias claude="$HOME/.claude/local/claude"
