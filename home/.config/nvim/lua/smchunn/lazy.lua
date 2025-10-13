@@ -48,5 +48,3 @@ require("lazy").setup({
 		},
 	},
 })
-
-require("smchunn.overrides")

@@ -1,4 +1,4 @@
-local M = { actions = {}, previewers = {} }
+local M = {}
 
 local function get_row(buf, row)
   return vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]
@@ -31,156 +31,49 @@ function M.opts(...)
   end
 end
 
-function M.actions.git_apply_stash_file(stash_id)
-  local actions = require("telescope.actions")
-  local action_state = require("telescope.actions.state")
-
-  return function(prompt_bufnr)
-    local picker = action_state.get_current_picker(prompt_bufnr)
-    local selection = picker:get_multi_selection()
-    if #selection == 0 then
-      selection = { picker:get_selection() }
-    end
-
-    local files = {}
-    for _, sel in ipairs(selection) do
-      table.insert(files, sel[1])
-    end
-    local git_command = {
-      "sh",
-      "-c",
-      "git --no-pager diff HEAD.." .. " | git apply -",
-    }
-
-    local _, ret, stderr = M.get_os_command_output(git_command)
-    if ret == 0 then
-      print("Applied stash files from " .. stash_id)
-    else
-      print("Error applying stash " .. vim.inspect(stderr))
-    end
-    actions.close(prompt_bufnr)
-  end
-end
-
-function M.actions.show_git_stash_files()
-  local actions = require("telescope.actions")
-  local pickers = require("telescope.pickers")
-  local finders = require("telescope.finders")
-  local action_state = require("telescope.actions.state")
-  local telescope_config = require("telescope.config").values
-
-  local selection = action_state.get_selected_entry()
-  if selection == nil or selection.value == nil or selection.value == "" then
-    return
-  end
-
-  local stash_id = selection.value
-
-  local opts = {}
-  local p = pickers.new(opts, {
-    prompt_title = "Files in " .. stash_id,
-    finder = finders.new_oneshot_job({
-      "git",
-      "--no-pager",
-      "stash",
-      "show",
-      stash_id,
-      "--name-only",
-    }, opts),
-    previewer = M.previewers.git_stash_file(stash_id, opts),
-    sorter = telescope_config.file_sorter(opts),
-    attach_mappings = function()
-      actions.select_default:replace(M.actions.git_apply_stash_file(stash_id))
-      return true
-    end,
-  })
-  p:find()
-end
-
-function M.previewers.git_stash_file(stash_id, opts)
-  local previewers = require("telescope.previewers")
-  local putils = require("telescope.previewers.utils")
-
-  return previewers.new_buffer_previewer({
-    title = "Stash file preview",
-    get_buffer_by_name = function(_, entry)
-      return entry.value
-    end,
-    define_preview = function(self, entry, _)
-      local cmd = { "git", "--no-pager", "diff", stash_id, "--", entry.value }
-      putils.job_maker(cmd, self.state.bufnr, {
-        value = entry.value,
-        bufname = self.state.bufname,
-        cwd = opts.cwd,
-        callback = function(bufnr)
-          if vim.api.nvim_buf_is_valid(bufnr) then
-            putils.regex_highlighter(bufnr, "diff")
-          end
-        end,
-      })
-    end,
-  })
-end
-
-function M.actions.open_and_resume(prompt_bufnr)
-  require("telescope.actions").select_default(prompt_bufnr)
-  require("telescope.builtin").resume()
-end
-
-function M.actions.open_in_nvim_tree(prompt_bufnr)
-  local actions = require("telescope.actions")
-  local action_state = require("telescope.actions.state")
-  local nvim_tree_api = require("nvim-tree.api")
-
-  local selection = action_state.get_selected_entry()
-  if not selection then
-    print("No selection made")
-    return
-  end
-
-  local selection_path = selection.value
-
-  actions.close(prompt_bufnr)
-
-  print("open...")
-  nvim_tree_api.tree.open()
-  nvim_tree_api.tree.find_file({
-    buf = selection_path,
-    open = true,
-    focus = true,
-  })
-end
-
-function M.file_picker()
-  local builtin = require("telescope.builtin")
-  if vim.fn.isdirectory(".git") == 1 or vim.fn.filereadable(".git") == 1 then
-    builtin.git_files({ show_untracked = true })
-  else
-    builtin.find_files({ hidden = true })
-  end
-end
-
-function M.open_in_nvim_tree()
-  local nvim_tree_api = require("nvim-tree.api")
-
-  print("open...")
-  nvim_tree_api.tree.find_file({ open = true })
-end
-
 function M.keymap(mappings)
+  -- Track which augroups we've already cleared in this call
+  local cleared_groups = {}
+
   for _, map in ipairs(mappings) do
     if map.autocmd and map.autocmdgroup then
+      -- Clear the augroup only once per call
+      local should_clear = not cleared_groups[map.autocmdgroup]
+      if should_clear then
+        cleared_groups[map.autocmdgroup] = true
+      end
+
+      local group = vim.api.nvim_create_augroup(map.autocmdgroup, { clear = should_clear })
+
       vim.api.nvim_create_autocmd(map.autocmd, {
-        group = vim.api.nvim_create_augroup(map.autocmdgroup, {}),
+        group = group,
         callback = function(args)
           local buf = args.buf
+
           for _, keymap in ipairs(map) do
-            vim.keymap.set(
-              keymap[1],
-              keymap[2],
-              keymap[3],
-              vim.tbl_extend("force", keymap[4], { buffer = buf })
-            )
+            local mode = keymap[1]
+            local lhs = keymap[2]
+            local rhs = keymap[3]
+            local opts = keymap[4] or {}
+
+            -- Handle multiple modes (e.g., {"n", "v"})
+            if type(mode) == "table" then
+              for _, m in ipairs(mode) do
+                vim.keymap.set(
+                  m,
+                  lhs,
+                  rhs,
+                  vim.tbl_extend("force", opts, { buffer = buf })
+                )
+              end
+            else
+              vim.keymap.set(
+                mode,
+                lhs,
+                rhs,
+                vim.tbl_extend("force", opts, { buffer = buf })
+              )
+            end
           end
         end,
       })
@@ -188,7 +81,7 @@ function M.keymap(mappings)
       vim.api.nvim_create_autocmd(map.autocmd, {
         callback = function()
           for _, keymap in ipairs(map) do
-            vim.api.nvim_set_keymap(keymap[1], keymap[2], keymap[3], keymap[4])
+            vim.api.nvim_set_keymap(keymap[1], keymap[2], keymap[3], keymap[4] or {})
           end
         end,
       })
@@ -335,35 +228,6 @@ local function bullet_indent(detab)
   return false
 end
 
-local function map_with_fallback(mode, lhs, condition_func)
-  local original_mapping = vim.api.nvim_get_keymap(mode)
-
-  local default_key = nil
-  for _, mapping in ipairs(original_mapping) do
-    if mapping.lhs == lhs then
-      default_key = mapping.rhs
-      break
-    end
-  end
-
-  vim.keymap.set(
-    mode,
-    lhs,
-    function()
-      if not condition_func() then
-        if default_key then
-          vim.api.nvim_feedkeys(
-            vim.api.nvim_replace_termcodes(default_key, true, false, true),
-            "n", -- Use 'n' for noremap mode or adjust as needed
-            true
-          )
-        end
-      end
-    end,
-    { buffer = vim.api.nvim_get_current_buf(), nowait = true, silent = true }
-  )
-end
-
 function M.bullets(opts)
   vim.keymap.set(
     "n",
@@ -455,6 +319,23 @@ function M.update_numbered_list(buf, row)
     row = row + 1
     new_num = new_num + 1
   end
+end
+
+local set_cursor_later = vim.schedule_wrap(function(pos)
+  vim.api.nvim_win_set_cursor(0, pos)
+end)
+
+M.auto_tag = function()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+
+  local tag = line:sub(1, col):match("<([%w:%-]+)[^<>]*$")
+  if tag == nil then
+    return ">"
+  end
+
+  set_cursor_later({ row, col + 1 })
+  return "></" .. tag .. ">"
 end
 
 return M
