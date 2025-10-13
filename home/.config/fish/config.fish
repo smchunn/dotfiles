@@ -29,6 +29,8 @@ test -d "$HOME/Development" && set -g _dev "$HOME/Development"
 test -d "$HOME/development" && set -g _dev "$HOME/development"
 test -d "$HOME/dev" && set -g _dev "$HOME/dev"
 
+test -e "$HOME/.claude/local/claude" && alias claude="$HOME/.claude/local/claude"
+
 if type -q eza
   function ls
     command eza $argv
@@ -58,7 +60,7 @@ end
 # -macos}
 
 function tvim
-  command nvim -c "cd $_dev/dotfiles/home/.config/nvim" -u "$HOME/.config/nvim/test/init.lua"
+  command nvim -u "$HOME/.config/nvim/test/init.lua" $argv
 end
 
 function svim
@@ -84,4 +86,3 @@ pyenv init - | source
 #     echo "export PATH=\"$fish_path\"" >> ~/.zshrc
 # end
 
-alias claude="$HOME/.claude/local/claude"
