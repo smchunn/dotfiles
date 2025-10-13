@@ -24,11 +24,17 @@ return {
     },
     opts = {
       ensure_installed = {
-        -- "lua_ls",
+        "lua_ls",
         "pyright",
-        -- "julials",
         "rust_analyzer",
+        -- "julials",
         "jinja_lsp",
+        "ts_ls", -- TypeScript/JavaScript
+        "tailwindcss", -- Tailwind CSS
+        "eslint", -- ESLint
+        "cssls", -- CSS
+        "html", -- HTML
+        "jsonls",
       },
       automatic_installation = true,
       handlers = {
@@ -63,6 +69,63 @@ return {
             },
           })
         end,
+        ["tailwindcss"] = function()
+          require("lspconfig").tailwindcss.setup({
+            capabilities = require("blink.cmp").get_lsp_capabilities(),
+            filetypes = {
+              "html",
+              "css",
+              "scss",
+              "javascript",
+              "javascriptreact",
+              "typescript",
+              "typescriptreact",
+            },
+            settings = {
+              tailwindCSS = {
+                experimental = {
+                  classRegex = {
+                    -- Support for cva, clsx, cn, etc.
+                    { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                    { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                    { "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                    "class[:]\\s*['\"`]([^'\"`]*)['\"`]",
+                  },
+                },
+              },
+            },
+          })
+        end,
+
+        -- ESLint with auto-fix on save
+        ["eslint"] = function()
+          require("lspconfig").eslint.setup({
+            capabilities = require("blink.cmp").get_lsp_capabilities(),
+            on_attach = function(client, bufnr)
+              vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                command = "EslintFixAll",
+              })
+            end,
+          })
+        end,
+
+        -- rust-analyzer with clippy
+        ["rust_analyzer"] = function()
+          require("lspconfig").rust_analyzer.setup({
+            capabilities = require("blink.cmp").get_lsp_capabilities(),
+            settings = {
+              ["rust-analyzer"] = {
+                cargo = {
+                  allFeatures = true,
+                },
+                checkOnSave = {
+                  command = "clippy",
+                },
+              },
+            },
+          })
+        end,
       },
     },
   },
@@ -74,11 +137,7 @@ return {
     "williamboman/mason.nvim",
     opts = {
       ui = {
-        icons = {
-          -- package_installed = "✓",
-          -- package_pending = "➜",
-          -- package_uninstalled = "✗",
-        },
+        icons = {},
         border = "single",
       },
       PATH = "append",
@@ -126,8 +185,20 @@ return {
 
       null_ls.setup({
         sources = {
-          formatting.prettierd.with({
-            filetypes = { "markdown" },
+          -- Prettier for JS/TS/React/CSS/HTML/JSON
+          formatting.prettier.with({
+            filetypes = {
+              "javascript",
+              "javascriptreact",
+              "typescript",
+              "typescriptreact",
+              "css",
+              "scss",
+              "html",
+              "json",
+              "yaml",
+              "markdown",
+            },
             disabled_filetypes = { "lua" },
           }),
           formatting.stylua.with({

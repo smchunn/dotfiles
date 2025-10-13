@@ -50,7 +50,7 @@ return {
   },
   -- stylua: ignore
   keys = {
-    { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
+  { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
     { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
     { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
     -- { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
@@ -58,16 +58,6 @@ return {
     { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
     { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
     { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
-    -- { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
-    -- { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
-    -- { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
-    -- { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
-    -- { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
-    -- { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
-    -- { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
-    -- { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
-    -- { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
-    -- { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {

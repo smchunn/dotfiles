@@ -38,8 +38,8 @@ return {
     version = false,
     opts = {},
     keys = {
-      { "ga", mode = { "n", "v" } },
-      { "gA", mode = { "n", "v" } },
+      { "<leader>a", mode = { "n", "v" } },
+      { "<leader>A", mode = { "n", "v" } },
     },
   },
   {
@@ -67,10 +67,6 @@ return {
     "echasnovski/mini.operators",
     version = false,
     opts = {
-      evaluate = {
-        prefix = "g=",
-        func = nil,
-      },
       exchange = {
         prefix = "gx",
         reindent_linewise = true,
@@ -80,7 +76,7 @@ return {
         func = nil,
       },
       replace = {
-        prefix = "gr",
+        prefix = "gp",
         reindent_linewise = true,
       },
       sort = {
@@ -94,15 +90,34 @@ return {
     version = false,
     event = "InsertEnter",
     opts = {
-      modes = { insert = true, command = true, terminal = false },
-      -- skip autopair when next character is one of these
-      skip_next = [=[[%w%%%'%[%"%.%`%$]]=],
-      skip_ts = { "string" },
-      -- skip autopair when next character is closing pair
-      -- and there are more closing pairs than opening pairs
-      skip_unbalanced = true,
-      -- better deal with markdown code blocks
-      markdown = true,
+      mappings = {
+        ["("] = { action = "open", pair = "()", neigh_pattern = "[^\\]." },
+        ["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\]." },
+        ["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\]." },
+
+        [")"] = { action = "close", pair = "()", neigh_pattern = "[^\\]." },
+        ["]"] = { action = "close", pair = "[]", neigh_pattern = "[^\\]." },
+        ["}"] = { action = "close", pair = "{}", neigh_pattern = "[^\\]." },
+
+        ['"'] = {
+          action = "closeopen",
+          pair = '""',
+          neigh_pattern = "[^\\].",
+          register = { cr = false },
+        },
+        ["'"] = {
+          action = "closeopen",
+          pair = "''",
+          neigh_pattern = "[^%a\\].",
+          register = { cr = false },
+        },
+        ["`"] = {
+          action = "closeopen",
+          pair = "``",
+          neigh_pattern = "[^\\].",
+          register = { cr = false },
+        },
+      },
     },
   },
   {

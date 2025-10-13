@@ -54,7 +54,7 @@ return {
     local fzflua = require("fzf-lua")
     -- Key mappings
     vim.keymap.set("n", "<leader>ff", function()
-      fzflua.files()
+      fzflua.files({ resume = true })
     end, { desc = "Find Files (fzf-lua)" })
     vim.keymap.set("n", "<leader>fg", function()
       fzflua.live_grep()

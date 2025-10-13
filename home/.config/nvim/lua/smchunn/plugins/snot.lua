@@ -9,12 +9,12 @@ return {
   },
   -- Optional: define keymaps
   keys = {
-    { "<leader>nn", "<cmd>NoteNew<cr>", desc = "New note" },
-    { "<leader>nf", "<cmd>NoteFind<cr>", desc = "Find note" },
-    { "<leader>ns", "<cmd>NoteSearch<cr>", desc = "Search notes" },
-    { "<leader>nb", "<cmd>NoteBacklinks<cr>", desc = "Show backlinks" },
-    { "<leader>ni", "<cmd>NoteIndex<cr>", desc = "Index vault" },
-    { "<leader>nl", "<cmd>NoteLink<cr>", desc = "Insert link" },
+    { "<leader>/n", "<cmd>NoteNew<cr>", desc = "New note" },
+    { "<leader>/f", "<cmd>NoteFind<cr>", desc = "Find note" },
+    { "<leader>/s", "<cmd>NoteSearch<cr>", desc = "Search notes" },
+    { "<leader>/b", "<cmd>NoteBacklinks<cr>", desc = "Show backlinks" },
+    { "<leader>/i", "<cmd>NoteIndex<cr>", desc = "Index vault" },
+    { "<leader>/l", "<cmd>NoteLink<cr>", desc = "Insert link" },
   },
   -- Optional: lazy load on commands or filetypes
   cmd = {
@@ -26,5 +26,4 @@ return {
     "NoteInit",
     "NoteLink",
   },
-  ft = "markdown",
 }
