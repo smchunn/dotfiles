@@ -26,8 +26,6 @@ utils.keymap({
   {"n", "<esc>",      ":nohl<CR>",     opts("Highlight Off")},
   {"n", "x",          '"_x',           opts("Delete char")},
   {"n", "s",          '"_s',           opts("Replace char")},
-  {"n", "<leader>+",  "<C-a>",         opts("Number +")},
-  {"n", "<leader>-",  "<C-x>",         opts("Number -")},
   {"n", "<leader>sv", "<C-w>v",        opts("Win: v-split")},
   {"n", "<leader>sd", "<C-w>s",        opts("Win: h-split")},
   {"n", "<leader>se", "<C-w>=",        opts("Win: equate")},
@@ -41,11 +39,10 @@ utils.keymap({
   {"n", "<leader>sL", "<C-w>>",        opts("Win: expand width")},
   {"n", "<leader>sH", "<C-w><",        opts("Win: shrink width")},
   {"n", "<leader>to", ":tabnew<CR>",   opts("Tab: new")},
-  {"n", "<leader>xt", ":tabclose<CR>", opts("Tab: close")},
+  {"n", "<leader>tx", ":tabclose<CR>", opts("Tab: close")},
   {"n", "<leader>tn", ":tabn<CR>",     opts("Tab: next")},
   {"n", "<leader>tp", ":tabp<CR>",     opts("Tab: prev")},
-  {"n", "<leader>p",  "<CTRL>6",       opts("Alternate File")},
-  {"n", "<leader>tp", ":tabp<CR>",     opts("Tab: prev")},
+  {"n", "<leader>p",  "<C-6>",         opts("Alternate File")},
   {"n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", opts("new line above")},
   {"n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", opts("new line below")},
   {"n", "YY", ":%y<CR>",               opts("Copy All")},
@@ -60,49 +57,30 @@ utils.keymap({
   {"n", "<leader>e", ":NvimTreeToggle<CR>", opts("Toggle NvimTree")},
   {"n", "<leader>i", function() require("nvim-tree.api").tree.find_file({ open = true, focus = true }) end, opts("Open NvimTree to current buffer")},
 
-  ---------------
-  -- Telescope --
-  ---------------
-  -- {"n", "<leader>tf",      ":Telescope egrepify<CR>",                                                opts("Telescope Egrepify")},
-  -- {"n", "<leader>f",       function () require("telescope.builtin").find_files() end,                opts("Telescope File Picker")},
-  -- {"n", "<leader>tt",      function () require("telescope.builtin").resume() end,                    opts("Telescope Resume")},
-  -- {"n", "<leader>tr",      function () require("telescope.builtin").pickers() end,                   opts("Telescope Recent Pickers")},
-  -- {"n", "<leader>tc",      function () require("telescope.builtin").filetypes() end,                 opts("Telescope Filetypes")},
-  -- {"n", "<leader>bb",      function () require("telescope.builtin").buffers() end,                   opts("Telescope Buffers")},
-  -- {"n", "<leader>th",      function () require("telescope.builtin").help_tags() end,                 opts("Telescope help")},
-  -- {"n", "<leader>tg",      function () require("telescope.builtin").current_buffer_fuzzy_find() end, opts("Telescope Search Buffer")},
-  -- {"n", "<localleader>gb", function () require("telescope.builtin").git_branches() end,              opts("Teleccope Git Branches")},
-  -- {"n", "<localleader>gc", function () require("telescope.builtin").git_commits() end,               opts("Telescope Git Commits")},
-  -- {"n", "<localleader>gf", function () require("telescope.builtin").git_bcommits() end,              opts("Telescope Git Commits(buffer)")},
-  -- {"n", "<localleader>gs", function () require("telescope.builtin").git_stash() end,                 opts("Telescope Git Stash")},
-  -- {"n", "<localleader>gt", function () require("telescope.builtin").git_status() end,                opts("Telescope Git Status")},
-  -- {"n", "<leader>tz",      ":Telescope spell_suggest<CR>",                                           opts("Telescope Spell Suggest")},
-
   ---------
   -- lsp --
   ---------
-  {"n",          "<leader>rs", ":LspRestart<CR>",                         opts("Restart lsp")},
+  {"n",          "<leader>rs", ":LspRestart<CR>",                    opts("Restart lsp")},
   { autocmd = "LspAttach", autocmdgroup = "UserLspConfig",
-    {"v",          "gf",         vim.lsp.buf.format,                        opts("Format selection")},
-    {"n",          "gR",         ":FzfLua lsp_references<CR>",       opts("Show LSP references")},
-    {"n",          "gD",         vim.lsp.buf.declaration,                   opts("Go to declaration")},
-    {"n",          "gd",         ":FzfLua lsp_definitions<CR>",      opts("Show LSP definitions")},
-    {"n",          "gi",         ":FzfLua lsp_implementations<CR>",  opts("Show LSP implementations")},
-    {"n",          "gt",         ":FzfLua lsp_type_definitions<CR>", opts("Show LSP type definitions")},
-    {{ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action,                   opts("See available code actions")},
-    {"n",          "<leader>rn", vim.lsp.buf.rename,                        opts("Smart rename")},
-    {"n",          "<leader>D",  ":FzfLua diagnostics bufnr=0<CR>",  opts("Show buffer diagnostics")},
-    {"n",          "K",          vim.lsp.buf.hover,                         opts("Show documentation for what is under cursor")},
-    {"n",          "<leader>rs", ":LspRestart<CR>",                         opts("Restart LSP")},
+    {"v",          "gF", vim.lsp.buf.format,                 opts("Format selection")},
+    {"n",          "gr", ":FzfLua lsp_references<CR>",       opts("Show references")},
+    {"n",          "gd", ":FzfLua lsp_definitions<CR>",      opts("Show definitions")},
+    {"n",          "gi", ":FzfLua lsp_implementations<CR>",  opts("Show implementations")},
+    {"n",          "gt", ":FzfLua lsp_type_definitions<CR>", opts("Show type definitions")},
+    {{ "n", "v" }, "ga", ":FzfLua lsp_code_actions<CR>",     opts("See available code actions")},
+    {"n",          "gn", vim.lsp.buf.rename,                 opts("Smart rename")},
+    {"n",          "K",  vim.lsp.buf.hover,                  opts("Show documentation for what is under cursor")},
   },
 
   -----------------
   -- Diagnostics --
   -----------------
-  {"n", "<leader>dp", function() vim.diagnostic.jump({count=-1,float=true}) end,  opts("Diagnostics prev")},
+  {"n", "<leader>dp", function() vim.diagnostic.jump({count=-1,float=true}) end, opts("Diagnostics prev")},
   {"n", "<leader>dn", function() vim.diagnostic.jump({count=1,float=true}) end,  opts("Diagnostics next")},
-  {"n", "<leader>dd", vim.diagnostic.open_float, opts("Diagnostics float")},
-  {"n", "<leader>ds", vim.diagnostic.setloclist, opts("Diagnostics list")},
+  {"n", "<leader>dt", vim.diagnostic.open_float,                                 opts("Diagnostics float")},
+  {"n", "<leader>ds", vim.diagnostic.setloclist,                                 opts("Diagnostics list")},
+  {"n", "<leader>dd", ":FzfLua diagnostics_document<CR>",                        opts("Document Diagnostics")},
+  {"n", "<leader>dw", ":FzfLua diagnostics_workspace<CR>",                       opts("Workspace Diagnostics")},
 
 
   --------------
@@ -118,7 +96,13 @@ utils.keymap({
   ---------------
   -- dashboard --
   ---------------
-  {"n", "<leader>db", ":lua Snacks.dashboard.open()<CR>", opts("Open Dashboard")},
+  {"n", "<leader>hh", ":lua Snacks.dashboard.open()<CR>", opts("Open Dashboard")},
+
+  ---------------
+  --  autotag  --
+  ---------------
+  {"i", ">", utils.auto_tag, { expr = true }},
+
 })
 
 -- stylua: ignore end
