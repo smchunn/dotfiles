@@ -42,7 +42,6 @@ utils.keymap({
   {"n", "<leader>tx", ":tabclose<CR>", opts("Tab: close")},
   {"n", "<leader>tn", ":tabn<CR>",     opts("Tab: next")},
   {"n", "<leader>tp", ":tabp<CR>",     opts("Tab: prev")},
-  {"n", "<leader>p",  "<C-6>",         opts("Alternate File")},
   {"n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", opts("new line above")},
   {"n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", opts("new line below")},
   {"n", "YY", ":%y<CR>",               opts("Copy All")},
