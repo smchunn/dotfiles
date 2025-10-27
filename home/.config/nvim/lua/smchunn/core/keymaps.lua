@@ -67,7 +67,7 @@ utils.keymap({
     {"n",          "gi", ":FzfLua lsp_implementations<CR>",  opts("Show implementations")},
     {"n",          "gt", ":FzfLua lsp_type_definitions<CR>", opts("Show type definitions")},
     {{ "n", "v" }, "ga", ":FzfLua lsp_code_actions<CR>",     opts("See available code actions")},
-    {"n",          "gn", vim.lsp.buf.rename,                 opts("Smart rename")},
+    {"n",          "<leader>rn", vim.lsp.buf.rename,                 opts("Smart rename")},
     {"n",          "K",  vim.lsp.buf.hover,                  opts("Show documentation for what is under cursor")},
   },
 
