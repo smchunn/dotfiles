@@ -1,6 +1,7 @@
 return {
   dir = "~/dev/snot/nvim", -- path to where you cloned the repo
   name = "snot",
+  enabled = false,
   opts = {
     vault_path = "~/snotes/", -- supports ~ home expansion
     snot_bin = "snot", -- or full path like "/usr/local/bin/snot"
