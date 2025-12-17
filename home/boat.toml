@@ -1,4 +1,5 @@
 target_dir = "~"
+default_build = "default"
 
 [targets]
 ".yabairc" = { tags = ["macos"] }
