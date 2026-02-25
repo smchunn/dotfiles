@@ -1,18 +1,21 @@
-target_dir = "~"
-default_build = "default"
+[system]
+tags = ["macos", "nvim", "fish", "tmux", "kitty", "git", "claude"]
 
-[targets]
+[packages.home]
+target_dir = "~"
+
+[packages.home.targets]
 ".yabairc" = { tags = ["macos"] }
 ".zshrc" = { tags = ["macos", "macos-work"] }
-".tmux.conf" = { tags = ["linux", "macos", "tmux"]}
+".tmux.conf" = { tags = ["linux", "macos", "tmux"] }
 
 ".config/Default.smsetting_app" = { tags = ["macos", "macos-work"] }
 ".config/skhd" = { tags = ["macos"] }
 
 ".config/nvim" = { tags = ["macos", "macos-work", "linux", "nvim"] }
-".config/fish" = { tags = ["macos",  "macos-work", "linux", "fish"] }
+".config/fish" = { tags = ["macos", "macos-work", "linux", "fish"] }
 ".config/git" = { tags = ["macos", "linux", "git"] }
-".config/kitty" = { tags = ["macos","linux","kitty"] }
+".config/kitty" = { tags = ["macos", "linux", "kitty"] }
 ".claude" = { tags = ["macos", "linux", "claude"] }
 
 ".config/hypr" = { tags = ["linux"] }
