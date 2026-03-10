@@ -14,9 +14,12 @@ target_dir = "~"
 
 ".config/nvim" = { tags = ["macos", "macos-work", "linux", "nvim"] }
 ".config/fish" = { tags = ["macos", "macos-work", "linux", "fish"] }
-".config/git" = { tags = ["macos", "linux", "git"] }
-".config/kitty" = { tags = ["macos", "linux", "kitty"] }
+".config/git" = { tags = ["macos", "macos-work", "linux", "git"] }
+".config/git/config_mmctech" = { tags = ["macos-work"] }
+".config/kitty" = { tags = ["macos", "macos-work", "linux", "kitty"] }
 ".claude" = { tags = ["macos", "linux", "claude"] }
 
 ".config/hypr" = { tags = ["linux"] }
 ".config/waybar" = { tags = ["linux"] }
+
+".config/karabiner" = { tags = ["macos-work"] }

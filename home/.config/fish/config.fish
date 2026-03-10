@@ -76,9 +76,10 @@ function note
 end
 
 # {macos-
-pyenv init - | source
+# pyenv init - | source
+set -gx UV_NATIVE_TLS "true"
 # -macos}
-
+set -gx JAVA_HOME (/usr/libexec/java_home)
 # set fish_path (string join ":" $PATH)
 # if grep -q "export PATH=" ~/.zshrc
 #     sed -i '' "s|export PATH=.*|export PATH=\"$fish_path\"|" ~/.zshrc

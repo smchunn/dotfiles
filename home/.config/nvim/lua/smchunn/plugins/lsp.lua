@@ -26,7 +26,7 @@ return {
       ensure_installed = {
         "lua_ls",
         "pyright",
-        "rust_analyzer",
+        -- "rust_analyzer",
         -- "julials",
         "jinja_lsp",
         "ts_ls", -- TypeScript/JavaScript
@@ -113,6 +113,7 @@ return {
         -- rust-analyzer with clippy
         ["rust_analyzer"] = function()
           require("lspconfig").rust_analyzer.setup({
+            cmd = { vim.fn.expand("~/.cargo/bin/rust-analyzer") },
             capabilities = require("blink.cmp").get_lsp_capabilities(),
             settings = {
               ["rust-analyzer"] = {

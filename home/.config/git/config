@@ -16,7 +16,7 @@
 [push]
   default = simple
 [merge]
-  tool = smerge
+  tool = nvimdiff
 [difftool]
   prompt = false
 [alias]
@@ -29,3 +29,6 @@
   l = log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit
 [pull]
 	rebase = true
+
+[includeIf "gitdir:~/mmctech/"]
+  path = ~/.config/git/config_mmctech
