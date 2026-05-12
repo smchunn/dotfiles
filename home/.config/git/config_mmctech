@@ -1,7 +1,7 @@
 
 [user]
   name = Spencer Chunn
-  email = spencer.chunn@oliverwyman.com
+  email = Spencer.Chunn@oliverwyman.com
 
 [url "git@github.mmctech:"]
   insteadOf = ssh://git@github.com:
