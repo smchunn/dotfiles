@@ -6,3 +6,4 @@ home/.config/op
 home/.config/nvim/lazy-lock.json
 home/.config/fish/fish_variables
 home/.config/Alfred.alfredpreferences/workflows
+.towboat/
