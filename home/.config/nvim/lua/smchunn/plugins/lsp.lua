@@ -8,7 +8,6 @@ return {
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
       "saghen/blink.cmp",
-      -- "hrsh7th/cmp-nvim-lsp",
       { "antosha417/nvim-lsp-file-operations", config = true },
       "folke/lazydev.nvim",
     },
@@ -27,7 +26,6 @@ return {
         "lua_ls",
         "pyright",
         -- "rust_analyzer",
-        -- "julials",
         "jinja_lsp",
         "ts_ls", -- TypeScript/JavaScript
         "tailwindcss", -- Tailwind CSS
@@ -159,7 +157,6 @@ return {
         "prettier", -- general formatter
         -- "stylua", -- lua formatter
         "black", -- python formatter
-        -- "alejandra",
       },
       automatic_installation = true,
     },
@@ -183,6 +180,55 @@ return {
           bufnr = bufnr,
         })
       end
+
+      local function get_frontmatter(bufnr)
+        local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+        if not lines[1] or lines[1] ~= "---" then
+          return nil
+        end
+
+        for i = 2, #lines do
+          if lines[i] == "---" or lines[i] == "..." then
+            return {
+              end_line = i,
+              lines = vim.list_slice(lines, 1, i),
+            }
+          end
+        end
+
+        return nil
+      end
+
+      local function format_with_frontmatter_guard(bufnr)
+        if vim.bo[bufnr].filetype ~= "markdown" then
+          lsp_formatting(bufnr)
+          return
+        end
+
+        local fm = get_frontmatter(bufnr)
+        if not fm then
+          lsp_formatting(bufnr)
+          return
+        end
+
+        local all_lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+        local body = vim.list_slice(all_lines, fm.end_line + 1, #all_lines)
+
+        -- temporarily remove frontmatter
+        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, body)
+
+        -- format markdown body
+        lsp_formatting(bufnr)
+
+        -- restore frontmatter
+        local formatted_body = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+        local restored = vim.list_extend(vim.deepcopy(fm.lines), formatted_body)
+        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, restored)
+      end
+
+      -- ---------- AUGROUP (FIXED) ----------
+      local format_group =
+        vim.api.nvim_create_augroup("FormatOnSave", { clear = false })
 
       null_ls.setup({
         sources = {
@@ -208,20 +254,23 @@ return {
           formatting.black.with({
             filetypes = { "python" },
           }),
-          formatting.alejandra.with({
-            command = "alejandra",
-            filetypes = { "nix" },
-          }),
         },
         on_attach = function(client, bufnr)
           if client.server_capabilities.documentFormattingProvider then
-            local format_group =
-              vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
+            vim.api.nvim_clear_autocmds({
+              group = format_group,
+              buffer = bufnr,
+            })
+
             vim.api.nvim_create_autocmd("BufWritePre", {
               group = format_group,
               buffer = bufnr,
               callback = function()
-                lsp_formatting(bufnr)
+                if not vim.g.autoformat then
+                  return
+                end
+
+                format_with_frontmatter_guard(bufnr)
               end,
             })
           end

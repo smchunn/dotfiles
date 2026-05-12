@@ -1,6 +1,6 @@
 return {
   "lervag/vimtex",
-  enabled = true,
+  enabled = false,
   lazy = true, -- we don't want to lazy load VimTeX
   ft = "tex",
   -- tag = "v2.15", -- uncomment to pin to a specific release

@@ -29,6 +29,9 @@ return {
           },
           u = ai.gen_spec.function_call(), -- u for "Usage"
           U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
+          [" "] = {
+            "%s().-()%s",
+          },
         },
       }
     end,

@@ -55,7 +55,7 @@ return {
     { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
     -- { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
     { "<leader>xd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-    { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
+    -- { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
     { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
     { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
   },
@@ -81,6 +81,11 @@ return {
         Snacks.toggle.indent():map("<leader>ug")
         -- Snacks.toggle.scroll():map("<leader>uj")
         Snacks.toggle.dim():map("<leader>uD")
+        Snacks.toggle({
+          name = "Format on Save",
+          get = function() return vim.g.autoformat end,
+          set = function(state) vim.g.autoformat = state end,
+        }):map("<leader>uf")
       end,
     })
   end,

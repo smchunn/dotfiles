@@ -1,6 +1,7 @@
 return {
   "OXY2DEV/markview.nvim",
   lazy = false,
+  -- enabled = false,
   -- Load before nvim-treesitter to avoid syntax issues
   priority = 49,
   dependencies = {
@@ -61,6 +62,7 @@ return {
     -- Preview configuration
     preview = {
       enable = true,
+      icon_provider = "devicons",
       filetypes = { "md", "rmd", "quarto", "markdown" },
       modes = { "n", "no", "c" },
       -- Optionally enable hybrid modes for editing while previewing

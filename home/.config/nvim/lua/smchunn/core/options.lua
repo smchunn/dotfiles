@@ -1,6 +1,9 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- autoformat
+vim.g.autoformat = true
+
 -- line numbers
 vim.opt.relativenumber = true
 vim.opt.number = true
