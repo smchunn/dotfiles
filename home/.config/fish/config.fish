@@ -22,7 +22,7 @@ set --global surge_fetch true
 set --global surge_term "wezterm" "xterm-kitty"
 
 # {macos-
-set --global OBSIDIAN_VAULT '/Users/smchunn/Library/Mobile Documents/iCloud~md~obsidian/Documents/SC'
+set --global OBSIDIAN_VAULT '/Users/spencer.chunn/Documents/vault/'
 # -macos}
 
 test -d "$HOME/Development" && set -g _dev "$HOME/Development"
@@ -86,4 +86,8 @@ set -gx JAVA_HOME (/usr/libexec/java_home)
 # else
 #     echo "export PATH=\"$fish_path\"" >> ~/.zshrc
 # end
+
+function op-env
+  set -Ux SMARTSHEET_ACCESS_TOKEN (op read op://Private/smartsheetAPI/credential)
+end
 
