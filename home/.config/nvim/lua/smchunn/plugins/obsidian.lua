@@ -1,40 +1,45 @@
 return {
   "obsidian-nvim/obsidian.nvim",
   version = "*",
-  -- enabled = false,
-  cmd = { "Obsidian" },
   dependencies = {
     "nvim-lua/plenary.nvim",
+  },
+  cmd = { "Obsidian" },
+  keys = {
+    { "<leader>cf", ":Obsidian quick_switch<CR>", desc = "Obsidian quick switch", },
+    { "<leader>ct", ":Obsidian tags<CR>", desc = "Obsidian tags", },
+    { "<leader>cg", ":Obsidian search<CR>", desc = "Obsidian search", },
+    { "<leader>cn", ":Obsidian new<CR>", desc = "Obsidian new", },
+    { "<leader>cN", ":Obsidian new_from_template<CR>", desc = "Obsidian new from template", },
+    { "<leader>cT", ":Obsidian today<CR>", desc = "Obsidian today", },
   },
   opts = {
     legacy_commands = false,
     workspaces = {
       {
         name = "main",
-        path = "/Users/smchunn/Library/Mobile Documents/iCloud~md~obsidian/Documents/SC",
+        path = "~/Documents/vault/",
       },
     },
     notes_subdir = "inbox",
     new_notes_location = "notes_subdir",
 
     templates = {
-      subdir = "templates",
-      date_format = "%Y-%m-%d",
-      time_format = "%H:%M:%S",
+      folder = "templates",
+      -- date_format = "%Y-%m-%d",
+      -- time_format = "%H:%M:%S",
+      date_format = "MM-DD",
+      time_format = "HHmm",
     },
 
-    ---@return table
     frontmatter = {
       func = function(note)
-        -- Add the title of the note as an alias.
         if note.title then
           note:add_alias(note.title)
         end
 
         local out = { id = note.id, aliases = note.aliases, tags = note.tags }
 
-        -- `note.metadata` contains any manually added fields in the frontmatter.
-        -- So here we just make sure those fields are kept in the frontmatter.
         if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
           for k, v in pairs(note.metadata) do
             out[k] = v
@@ -58,6 +63,7 @@ return {
       end
       return current_datetime .. "-" .. suffix
     end,
+
     completion = {
       blink = true,
       min_chars = 2,
@@ -65,17 +71,16 @@ return {
     picker = {
       name = "fzf-lua",
       note_mappings = {
-        -- Create a new note from your query.
         new = "<C-x>",
-        -- Insert a link to the selected note.
         insert_link = "<C-l>",
       },
       tag_mappings = {
-        -- Add tag(s) to current note.
         tag_note = "<C-x>",
-        -- Insert a tag at the current location.
         insert_tag = "<C-l>",
       },
+    },
+    callbacks = {
+      enter_note = function(note) end,
     },
   },
 }
