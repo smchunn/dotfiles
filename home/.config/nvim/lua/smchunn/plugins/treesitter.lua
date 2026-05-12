@@ -1,19 +1,9 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
+  "romus204/tree-sitter-manager.nvim",
   config = function()
-    require("nvim-treesitter.configs").setup({
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      indent = {
-        enable = true,
-        -- disable = {
-        --   "markdown",
-        -- },
-      },
-      autotag = { enable = true },
+    require("tree-sitter-manager").setup({
+      highlight = true,
+      auto_install = true,
       ensure_installed = {
         "json",
         "javascript",
@@ -39,11 +29,6 @@ return {
         "python",
         "fish",
       },
-      ignore_install = {},
-      disable = {},
-      auto_install = true,
-      modules = {},
-      sync_install = false,
     })
   end,
 }
