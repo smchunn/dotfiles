@@ -70,6 +70,14 @@ ctrl + ralt - f : yabai -m window --toggle zoom-fullscreen
 # Make window zoom to parent node: ralt - f
 ralt - f : yabai -m window --toggle zoom-parent
 
+## App focus / launcher (smcboard40 APP layer = hold LB4). Each layer key emits
+## Hyper (cmd+ctrl+shift+alt) + <letter>; opens the app if closed, else cycles its windows.
+cmd + ctrl + shift + alt - k : ~/.config/skhd/scripts/focus-app.sh kitty
+cmd + ctrl + shift + alt - s : ~/.config/skhd/scripts/focus-app.sh Safari
+cmd + ctrl + shift + alt - g : ~/.config/skhd/scripts/focus-app.sh ChatGPT
+cmd + ctrl + shift + alt - m : ~/.config/skhd/scripts/focus-app.sh Mail
+cmd + ctrl + shift + alt - c : ~/.config/skhd/scripts/focus-app.sh Calendar
+
 ## Window Movement (ctrl + lalt - ...)
 # Moving windows in spaces: ctrl + lalt - {h, j, k, l}
 ctrl + lalt - h : yabai -m window --warp west  || $(yabai -m window --display west && yabai -m display --focus west && yabai -m window --warp last) || yabai -m window --move rel:-10:0
