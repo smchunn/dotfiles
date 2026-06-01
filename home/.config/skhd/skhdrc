@@ -1,6 +1,24 @@
-## Navigation (lalt - ...)
-#o
-# Space Navigation (four spaces per display): lalt - {1, 2, 3, 4}
+# ==============================================================================
+#  yabai / skhd hotkeys
+#
+#  These chords are designed to be produced ergonomically from the smcboard40
+#  ZMK "WM" layer (hold the LH2 thumb): each WM-layer key emits one of the
+#  modifier+key chords below, so no home-row-mod gymnastics are needed. The
+#  chords still also work via home row mods. Keep these in sync with the WM
+#  layer in ~/dev/zmk-config/config/smcboard40.keymap.
+#
+#  Modifier families:
+#    ralt              -> focus space / float / zoom-parent
+#    lalt              -> focus window (hjkl) / cycle windows (e,n)
+#    ctrl+lalt         -> move/warp window (hjkl) / move window between spaces (e,n)
+#    cmd+lalt          -> resize window (hjkl) / balance (e)
+#    ctrl+ralt         -> move window to space (1-5) / toggle split / fullscreen
+#    shift+ctrl        -> stacks (hjkl, n/p)
+#    shift+ctrl+lalt   -> insertion point (= the MEH thumb)
+#    cmd+ctrl+ralt     -> gaps / restart services
+# ==============================================================================
+
+## Space Navigation (ralt - {1..5}): focus Nth space on current display
 # ralt - 1 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); \
 #            test (count $SPACES) -ge 1; \
 #            and yabai -m space --focus $SPACES[1]
@@ -22,6 +40,7 @@ ralt - 1 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[0]")
 ralt - 2 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[1]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
 ralt - 3 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[2]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
 ralt - 4 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[3]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
+ralt - 5 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[4]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
 
 # Window Navigation (through display borders): lalt - {h, j, k, l}
 lalt - h    : yabai -m window --focus west  || yabai -m display --focus west
@@ -45,31 +64,32 @@ lalt - n : yabai -m query --spaces --space \
 # Float / Unfloat window: ralt - space
 ralt - space : yabai -m window --toggle float
 
-# Make window zoom to fullscreen: shift + lalt - f
+# Make window zoom to fullscreen: ctrl + ralt - f
 ctrl + ralt - f : yabai -m window --toggle zoom-fullscreen
 
-# Make window zoom to parent node: lalt - f
+# Make window zoom to parent node: ralt - f
 ralt - f : yabai -m window --toggle zoom-parent
 
-## Window Movement (shift + lalt - ...)
-# Moving windows in spaces: shift + lalt - {h, j, k, l}
+## Window Movement (ctrl + lalt - ...)
+# Moving windows in spaces: ctrl + lalt - {h, j, k, l}
 ctrl + lalt - h : yabai -m window --warp west  || $(yabai -m window --display west && yabai -m display --focus west && yabai -m window --warp last) || yabai -m window --move rel:-10:0
 ctrl + lalt - j : yabai -m window --warp south || $(yabai -m window --display south && yabai -m display --focus south) || yabai -m window --move rel:0:10
 ctrl + lalt - k : yabai -m window --warp north || $(yabai -m window --display north && yabai -m display --focus north) || yabai -m window --move rel:0:-10
 ctrl + lalt - l : yabai -m window --warp east  || $(yabai -m window --display east && yabai -m display --focus east && yabai -m window --warp first) || yabai -m window --move rel:10:0
 
-# Toggle split orientation of the selected windows node: shift + lalt - s
+# Toggle split orientation of the selected windows node: ctrl + ralt - s
 ctrl + ralt - s : yabai -m window --toggle split
 
-# Moving windows between spaces: shift + lalt - {1, 2, 3, 4, p, n } (Assumes 4 Spaces Max per Display)
+# Moving windows between spaces: ctrl + ralt - {1..5}; ctrl + lalt - {e, n} (prev/next)
 ctrl + ralt - 1 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$1" ] && yabai -m window --space "$1"'
 ctrl + ralt - 2 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$2" ] && yabai -m window --space "$2"'
 ctrl + ralt - 3 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$3" ] && yabai -m window --space "$3"'
 ctrl + ralt - 4 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$4" ] && yabai -m window --space "$4"'
-ctrl + lalt - n : yabai -m window --space prev && yabai -m space --focus prev
-ctrl + lalt - e : yabai -m window --space next && yabai -m space --focus next
+ctrl + ralt - 5 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$5" ] && yabai -m window --space "$5"'
+ctrl + lalt - e : yabai -m window --space prev && yabai -m space --focus prev
+ctrl + lalt - n : yabai -m window --space next && yabai -m space --focus next
 
-# Mirror Space on X and Y Axis: shift + lalt - {x, y}
+# Mirror Space on X and Y Axis: ctrl + lalt - {x, y}
 ctrl + lalt - x : yabai -m space --mirror x-axis
 ctrl + lalt - y : yabai -m space --mirror y-axis
 
@@ -84,17 +104,17 @@ shift + ctrl - l : yabai -m window  east --stack $(yabai -m query --windows --wi
 shift + ctrl - n : yabai -m window --focus stack.next
 shift + ctrl - p : yabai -m window --focus stack.prev
 
-## Resize (ctrl + lalt - ...)
-# Resize windows: ctrl + lalt - {h, j, k, l}
+## Resize (cmd + lalt - ...)
+# Resize windows: cmd + lalt - {h, j, k, l}
 cmd + lalt - h : yabai -m window --resize right:-100:0 || yabai -m window --resize left:-100:0
 cmd + lalt - j : yabai -m window --resize bottom:0:100 || yabai -m window --resize top:0:100
 cmd + lalt - k : yabai -m window --resize bottom:0:-100 || yabai -m window --resize top:0:-100
 cmd + lalt - l : yabai -m window --resize right:100:0 || yabai -m window --resize left:100:0
 
-# Equalize size of windows: ctrl + lalt - e
-ctrl + lalt - e : yabai -m space --balance
+# Equalize size of windows: cmd + lalt - e (moved off ctrl+lalt-e, which moves window to prev space)
+cmd + lalt - e : yabai -m space --balance
 
-# Enable / Disable gaps in current workspace: ctrl + lalt - g
+# Enable / Disable gaps in current workspace: cmd + ctrl + ralt - g
 cmd + ctrl + ralt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 ## Insertion (shift + ctrl + lalt - ...)
