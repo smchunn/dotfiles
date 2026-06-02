@@ -1,101 +1,71 @@
 # ==============================================================================
-#  yabai / skhd hotkeys  --  F13-F20 obscured namespace
+#  yabai / skhd hotkeys  --  positional WM / WMOS namespace
 #
 #  Every chord is emitted by the smcboard40 ZMK layers, never typed by hand:
-#    WIN   = hold LH2     SPACE = hold LB4
+#    WM   = HOLD LH3        WMOS = TAP  LH3 (one-shot)
 #  F13-F20 are unmapped by macOS/apps, so any modifier combo on them is collision-free.
-#  Convention: the MODIFIER COMBO names the family/verb, the F-KEY names the object
-#  (F13/14/15/16 = West/South/North/East or Left/Down/Up/Right; F13..F17 = 1..5).
+#  The chord reads as (row, hand/column, layer):
+#    LAYER  : F16-F20 => WM        ·  F13-F15 => WMOS
+#    ROW    : ctrl = top  ·  alt = home  ·  ctrl+alt = bottom
+#    HAND   : shift = right hand (WM) / extra column (WMOS)
+#    COLUMN : the F-key (finger), index->pinky
+#  cmd is unused/reserved; nothing exceeds 3 modifiers.
 #  Keep in sync with ~/dev/zmk-config/config/smcboard40.keymap.
-#
-#    FOCUS   ctrl+alt            MOVE    cmd+ctrl           RESIZE  cmd+alt
-#    STACK   ctrl+shift          INSERT  shift+alt          FSPACE  cmd+shift
-#    MSPACE  cmd+ctrl+alt        WTOG    ctrl+shift+alt     WMISC   cmd+ctrl+shift
-#    APPK    cmd+shift+alt       SMISC   cmd+ctrl+shift+alt
 # ==============================================================================
 
-# ── FOCUS (ctrl+alt) — layout-aware: bsp = directional, stack = cycle/displays ─
-ctrl + alt - f13 : ~/.config/skhd/scripts/wm.sh focus west
-ctrl + alt - f14 : ~/.config/skhd/scripts/wm.sh focus south
-ctrl + alt - f15 : ~/.config/skhd/scripts/wm.sh focus north
-ctrl + alt - f16 : ~/.config/skhd/scripts/wm.sh focus east
+# ── WM (F16-F20) — held LH3, repeatable ───────────────────────────────────────
 
-# ── MOVE (cmd+ctrl) — layout-aware: bsp = warp, stack = no-op ──────────────────
-cmd + ctrl - f13 : ~/.config/skhd/scripts/wm.sh move west
-cmd + ctrl - f14 : ~/.config/skhd/scripts/wm.sh move south
-cmd + ctrl - f15 : ~/.config/skhd/scripts/wm.sh move north
-cmd + ctrl - f16 : ~/.config/skhd/scripts/wm.sh move east
+# apps (ctrl, left) — focus-app.sh opens if closed, else cycles that app's windows
+ctrl - f16 : ~/.config/skhd/scripts/focus-app.sh kitty
+ctrl - f17 : ~/.config/skhd/scripts/focus-app.sh Safari
+ctrl - f18 : ~/.config/skhd/scripts/focus-app.sh ChatGPT
+ctrl - f19 : ~/.config/skhd/scripts/focus-app.sh Mail
+ctrl - f20 : ~/.config/skhd/scripts/focus-app.sh Calendar
 
-# ── RESIZE (cmd+alt) — layout-aware: bsp = resize L/D/U/R, stack = no-op ───────
-cmd + alt - f13 : ~/.config/skhd/scripts/wm.sh resize west
-cmd + alt - f14 : ~/.config/skhd/scripts/wm.sh resize south
-cmd + alt - f15 : ~/.config/skhd/scripts/wm.sh resize north
-cmd + alt - f16 : ~/.config/skhd/scripts/wm.sh resize east
+# resize / rotate (ctrl+shift, right) — try one edge, fall back to the opposite
+ctrl + shift - f16 : yabai -m window --resize right:60:0    || yabai -m window --resize left:-60:0
+ctrl + shift - f17 : yabai -m window --resize right:-60:0   || yabai -m window --resize left:60:0
+ctrl + shift - f18 : yabai -m window --resize bottom:0:60   || yabai -m window --resize top:0:-60
+ctrl + shift - f19 : yabai -m window --resize bottom:0:-60  || yabai -m window --resize top:0:60
+ctrl + shift - f20 : yabai -m space --rotate 90
 
-# ── STACK (ctrl+shift) — add active window onto stack W/S/N/E ──────────────────
-ctrl + shift - f13 : yabai -m window  west --stack $(yabai -m query --windows --window | jq -r '.id')
-ctrl + shift - f14 : yabai -m window south --stack $(yabai -m query --windows --window | jq -r '.id')
-ctrl + shift - f15 : yabai -m window north --stack $(yabai -m query --windows --window | jq -r '.id')
-ctrl + shift - f16 : yabai -m window  east --stack $(yabai -m query --windows --window | jq -r '.id')
+# go-to-space 1-5 (alt, left) — per-display Nth space
+alt - f16 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[0]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
+alt - f17 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[1]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
+alt - f18 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[2]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
+alt - f19 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[3]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
+alt - f20 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[4]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
 
-# ── INSERT (shift+alt) — set insertion point W/S/N/E ──────────────────────────
-shift + alt - f13 : yabai -m window --insert west
-shift + alt - f14 : yabai -m window --insert south
-shift + alt - f15 : yabai -m window --insert north
-shift + alt - f16 : yabai -m window --insert east
+# space prev / next (alt+shift, right) — wraps at the ends
+alt + shift - f16 : yabai -m space --focus prev || yabai -m space --focus last
+alt + shift - f17 : yabai -m space --focus next || yabai -m space --focus first
 
-# ── FSPACE (cmd+shift) — focus space 1-5 on current display ────────────────────
-cmd + shift - f13 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[0]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
-cmd + shift - f14 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[1]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
-cmd + shift - f15 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[2]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
-cmd + shift - f16 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[3]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
-cmd + shift - f17 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[4]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
+# focus / swap / balance (ctrl+alt, left) — rotational, wraps via wm.sh
+ctrl + alt - f16 : ~/.config/skhd/scripts/wm.sh focus next
+ctrl + alt - f17 : ~/.config/skhd/scripts/wm.sh focus prev
+ctrl + alt - f18 : ~/.config/skhd/scripts/wm.sh swap  next
+ctrl + alt - f19 : ~/.config/skhd/scripts/wm.sh swap  prev
+ctrl + alt - f20 : yabai -m space --balance
 
-# ── MSPACE (cmd+ctrl+alt) — move window to space 1-5 ──────────────────────────
-cmd + ctrl + alt - f13 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$1" ] && yabai -m window --space "$1"'
-cmd + ctrl + alt - f14 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$2" ] && yabai -m window --space "$2"'
-cmd + ctrl + alt - f15 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$3" ] && yabai -m window --space "$3"'
-cmd + ctrl + alt - f16 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$4" ] && yabai -m window --space "$4"'
-cmd + ctrl + alt - f17 : sh -c 'SPACES=$(yabai -m query --displays --display | jq ".spaces[]"); set -- $SPACES; [ -n "$5" ] && yabai -m window --space "$5"'
+# ── WMOS (F13-F15) — tapped LH3, one-shot ─────────────────────────────────────
 
-# ── WTOG (ctrl+shift+alt) — window toggles + cycle ────────────────────────────
-ctrl + shift + alt - f13 : yabai -m window --toggle float
-ctrl + shift + alt - f14 : yabai -m window --toggle zoom-fullscreen
-ctrl + shift + alt - f15 : yabai -m window --toggle zoom-parent
-ctrl + shift + alt - f16 : ~/.config/skhd/scripts/wm.sh split
-# f19 = toggle this space's layout bsp <-> stack (the "mode" the WIN keys follow)
-ctrl + shift + alt - f19 : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "stack" then "bsp" else "stack" end')
-ctrl + shift + alt - f17 : yabai -m query --spaces --space \
-  | jq -re ".index" \
-  | xargs -I{} yabai -m query --windows --space {} \
-  | jq -r '[.[] | select(.["is-minimized"]? != true)] | sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.["has-focus"]? == true))) - 1).id' \
-  | xargs -I{} yabai -m window --focus {}
-ctrl + shift + alt - f18 : yabai -m query --spaces --space \
-  | jq -re ".index" \
-  | xargs -I{} yabai -m query --windows --space {} \
-  | jq -r '[.[] | select(.["is-minimized"]? != true)] | sort_by(.display, .frame.y, .frame.x, .id) | nth(index(map(select(.["has-focus"]? == true))) - 1).id' \
-  | xargs -I{} yabai -m window --focus {}
+# window toggles (ctrl / ctrl+shift)
+ctrl - f13 : yabai -m window --toggle float
+ctrl - f14 : yabai -m window --toggle zoom-fullscreen
+ctrl - f15 : yabai -m window --toggle split
+ctrl + shift - f13 : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "stack" then "bsp" else "stack" end')
+ctrl + shift - f14 : yabai -m window --toggle zoom-parent
 
-# ── WMISC (cmd+ctrl+shift) — stack-nav / insert-stack / new-window ────────────
-cmd + ctrl + shift - f13 : yabai -m window --focus stack.prev
-cmd + ctrl + shift - f14 : yabai -m window --focus stack.next
-cmd + ctrl + shift - f15 : yabai -m window --insert stack
-cmd + ctrl + shift - f16 : yabai -m window --insert east;  skhd -k "cmd - n"
-cmd + ctrl + shift - f17 : yabai -m window --insert south; skhd -k "cmd - n"
+# send window to space 1-5 (alt / alt+shift) — per-display Nth space
+alt - f13 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[0]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m window --space "$ID"'
+alt - f14 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[1]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m window --space "$ID"'
+alt - f15 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[2]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m window --space "$ID"'
+alt + shift - f13 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[3]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m window --space "$ID"'
+alt + shift - f14 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[4]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m window --space "$ID"'
 
-# ── APPK (cmd+shift+alt) — focus/launch app (open if closed, else cycle) ──────
-cmd + shift + alt - f13 : ~/.config/skhd/scripts/focus-app.sh kitty
-cmd + shift + alt - f14 : ~/.config/skhd/scripts/focus-app.sh Safari
-cmd + shift + alt - f15 : ~/.config/skhd/scripts/focus-app.sh ChatGPT
-cmd + shift + alt - f16 : ~/.config/skhd/scripts/focus-app.sh Mail
-cmd + shift + alt - f17 : ~/.config/skhd/scripts/focus-app.sh Calendar
-
-# ── SMISC (cmd+ctrl+shift+alt) — space-level extras ───────────────────────────
-cmd + ctrl + shift + alt - f13 : yabai -m window --space prev && yabai -m space --focus prev
-cmd + ctrl + shift + alt - f14 : yabai -m window --space next && yabai -m space --focus next
-cmd + ctrl + shift + alt - f15 : yabai -m space --mirror x-axis
-cmd + ctrl + shift + alt - f16 : yabai -m space --mirror y-axis
-cmd + ctrl + shift + alt - f17 : yabai -m space --toggle padding; yabai -m space --toggle gap
-cmd + ctrl + shift + alt - f18 : yabai -m space --balance
-cmd + ctrl + shift + alt - f19 : yabai --restart-service
-cmd + ctrl + shift + alt - f20 : skhd --restart-service
+# space / system (ctrl+alt / ctrl+alt+shift)
+ctrl + alt - f13 : yabai -m space --mirror x-axis
+ctrl + alt - f14 : yabai -m space --mirror y-axis
+ctrl + alt - f15 : yabai -m space --balance
+ctrl + alt + shift - f13 : yabai --restart-service
+ctrl + alt + shift - f14 : skhd --restart-service
