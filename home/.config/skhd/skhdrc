@@ -9,7 +9,7 @@
 #    ROW    : ctrl = top  ·  alt = home  ·  ctrl+alt = bottom
 #    HAND   : shift = right hand
 #    COLUMN : the F-key F16-F20 (send/go-to-space run 1-5 = f16-f20)
-#  cmd is unused/reserved; nothing exceeds 3 modifiers.
+#  cmd = BASE-thumb window toggles (LH2 fullscreen / Shift+LH2 zoom-parent).
 #  Keep in sync with ~/dev/zmk-config/config/smcboard40.keymap.
 # ==============================================================================
 
@@ -20,12 +20,14 @@ ctrl - f18 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[2]
 ctrl - f19 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[3]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m window --space "$ID"'
 ctrl - f20 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[4]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m window --space "$ID"'
 
-# ── window toggles (ctrl+shift) ───────────────────────────────────────────────
+# ── window toggles (ctrl+shift) — float on BASE LH4; split/bsp-stack in WM ─────
 ctrl + shift - f16 : yabai -m window --toggle float
-ctrl + shift - f17 : yabai -m window --toggle zoom-fullscreen
-ctrl + shift - f18 : yabai -m window --toggle zoom-parent
 ctrl + shift - f19 : yabai -m window --toggle split
 ctrl + shift - f20 : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "stack" then "bsp" else "stack" end')
+
+# ── BASE thumb toggles (cmd) — LH2 = fullscreen, Shift+LH2 = zoom-parent ───────
+cmd - f17 : yabai -m window --toggle zoom-fullscreen
+cmd + shift - f17 : yabai -m window --toggle zoom-parent
 
 # ── go to space 1-5 (alt) — per-display Nth space ─────────────────────────────
 alt - f16 : sh -c 'ID=$(yabai -m query --displays --display | jq -r ".spaces[0]"); [ -n "$ID" ] && [ "$ID" != null ] && yabai -m space --focus "$ID"'
